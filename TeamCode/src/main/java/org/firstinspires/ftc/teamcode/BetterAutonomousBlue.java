@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 import java.util.Timer;
@@ -25,6 +26,8 @@ public class BetterAutonomousBlue extends LinearOpMode{
     long startTime;
     RobotWithFlickerShooter robot;
     ArcadeDrive ArcDrive;
+    private ElapsedTime runtime = new ElapsedTime();
+
     @Override
     public void runOpMode() throws InterruptedException {
         //Start Timer
@@ -97,7 +100,7 @@ public class BetterAutonomousBlue extends LinearOpMode{
        //the initialization of whitelight is what is recommended but TEST IT AGAINST WHITE TAPE or WHITE PAPER and reset the value adjusted to what you get
         double whiteLight  = tileLight +50;
 
-        while(distanceSensor.getLightDetected() <= (whiteLight))){
+        while(distanceSensor.getLightDetected() <= (whiteLight)){
             robot.getBLM().setPower(1);
             robot.getBRM().setPower(1);
         }
@@ -132,14 +135,22 @@ public class BetterAutonomousBlue extends LinearOpMode{
 
         //move half the distance of the robot
         double robotFullLength = 12;  //actually measure exact length of our robots base
-
         encoderDrive(DRIVE_SPEED,(robotFullLength/2), (-1*(robotFullLength/2)), 2.0);
 
 
 
 
+        //turn 45
+        robot.getBLM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.getBRM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        stopAndResetEncoders();
+        robot.getBLM().setTargetPosition(distToEncoderTicks(2*3.1415*12*2.54/8));
+        //Assuming Robot's turning radius is 12in b/c dist between wheels is ~12in & 45deg is 360/8
+        while(robot.getBLM().isBusy()){}
 
 
+       //now take in information from the camera
+        
 
 
 
@@ -165,6 +176,10 @@ public class BetterAutonomousBlue extends LinearOpMode{
                              double timeoutS) {
         int newLeftTarget;
         int newRightTarget;
+         final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder // CHECK IF THIS IS CORRECT
+         final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP //CHECK IF THIS IS CORRECT
+         final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference  // CHECK IF THIS IS CORRECT
+         final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
@@ -207,4 +222,5 @@ public class BetterAutonomousBlue extends LinearOpMode{
 
             //  sleep(250);   // optional pause after each move
         }
+    }
 }
