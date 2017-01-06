@@ -8,6 +8,51 @@ import com.qualcomm.robotcore.hardware.Gamepad;
  * Created by Kenneth on 12/27/2016.
  */
 public class RobotWithWheeledShooter extends BasicRobot {
+
+    private DcMotor shooterMotor;
+    public RobotWithWheeledShooter(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight, Gamepad g1, DcMotor shooter){
+        super(frontLeft,frontRight,backLeft,backRight, g1);
+        shooterMotor = shooter;
+    }
+    public RobotWithWheeledShooter(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight, Gamepad g1, Gamepad g2,DcMotor shooter){
+        super(frontLeft,frontRight,backLeft,backRight, g1);
+        shooterMotor = shooter;
+    }
+    public RobotWithWheeledShooter(DcMotor backLeft, DcMotor backRight, Gamepad g1, DcMotor shooter){
+        super(backLeft,backRight, g1);
+        shooterMotor = shooter;
+    }
+
+    public RobotWithWheeledShooter(DcMotor shooter,Gamepad g1){
+        super(g1);
+        shooterMotor = shooter;
+    }
+
+    public DcMotor getShooterMotor() {
+        return shooterMotor;
+    }
+
+    public void setShooterMotor(DcMotor shooterMotor) {
+        this.shooterMotor = shooterMotor;
+    }
+
+    public void turnForwards(){
+        shooterMotor.setPower(1.0);
+    }
+    public void turnBackwards(){
+        shooterMotor.setPower(-1.0);
+    }
+    public void turnForwards(double power){
+        shooterMotor.setPower(power);
+    }
+    public void turnBackwards(double power){
+        shooterMotor.setPower(-1*power);
+    }
+
+    public void stopShooter(){
+        shooterMotor.setPower(0.0);
+    }
+    /*
     private DcMotor leftShooterMotor;
     private DcMotor rightShooterMotor;
     private double LeftMotorSpeed, RightMotorSpeed = 0;
@@ -42,7 +87,8 @@ public class RobotWithWheeledShooter extends BasicRobot {
 
 
     /*** Wheeled shooter methods below ***/
-    public void setShooterSpeed(double speed1, double speed2){
+    /*
+    public void setShooterSpeed(double speed){
         LeftMotorSpeed = speed1;
         RightMotorSpeed = speed2;
     }
@@ -62,4 +108,5 @@ public class RobotWithWheeledShooter extends BasicRobot {
         leftShooterMotor.setPower(0);
         rightShooterMotor.setPower(0);
     }
+    */
 }
