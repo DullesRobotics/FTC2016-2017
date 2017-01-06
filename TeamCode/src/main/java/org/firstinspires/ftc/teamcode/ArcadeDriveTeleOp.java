@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.dullesrobotics.ftc.libraries.ArcadeDrive;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.RobotWithWheeledShooter;
+import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -16,6 +17,7 @@ public class ArcadeDriveTeleOp extends OpMode {
     private ArcadeDrive ArcDrive;
     private String shooterMotor1; //This is for Wheeled Shooter and Flicker Shooter
     private String shooterMotor2; //This is for Wheeled Shooter
+    private ServoControllerLib servController;
 
     @Override
     public void init() {
@@ -28,6 +30,7 @@ public class ArcadeDriveTeleOp extends OpMode {
         robotWithFlickerShooter = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1,hardwareMap.dcMotor.get("flickerShooter"));
         ArcDrive = new ArcadeDrive(robotWithFlickerShooter);
         robotWithFlickerShooter.setDriveTrain(ArcDrive);
+        servController = new ServoControllerLib(hardwareMap.servo.get("BtnServo"));
     }
 
     @Override
@@ -53,6 +56,12 @@ public class ArcadeDriveTeleOp extends OpMode {
         }
         else {
             robotWithFlickerShooter.stopShooter();
+        }
+
+        if (robotWithFlickerShooter.getGamepad1().dpad_right){
+            servController.setDegrees(0);
+        } else if (robotWithFlickerShooter.getGamepad1().dpad_left){
+            servController.setDegrees(180);
         }
     }
 }
