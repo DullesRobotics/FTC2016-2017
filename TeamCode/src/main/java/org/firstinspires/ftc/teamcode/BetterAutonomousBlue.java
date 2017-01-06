@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import android.content.Context;
+import android.hardware.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 
@@ -150,7 +151,8 @@ public class BetterAutonomousBlue extends LinearOpMode{
 
 
        //now take in information from the camera
-        
+
+
 
 
 
@@ -223,4 +225,22 @@ public class BetterAutonomousBlue extends LinearOpMode{
             //  sleep(250);   // optional pause after each move
         }
     }
+    public static Camera getCameraInstance(){
+        Camera c = null;
+        try {
+            c = Camera.open(); // attempt to get a Camera instance
+        }
+        catch (Exception e){
+            // Camera is not available (in use or does not exist)
+        }
+        return c; // returns null if camera is unavailable
+    }
+    private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
+
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+
+
+        }
+    };
 }
