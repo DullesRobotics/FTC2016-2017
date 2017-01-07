@@ -21,7 +21,7 @@ public class ArcadeDrive extends Drivetrain{
 
     public void reverseGamepad(){
         Gamepad gamepad = robot.getGamepad1();
-        drive(gamepad.right_stick_x,gamepad.right_stick_y);
+        drive(-gamepad.right_stick_x,gamepad.right_stick_y);
     }
 
     public void drive(double xPower, double yPower) {

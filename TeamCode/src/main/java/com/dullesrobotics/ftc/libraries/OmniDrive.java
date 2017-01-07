@@ -34,4 +34,9 @@ public class OmniDrive extends Drivetrain {
         robot.getBLM().setPower(-x+y+c);
         robot.getBRM().setPower(x+y-c);
     }
+
+    @Override
+    public void reverseGamepad() {
+        //xdfbklnbkxf
+    }
 }

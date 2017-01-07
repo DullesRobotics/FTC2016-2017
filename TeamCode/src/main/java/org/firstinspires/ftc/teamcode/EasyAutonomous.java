@@ -64,6 +64,8 @@ public class EasyAutonomous extends LinearOpMode {
         robot.getBLM().setTargetPosition(distToEncoderTicks(distInches*2.54));  //Assuming Robot's turning radius is 12in b/c dist between wheels is ~12in & 45deg is 360/8
         while(robot.getBLM().isBusy()||robot.getBRM().isBusy()){}
 
+        robot.getBLM().setPower(0.0);
+        robot.getBRM().setPower(0.0);
 
 
     }

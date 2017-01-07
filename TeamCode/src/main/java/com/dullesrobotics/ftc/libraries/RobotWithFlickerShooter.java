@@ -44,6 +44,12 @@ public class RobotWithFlickerShooter extends BasicRobot {
     public void turnBackwards(float power){
         shooterMotor.setPower(power);
     }
+    public void turnForwards(){
+        shooterMotor.setPower(1.0);
+    }
+    public void turnBackwards(){
+        shooterMotor.setPower(-1.0);
+    }
     public void stopShooter(){
         shooterMotor.setPower(0.0);
     }
