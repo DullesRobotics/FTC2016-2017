@@ -18,6 +18,7 @@ public class ArcadeDriveTeleOp extends OpMode {
     private String shooterMotor1; //This is for Wheeled Shooter and Flicker Shooter
     private String shooterMotor2; //This is for Wheeled Shooter
     private ServoControllerLib servController;
+    private boolean reversed = false;
 
     @Override
     public void init() {
@@ -46,14 +47,31 @@ public class ArcadeDriveTeleOp extends OpMode {
         else if(robotWithWheeledShooter.getGamepad1().x) //change
             robotWithWheeledShooter.stopShooter();
             */
-        robotWithFlickerShooter.driveWithGamepad();
-        if (robotWithFlickerShooter.getGamepad1().a)  //change
-        {
-            robotWithFlickerShooter.turnForwards();
+
+        if (robotWithFlickerShooter.getGamepad1().right_bumper){
+            reversed = !reversed;
         }
-        else if(robotWithFlickerShooter.getGamepad1().b) //change
+
+        if (!reversed) {
+            robotWithFlickerShooter.driveWithGamepad();
+        } else
         {
-            robotWithFlickerShooter.turnBackwards();
+            robotWithFlickerShooter.reverseGamepad();
+        }
+
+        if (robotWithFlickerShooter.getGamepad1().right_trigger > 0)  //change
+        {
+            robotWithFlickerShooter.turnForwards(robotWithFlickerShooter.getGamepad1().right_trigger);
+        }
+        else if(robotWithFlickerShooter.getGamepad1().left_trigger > 0) //change
+        {
+            robotWithFlickerShooter.turnBackwards(robotWithFlickerShooter.getGamepad1().left_trigger);
+        }
+        else if (robotWithFlickerShooter.getGamepad1().dpad_up) {
+            //Move Lift Up
+        }
+        else if (robotWithFlickerShooter.getGamepad1().dpad_down){
+            //Move Lift Down
         }
         else {
             robotWithFlickerShooter.stopShooter();
