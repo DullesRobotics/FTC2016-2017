@@ -26,6 +26,10 @@ public class RobotWithFlickerShooter extends BasicRobot {
         shooterMotor = shooter;
     }
 
+    public RobotWithFlickerShooter(Gamepad g1){
+        super(g1);
+    }
+
     public DcMotor getShooterMotor() {
         return shooterMotor;
     }
@@ -34,11 +38,11 @@ public class RobotWithFlickerShooter extends BasicRobot {
         this.shooterMotor = shooterMotor;
     }
 
-    public void turnForwards(){
-        shooterMotor.setPower(1.0);
+    public void turnForwards(float power){
+        shooterMotor.setPower(power);
     }
-    public void turnBackwards(){
-        shooterMotor.setPower(-1.0);
+    public void turnBackwards(float power){
+        shooterMotor.setPower(power);
     }
     public void stopShooter(){
         shooterMotor.setPower(0.0);
