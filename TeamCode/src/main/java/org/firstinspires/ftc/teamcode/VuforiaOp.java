@@ -155,12 +155,7 @@ public class VuforiaOp extends LinearOpMode {
             if(vuforia.rgb != null){
                     Bitmap bn = Bitmap.createBitmap(vuforia.rgb.getWidth(),vuforia.rgb.getHeight(),Bitmap.Config.RGB_565);
                     bn.copyPixelsFromBuffer(vuforia.rgb.getPixels());
-
-
-
-
-
-
+                
             }
 
 
@@ -175,12 +170,6 @@ public class VuforiaOp extends LinearOpMode {
                     Vec2F upperRight = Tool.projectPoint(vuforia.getCameraCalibration(),rawPose, new Vec3F(127,92,0));
                     Vec2F lowerRight = Tool.projectPoint(vuforia.getCameraCalibration(),rawPose, new Vec3F(127,-92,0));
                     Vec2F lowerLeft = Tool.projectPoint(vuforia.getCameraCalibration(),rawPose, new Vec3F(-127,-92,0));
-
-
-                    upperLeft.getData()[0]
-
-
-
 
                 }
             }
