@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 /**
  * Created by Kenneth on 11/4/2016.
  */
-@Autonomous (name = "BasicAutonomous")
+//@Autonomous (name = "BasicAutonomous")
 public class BasicAutonomous extends LinearOpMode {
     DcMotor leftMotor;
     DcMotor rightMotor;
