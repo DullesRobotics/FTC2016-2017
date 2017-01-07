@@ -24,7 +24,7 @@ public class EOPDTest extends OpMode {
     public void loop() {
         telemetry.addData("Raw",    odsSensor.getRawLightDetected());
         telemetry.addData("Normal", odsSensor.getLightDetected());
-        telemetry.
+//        telemetry.
 
         //telemetry.update();
 

@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class EasyAutonomous extends LinearOpMode {
     final double ENCODERTICKSPERREVOLUTION = 1478.4;
-    final double CIRCUMFERENCEOFWHEELCENTIMETERS = 3.1416*9.6;//ModernRobotics has generously not provided us with a CAD file for the wheel so let's use 96mm diam until we get an actual measurement
+    final double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;//ModernRobotics has generously not provided us with a CAD file for the wheel so let's use 96mm diam until we get an actual measurement
     long startTime;
     RobotWithFlickerShooter robot;
     ArcadeDrive ArcDrive;
@@ -49,11 +49,11 @@ public class EasyAutonomous extends LinearOpMode {
 
 
 
-
+/*
         //Move froward 6 inches
         int DRIVE_SPEED = 1;
-        encoderDrive(DRIVE_SPEED,   6, -6, 2.0);
-
+        encoderDrive(DRIVE_SPEED, 6, -6, 2.0);
+*/
 
 
         //Go 6ft fwd (3 tiles)
