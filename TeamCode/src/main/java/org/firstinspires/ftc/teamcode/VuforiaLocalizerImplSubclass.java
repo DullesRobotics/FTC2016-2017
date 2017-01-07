@@ -29,7 +29,6 @@ public class VuforiaLocalizerImplSubclass extends VuforiaLocalizerImpl{
 
     // A hack that works around lack of access in v2.2 to camera image data when Vuforia is running
     // Note: this may or may not be supported in future releases.
-    class VuforiaLocalizerImplSubclass extends VuforiaLocalizerImpl {
 
         class VuforiaCallbackSubclass extends VuforiaLocalizerImpl.VuforiaCallback {
 
@@ -83,4 +82,4 @@ public class VuforiaLocalizerImplSubclass extends VuforiaLocalizerImpl{
         }
     }
 
-}
+

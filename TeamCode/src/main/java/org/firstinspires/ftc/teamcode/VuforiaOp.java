@@ -105,7 +105,7 @@ public class VuforiaOp extends LinearOpMode {
         driveL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         driveR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        int Wheel
+
 
         driveL.setTargetPosition((int) (driveL.getCurrentPosition() + ((Math.hypot(trans.get(0), trans.get(2)) + 150 / 113.668 * 1478.4 ))));
         driveR.setTargetPosition((int) (driveL.getCurrentPosition() + ((Math.hypot(trans.get(0), trans.get(2)) + 150 / 113.668 * 1478.4 ))));
@@ -155,7 +155,7 @@ public class VuforiaOp extends LinearOpMode {
             if(vuforia.rgb != null){
                     Bitmap bn = Bitmap.createBitmap(vuforia.rgb.getWidth(),vuforia.rgb.getHeight(),Bitmap.Config.RGB_565);
                     bn.copyPixelsFromBuffer(vuforia.rgb.getPixels());
-                
+
             }
 
 
