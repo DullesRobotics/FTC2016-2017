@@ -32,4 +32,8 @@ public class ServoControllerLib {
     public void setDirection(Servo.Direction dir){
         buttonServo.setDirection(dir);
     }
+
+    public Servo returnServo(){
+        return buttonServo;
+    }
 }
