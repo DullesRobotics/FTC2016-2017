@@ -16,5 +16,6 @@ public abstract class Drivetrain {
     }
 
     public abstract void driveWithGamepad();
+    public abstract void reverseGamepad();
 
 }
