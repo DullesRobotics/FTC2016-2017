@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.dullesrobotics.ftc.libraries.ArcadeDrive;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.RobotWithWheeledShooter;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -12,7 +13,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Created by Kenneth on 1/6/2017.
  */
-
+@Autonomous(name ="EasyAuton")
 public class EasyAutonomous extends LinearOpMode {
     final double ENCODERTICKSPERREVOLUTION = 1478.4;
     final double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;//ModernRobotics has generously not provided us with a CAD file for the wheel so let's use 96mm diam until we get an actual measurement
@@ -43,7 +44,7 @@ public class EasyAutonomous extends LinearOpMode {
 
         //Shoot ONE Ball
         robot.turnBackwards();
-        wait(5000);
+        delay(5000);
         robot.stopShooter();
 
 
@@ -127,9 +128,13 @@ public class EasyAutonomous extends LinearOpMode {
     public void stopAndResetEncoders() throws InterruptedException {
         robot.getBLM().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.getBRM().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        wait(1);//Example I used waited one hardware cycle but the method is deprecated
+        waitOneFullHardwareCycle();
     }
     public int distToEncoderTicks(double dist){
         return (int)(dist/CIRCUMFERENCEOFWHEELCENTIMETERS*ENCODERTICKSPERREVOLUTION);
+    }
+    public void delay(long millis){
+        long start = System.currentTimeMillis();
+        while (System.currentTimeMillis() < start+millis){}
     }
 }

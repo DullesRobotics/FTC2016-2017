@@ -156,7 +156,7 @@ public class FTCVisionAutonomousOpBlue extends LinearVisionOpMode {
             delay(50); //Let vision process a new frame not get same info
         }
          if (redBlue > blueRed){
-            //Press Right side b/c we are blue
+            //Press Right side b/c we are blue2
 
              //Turn Servo
              //Drive Forwards to press with lower power, keep pushing for some time
