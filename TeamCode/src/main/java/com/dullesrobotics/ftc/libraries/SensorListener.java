@@ -27,10 +27,10 @@ public class SensorListener implements SensorEventListener {
     //private float roll;
     private float yaw;
 
-    public final int LANDSCAPE_RIGHT = 0;//Orientation you get when you rotate portrait phone right 90deg to landscape
-    public final int LANDSCAPE_LEFT = 1;//Orientation you get when you rotate portrait phone left 90deg to landscape
-    public final int PORTRAIT_VERTICAL = 2; //Normal Portrait Orientation
-    public final int UPSIDE_DOWN_PORTRAIT = 3;//Upside down portrait
+    public static final int LANDSCAPE_RIGHT = 0;//Orientation you get when you rotate portrait phone right 90deg to landscape
+    public static final int LANDSCAPE_LEFT = 1;//Orientation you get when you rotate portrait phone left 90deg to landscape
+    public static final int PORTRAIT_VERTICAL = 2; //Normal Portrait Orientation
+    public static final int UPSIDE_DOWN_PORTRAIT = 3;//Upside down portrait
 
     private int phoneOrientation; //defaults to PORTRAIT orientation
 
