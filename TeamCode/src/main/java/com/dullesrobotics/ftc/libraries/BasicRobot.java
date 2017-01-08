@@ -15,7 +15,8 @@ public class BasicRobot {
     private DcMotor BRM;
     private Gamepad gamepad1;
     private Gamepad gamepad2;
-    private Drivetrain driveTrain;
+    private TeleOpDrivetrain driveTrain;
+
 
     public BasicRobot(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight, Gamepad g1){
         FLM = frontLeft;
@@ -44,11 +45,11 @@ public class BasicRobot {
         gamepad1 = g1;
     }
 
-    public void setDriveTrain(Drivetrain driveTrain) {
+    public void setDriveTrain(TeleOpDrivetrain driveTrain) {
         this.driveTrain = driveTrain;
     }
 
-    public Drivetrain getDriveTrain() {
+    public TeleOpDrivetrain getDriveTrain() {
         return driveTrain;
     }
     public void driveWithGamepad(){

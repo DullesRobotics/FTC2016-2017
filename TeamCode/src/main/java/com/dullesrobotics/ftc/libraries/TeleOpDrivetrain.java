@@ -7,11 +7,11 @@ import com.qualcomm.robotcore.hardware.Gamepad;
  * Created by Kenneth on 11/5/2016.
  */
 
-public abstract class Drivetrain {
+public abstract class TeleOpDrivetrain {
 
     protected BasicRobot robot;
 
-    public Drivetrain(BasicRobot r){
+    public TeleOpDrivetrain(BasicRobot r){
         robot = r;
     }
 

@@ -53,4 +53,6 @@ public class RobotWithFlickerShooter extends BasicRobot {
     public void stopShooter(){
         shooterMotor.setPower(0.0);
     }
+
+
 }
