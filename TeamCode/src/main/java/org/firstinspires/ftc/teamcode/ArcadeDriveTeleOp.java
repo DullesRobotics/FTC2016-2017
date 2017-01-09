@@ -79,9 +79,9 @@ public class ArcadeDriveTeleOp extends OpMode {
         }
 
         if (robotWithFlickerShooter.getGamepad1().dpad_right){
-            servController.setDegrees(180);
+            servController.setDegrees(180); //Right
         } else if (robotWithFlickerShooter.getGamepad1().dpad_left){
-            servController.setDegrees(0);
+            servController.setDegrees(0); //Left
         }
     }
 }
