@@ -49,7 +49,7 @@ public class ArcadeDriveTeleOp extends OpMode {
             robotWithWheeledShooter.stopShooter();
             */
         boolean curState = robotWithFlickerShooter.getGamepad1().right_bumper;
-        if (curState && (prevStateReverse == false)&&prevStateReverse!=curState){
+        if (curState && (prevStateReverse == false)&&curState == true){
             reversed = !reversed;
         }
         prevStateReverse = curState;
