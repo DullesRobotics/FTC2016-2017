@@ -1,5 +1,6 @@
 package com.dullesrobotics.ftc.libraries;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
@@ -15,7 +16,7 @@ OMNIDRIVE ---->> http://ftckey.com/build/drive-trains/
 
  */
 
-public class OmniDrive extends Drivetrain {
+public class OmniDrive extends TeleOpDrivetrain {
     public OmniDrive(BasicRobot r) {
         super(r);
     }

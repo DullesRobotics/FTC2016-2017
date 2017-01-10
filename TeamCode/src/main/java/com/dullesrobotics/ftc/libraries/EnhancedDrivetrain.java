@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
  * Created by Kenneth on 11/5/2016.
  */
 
-public abstract class EnhancedDrivetrain extends Drivetrain {
+public abstract class EnhancedDrivetrain extends TeleOpDrivetrain {
     public EnhancedDrivetrain(BasicRobot r) {
         super(r);
     }
