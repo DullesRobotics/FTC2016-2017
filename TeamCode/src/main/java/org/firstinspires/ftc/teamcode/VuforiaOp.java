@@ -49,6 +49,7 @@ public class VuforiaOp extends LinearVisionOpMode {
     String currentColorOrder = "???, ???";
     //Frame counter
     int frameCount = 0;
+    ServoControllerLib servLib = new ServoControllerLib(hardwareMap.servo.get("BtnServo"));
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -305,7 +306,7 @@ public class VuforiaOp extends LinearVisionOpMode {
         driveR.setPower(0.0);
 
 
-        ServoControllerLib servLib = new ServoControllerLib(hardwareMap.servo.get("BtnServo"));
+
         int redBlue = 0;
         int blueRed = 0;
         for(int i=0; i < 19; i++){ //Purposefully not even number
