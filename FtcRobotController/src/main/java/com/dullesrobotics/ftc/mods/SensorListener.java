@@ -1,4 +1,4 @@
-package com.dullesrobotics.ftc.libraries;
+package com.dullesrobotics.ftc.mods;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -7,6 +7,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
+import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 
 
 /**
@@ -34,8 +36,8 @@ public class SensorListener implements SensorEventListener {
 
     private int phoneOrientation; //defaults to PORTRAIT orientation
 
-    public SensorListener(OpMode opMode, int phoneOrient){
-        sensorManager = (SensorManager)(opMode.hardwareMap.appContext.getSystemService(Context.SENSOR_SERVICE));
+    public SensorListener(FtcRobotControllerActivity ftcRobotControllerActivity,int phoneOrient){
+        sensorManager = (SensorManager) (ftcRobotControllerActivity.getSystemService(Context.SENSOR_SERVICE));
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         phoneOrientation = phoneOrient;

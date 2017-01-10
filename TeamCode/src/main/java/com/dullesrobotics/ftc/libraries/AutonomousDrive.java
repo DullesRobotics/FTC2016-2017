@@ -1,5 +1,6 @@
 package com.dullesrobotics.ftc.libraries;
 
+import com.dullesrobotics.ftc.mods.SensorListener;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 /**

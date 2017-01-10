@@ -56,6 +56,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dullesrobotics.ftc.mods.SensorListener;
 import com.google.blocks.ftcrobotcontroller.BlocksActivity;
 import com.google.blocks.ftcrobotcontroller.ProgrammingModeActivity;
 import com.google.blocks.ftcrobotcontroller.ProgrammingModeControllerImpl;
@@ -135,6 +136,13 @@ public class FtcRobotControllerActivity extends Activity {
 
   protected FtcEventLoop eventLoop;
   protected Queue<UsbDevice> receivedUsbAttachmentNotifications;
+
+  //Edited 1/10/2017 Kenneth
+  private SensorListener sensorListener;
+  public SensorListener getSensorListener(){
+    return sensorListener;
+  }
+  //End edit section 1
 
   protected class RobotRestarter implements Restarter {
 
@@ -298,6 +306,11 @@ public class FtcRobotControllerActivity extends Activity {
   protected void onResume() {
     super.onResume();
     RobotLog.vv(TAG, "onResume()");
+
+    //Edited 1/10/17 by Kenneth
+    sensorListener = new SensorListener(this,SensorListener.PORTRAIT_VERTICAL);
+    sensorListener.register();
+    //End edit section 2
   }
 
   @Override
@@ -307,6 +320,9 @@ public class FtcRobotControllerActivity extends Activity {
     if (programmingModeController.isActive()) {
       programmingModeController.stopProgrammingMode();
     }
+    //Edited 1/10/17 by Kenneth
+    sensorListener.unregister();
+    //End Edit section 3
   }
 
   @Override
