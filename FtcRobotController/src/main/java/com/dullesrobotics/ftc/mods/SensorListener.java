@@ -93,6 +93,7 @@ public class SensorListener implements SensorEventListener {
                     break;
                 case PORTRAIT_VERTICAL:
                     yaw = (orientation[2] - startOrientation[2])*-1;
+                    break;
             }
 
         }
