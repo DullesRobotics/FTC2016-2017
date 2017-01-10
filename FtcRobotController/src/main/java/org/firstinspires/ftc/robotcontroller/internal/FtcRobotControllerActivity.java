@@ -138,10 +138,12 @@ public class FtcRobotControllerActivity extends Activity {
   protected Queue<UsbDevice> receivedUsbAttachmentNotifications;
 
   //Edited 1/10/2017 Kenneth
-  private SensorListener sensorListener;
+  //private SensorListener sensorListener;
+  /*
   public SensorListener getSensorListener(){
     return sensorListener;
   }
+  */
   //End edit section 1
 
   protected class RobotRestarter implements Restarter {
@@ -308,8 +310,8 @@ public class FtcRobotControllerActivity extends Activity {
     RobotLog.vv(TAG, "onResume()");
 
     //Edited 1/10/17 by Kenneth
-    sensorListener = new SensorListener(this,SensorListener.PORTRAIT_VERTICAL);
-    sensorListener.register();
+    //sensorListener = new SensorListener(this,SensorListener.PORTRAIT_VERTICAL);
+    //sensorListener.register();
     //End edit section 2
   }
 
@@ -321,13 +323,13 @@ public class FtcRobotControllerActivity extends Activity {
       programmingModeController.stopProgrammingMode();
     }
     //Edited 1/10/17 by Kenneth
-    sensorListener.unregister();
+    //sensorListener.unregister();
     //End Edit section 3
   }
 
   @Override
   protected void onStop() {
-    // Note: this gets called even when the configuration editor is launched. That is, it gets
+    // Note: this gets called even when the configuration or is launched. That is, it gets
     // called surprisingly often.
     super.onStop();
     RobotLog.vv(TAG, "onStop()");
