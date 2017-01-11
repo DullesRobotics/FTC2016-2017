@@ -2,6 +2,7 @@ package com.dullesrobotics.ftc.libraries;
 
 import com.dullesrobotics.ftc.mods.SensorListener;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
 /**
  * Created by Kenneth on 1/8/2017.
@@ -12,6 +13,7 @@ public class AutonomousDrive {
     final double ENCODERTICKSPERREVOLUTION = 1478.4;
     final double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
     final double TICKSPERCENTIMETER = CIRCUMFERENCEOFWHEELCENTIMETERS/ENCODERTICKSPERREVOLUTION;
+    OpticalDistanceSensor ods;
     //SensorListener sensorListener;
     //float heading;
 /*
@@ -23,8 +25,12 @@ public class AutonomousDrive {
     public AutonomousDrive(BasicRobot r) {
         robot = r;
     }
+    public AutonomousDrive(BasicRobot r,OpticalDistanceSensor o) {
+        robot = r;
+        ods = o;
+    }
 
-    public void driveStraightADistanceWithEncoders(double centimeters){
+    public boolean driveStraightADistanceWithEncoders(double centimeters){
         int ticks = (int) (centimeters*TICKSPERCENTIMETER);
         resetEncoders();
         setRUNWITHENCODERS();
@@ -47,6 +53,40 @@ public class AutonomousDrive {
                 robot.getBLM().setPower(power);
             }
         }
+        return true;
+    }
+    public boolean driveStraightTillEOPD(double maxDistCM, double EOPDThreshold){
+        int ticks = (int) (maxDistCM*TICKSPERCENTIMETER);
+        resetEncoders();
+        setRUNWITHENCODERS();
+        int firstFifth = (int) (ticks*.2);
+        int lastFifth = (int)(ticks*.8);
+        final double MAXPOWER = 0.75;
+        double power = 0;
+        while(robot.getBLM().getCurrentPosition()<=ticks || robot.getBRM().getCurrentPosition()<=ticks){
+            double lightLevel = ods.getLightDetected();
+            if(lightLevel >= EOPDThreshold){
+                robot.getBRM().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                robot.getBLM().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                robot.getBRM().setPower(0.0);
+                robot.getBLM().setPower(0.0);
+                return true;
+            }
+            if(robot.getBRM().getCurrentPosition()<firstFifth && robot.getBRM().getCurrentPosition()<firstFifth){
+                power = getMaxCurrentPos()*5.0/ticks*MAXPOWER;
+                robot.getBRM().setPower(power);
+                robot.getBLM().setPower(power);
+            } else if(robot.getBLM().getCurrentPosition()>=lastFifth||robot.getBRM().getCurrentPosition()>=lastFifth){
+                power = MAXPOWER - (getMaxCurrentPos()/ticks*MAXPOWER);
+                robot.getBRM().setPower(power);
+                robot.getBLM().setPower(power);
+            }else{
+                power = MAXPOWER;
+                robot.getBRM().setPower(power);
+                robot.getBLM().setPower(power);
+            }
+        }
+        return false;
     }
 
     public void pointTurn(double angleInDeg){
@@ -77,7 +117,7 @@ public class AutonomousDrive {
         robot.getBRM().setPower(0.2);
     }
 
-    public void driveStraightForSetTime(double seconds){
+    public void driveStraightForSetTimeScaleUp(double seconds){
         long millis = (long) (seconds*1000.0);
         long start = System.currentTimeMillis();
         resetEncoders();
@@ -103,6 +143,19 @@ public class AutonomousDrive {
                 robot.getBLM().setPower(power);
             }
         }
+    }
+
+    public void driveStraightForSetTime(double seconds, double power){
+        long startTime = System.currentTimeMillis();
+        long millis = (long) (seconds*1000);
+        long endTime = startTime + millis;
+        robot.getBLM().setPower(power);
+        robot.getBRM().setPower(power);
+        while(System.currentTimeMillis() < endTime){
+            //Do Nothing
+        }
+        robot.getBLM().setPower(0.0);
+        robot.getBRM().setPower(0.0);
     }
 
     public int getMaxCurrentPos(){
