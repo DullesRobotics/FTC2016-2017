@@ -12,12 +12,16 @@ public class AutonomousDrive {
     final double ENCODERTICKSPERREVOLUTION = 1478.4;
     final double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
     final double TICKSPERCENTIMETER = CIRCUMFERENCEOFWHEELCENTIMETERS/ENCODERTICKSPERREVOLUTION;
-    SensorListener sensorListener;
-    float heading;
-
+    //SensorListener sensorListener;
+    //float heading;
+/*
     public AutonomousDrive(BasicRobot r, SensorListener s) {
         robot = r;
         sensorListener = s;
+    }
+*/
+    public AutonomousDrive(BasicRobot r) {
+        robot = r;
     }
 
     public void driveStraightADistanceWithEncoders(double centimeters){
@@ -45,7 +49,7 @@ public class AutonomousDrive {
         }
     }
 
-    public void pointTurnAnAngle(double angleInDeg){
+    public void pointTurn(double angleInDeg){
         double percentOfCircle = angleInDeg/360.0;
         double turnRadiusCM = 5*2.54;
         double ticksNeededToTurn = 2*Math.PI*turnRadiusCM*TICKSPERCENTIMETER*percentOfCircle;
@@ -53,6 +57,22 @@ public class AutonomousDrive {
         setRUNTOPOSITION();
         robot.getBRM().setTargetPosition((int) (ticksNeededToTurn/2.0));
         robot.getBLM().setTargetPosition((int) (ticksNeededToTurn/2.0));
+        robot.getBLM().setPower(0.2);
+        robot.getBRM().setPower(0.2);
+    }
+
+    public void swingTurn(double angleInDeg){
+        double percentOfCircle = (angleInDeg>0)? angleInDeg:angleInDeg*-1.0;
+        double turnRadiusCM = 5*2.54;
+        double ticksNeededToTurn = 2*Math.PI*turnRadiusCM*TICKSPERCENTIMETER*percentOfCircle;
+        resetEncoders();
+        setRUNTOPOSITION();
+        if(angleInDeg>0){
+            //Turn Right
+            robot.getBLM().setTargetPosition((int)(ticksNeededToTurn));
+        }else{
+            robot.getBRM().setTargetPosition((int)(ticksNeededToTurn));
+        }
         robot.getBLM().setPower(0.2);
         robot.getBRM().setPower(0.2);
     }
