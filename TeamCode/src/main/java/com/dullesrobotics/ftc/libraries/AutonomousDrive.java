@@ -34,7 +34,7 @@ public class AutonomousDrive {
                 robot.getBRM().setPower(power);
                 robot.getBLM().setPower(power);
             } else if(robot.getBLM().getCurrentPosition()>=lastFifth||robot.getBRM().getCurrentPosition()>=lastFifth){
-                power = MAXPOWER - (getMaxCurrentPos()*5.0/ticks*MAXPOWER);
+                power = MAXPOWER - (getMaxCurrentPos()/ticks*MAXPOWER);
                 robot.getBRM().setPower(power);
                 robot.getBLM().setPower(power);
             }else{
@@ -55,6 +55,34 @@ public class AutonomousDrive {
         robot.getBLM().setTargetPosition((int) (ticksNeededToTurn/2.0));
         robot.getBLM().setPower(0.2);
         robot.getBRM().setPower(0.2);
+    }
+
+    public void driveStraightForSetTime(double seconds){
+        long millis = (long) (seconds*1000.0);
+        long start = System.currentTimeMillis();
+        resetEncoders();
+        setRUNWITHENCODERS();
+        long firstFifth = (long) ((millis*.2)+start);
+        long lastFifth = (long)(millis*.8)+start;
+        final double MAXPOWER = 0.75;
+        double power = 0;
+        long end = start + millis;
+        while(System.currentTimeMillis()<= end){
+            long curTime = System.currentTimeMillis();
+            if(curTime<=firstFifth){
+                power = (((double)(curTime)-((double)start))*5.0/((double)(millis)))*MAXPOWER;
+                robot.getBRM().setPower(power);
+                robot.getBLM().setPower(power);
+            } else if(curTime >= lastFifth){
+                power = MAXPOWER - (((double)(curTime)-((double)start))*5.0/((double)(millis)))*MAXPOWER;
+                robot.getBRM().setPower(power);
+                robot.getBLM().setPower(power);
+            }else{
+                power = MAXPOWER;
+                robot.getBRM().setPower(power);
+                robot.getBLM().setPower(power);
+            }
+        }
     }
 
     public int getMaxCurrentPos(){
