@@ -21,7 +21,7 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 /**
  * Created by Kenneth on 1/7/2017.
  */
-@Autonomous(name = "UseThisBlue")
+@Autonomous(name = "BitterBasesBlueAutonOp(FTCVision2ndtryBLUE)")
 public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;
     final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
@@ -127,9 +127,9 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot.getBLM().setPower(0.0);
         robot.getBRM().setPower(0.0);
 
-        //Turn 55
+        //Turn 65
         //TODO Karim fiddle with this to make sure it faces the beacon head on
-        ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*55.0*TICKSPERCENTIMETER);
+        ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*65.0*TICKSPERCENTIMETER);
         autonomousDrive.resetEncoders();
         autonomousDrive.setRUNTOPOSITION();
         robot.getBLM().setTargetPosition(ticksToGo);
@@ -199,6 +199,23 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         }
 
         //Backup, go to other beacon
+
+        robot.getBLM().setDirection(DcMotorSimple.Direction.FORWARD);
+        robot.getBRM().setDirection(DcMotorSimple.Direction.REVERSE);
+
+        autonomousDrive.resetEncoders();
+        autonomousDrive.setRUNTOPOSITION();
+
+
+        robot.getBLM().setTargetPosition((int)(30.0*TICKSPERCENTIMETER));
+        robot.getBRM().setTargetPosition((int)(30.0*TICKSPERCENTIMETER));
+        robot.getBLM().setPower(.75);
+        robot.getBRM().setPower(0.75);
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<30.0*TICKSPERCENTIMETER){};
+
+        robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
+        robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
+
 
         //2nd Beacon
         redBlue = 0;
