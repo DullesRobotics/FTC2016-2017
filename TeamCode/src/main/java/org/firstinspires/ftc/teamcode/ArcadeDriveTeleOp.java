@@ -19,7 +19,10 @@ public class ArcadeDriveTeleOp extends OpMode {
     private String shooterMotor2; //This is for Wheeled Shooter
     private ServoControllerLib servController;
     private boolean reversed = true;
-    private boolean prevStateReverse = true;
+    private boolean prevStateReverse = reversed;
+
+    private boolean quickly = true;
+    private boolean prevStateQuickly = quickly;
 
     @Override
     public void init() {
@@ -49,15 +52,26 @@ public class ArcadeDriveTeleOp extends OpMode {
             robotWithWheeledShooter.stopShooter();
             */
         boolean curState = robotWithFlickerShooter.getGamepad1().right_bumper;
+        boolean curStateQuickly = robotWithFlickerShooter.getGamepad1().left_bumper;
+        if (curStateQuickly && (prevStateQuickly == false)&&curStateQuickly == true){
+            quickly = !quickly;
+        }
         if (curState && (prevStateReverse == false)&&curState == true){
             reversed = !reversed;
         }
         prevStateReverse = curState;
+        prevStateQuickly = curStateQuickly;
         if (!reversed) {
             robotWithFlickerShooter.driveWithGamepad();
+            if (quickly) {
+                robotWithFlickerShooter.driveQuicklyWithGamepad();
+            }
         } else
         {
             robotWithFlickerShooter.reverseGamepad();
+            if (quickly) {
+                robotWithFlickerShooter.reverseQuicklyGamepad();
+            }
         }
 
         if (robotWithFlickerShooter.getGamepad1().right_trigger > 0)  //change

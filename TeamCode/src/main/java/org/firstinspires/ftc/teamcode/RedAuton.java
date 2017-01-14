@@ -36,14 +36,14 @@ public class RedAuton extends LinearVisionOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        waitForVisionStart();
-
         //Initialize Robot
-        robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1,hardwareMap.dcMotor.get("flickerShooter"));
-        autonomousDrive = new AutonomousDrive(robot,hardwareMap.opticalDistanceSensor.get("EOPD"));
-        servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"),ServoControllerLib.SERVOLEFT);
+        robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1, hardwareMap.dcMotor.get("flickerShooter"));
+        autonomousDrive = new AutonomousDrive(robot, hardwareMap.opticalDistanceSensor.get("EOPD"));
+        servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         ods = hardwareMap.opticalDistanceSensor.get("EOPD");
+        waitForVisionStart();
+
 
         //Sets Up Camera
         //initializes camera
@@ -60,6 +60,9 @@ public class RedAuton extends LinearVisionOpMode {
         rotation.setActivityOrientationFixed(ScreenOrientation.LANDSCAPE);
         cameraControl.setColorTemperature(CameraControlExtension.ColorTemperature.AUTO);
         cameraControl.setAutoExposureCompensation();
+        waitForStart();
+        while (opModeIsActive()) {
+
 
 /*
         //Allow Setting a time delay
@@ -89,171 +92,241 @@ public class RedAuton extends LinearVisionOpMode {
             prevStateBtnB = gamepad1.b;
         }
 */
-        waitForStart(); //Wait for START Button Press on DS
-        //delay(sleepTime*1000);
+             //Wait for START Button Press on DS
+            //delay(sleepTime*1000);
 
-        //START
+            //START
 
-        //Drive forwards until ODS is triggered by white tape
-        //autonomousDrive.driveStraightForSetTime(2,.75);
-        //FWD 10cm
-        telemetry.addData("Action","FWD 10CM");
-        autonomousDrive.resetEncoders();
-        autonomousDrive.setRUNTOPOSITION();
-        telemetry.addData("running", "fwd 10 cm");
-        robot.getBLM().setTargetPosition((int)(5.0*TICKSPERCENTIMETER));
-        robot.getBRM().setTargetPosition((int)(5.0*TICKSPERCENTIMETER));
-        robot.getBLM().setPower(.75);
-        robot.getBRM().setPower(0.75);
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<5.0*TICKSPERCENTIMETER){delay(1);};
+            //Drive forwards until ODS is triggered by white tape
+            //autonomousDrive.driveStraightForSetTime(2,.75);
+            //FWD 10cm
+            telemetry.addData("Action", "FWD 10CM");
+            autonomousDrive.resetEncoders();
+            autonomousDrive.setRUNTOPOSITION();
+            telemetry.addData("running", "fwd 10 cm");
+            robot.getBLM().setTargetPosition((int) (5.0 * TICKSPERCENTIMETER));
+            robot.getBRM().setTargetPosition((int) (5.0 * TICKSPERCENTIMETER));
+            robot.getBLM().setPower(0.75);
+            robot.getBRM().setPower(0.75);
+            while (opModeIsActive() && robot.getBLM().getCurrentPosition() < 5.0 * TICKSPERCENTIMETER) {
+                delay(1);
+            }
+            ;
+            if (opModeIsActive()) {
+                telemetry.addData("OpMode","Active");
+            } else {
+                telemetry.addData("OpMode","Disabled");
+                break;
+            }
+            int ticksToGo = (int) (Math.PI * 2.0 * 14.0 * 2.54 / 360.0 * 40.0 * TICKSPERCENTIMETER);
 
-        //Turn 35
-        telemetry.addData("Action","Turn35");
-        int ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*35.0*TICKSPERCENTIMETER);
-        autonomousDrive.resetEncoders();
-        autonomousDrive.setRUNTOPOSITION();
-        robot.getBRM().setTargetPosition(ticksToGo);
-        robot.getBRM().setPower(0.3);
-        robot.getBLM().setPower(0.0);
-        while(opModeIsActive()&&robot.getBRM().getCurrentPosition() < ticksToGo&&robot.getBRM().getCurrentPosition() < 100000){delay(1);}
-        robot.getBRM().setPower(0.0);
+            //Turn 35
+            telemetry.addData("Action", "Turn35");
+            autonomousDrive.resetEncoders();
+            autonomousDrive.setRUNTOPOSITION();
+            robot.getBRM().setTargetPosition(ticksToGo);
+            robot.getBRM().setPower(0.3);
+            robot.getBLM().setPower(0.0);
 
-        final double EOPDWHITELINELIGHTLEVEL = 0.15;//TODO Karim make sure this is right too
-        //Go straight till EOPD
-        telemetry.addData("Action", "Go straight till line");
-        autonomousDrive.resetEncoders();
-        autonomousDrive.setRUNWITHENCODERS();
-        robot.getBLM().setPower(.3);
-        robot.getBRM().setPower(.3);
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < 100000&& ods.getLightDetected() < EOPDWHITELINELIGHTLEVEL){delay(1);}
-        robot.getBLM().setPower(0.0);
-        robot.getBRM().setPower(0.0);
+            while (opModeIsActive() && robot.getBRM().getCurrentPosition() < ticksToGo && robot.getBRM().getCurrentPosition() < 100000) {
+                delay(1);
+            }
+            robot.getBRM().setPower(0.0);
 
-        //Go back to make room
-        telemetry.addData("Action","GoBackToMakeRoom");
-        robot.getBLM().setDirection(DcMotorSimple.Direction.FORWARD);
-        robot.getBRM().setDirection(DcMotorSimple.Direction.REVERSE);
-        telemetry.addData("Action","SetMotorDirection");
-        autonomousDrive.resetEncoders();
-        autonomousDrive.setRUNTOPOSITION();
-        telemetry.addData("Action","setRuntoPos");
+            if (opModeIsActive()) {
+                telemetry.addData("OpMode","Active");
+            } else {
+                telemetry.addData("OpMode","Disabled");
+                break;
+            }
 
-        double dist = 10.0;
-        robot.getBLM().setTargetPosition((int)(dist*TICKSPERCENTIMETER));
-        robot.getBRM().setTargetPosition((int)(dist*TICKSPERCENTIMETER));
-        telemetry.addData("Action","setTargetPos");
-        robot.getBLM().setPower(.75);
-        robot.getBRM().setPower(0.75);
-        telemetry.addData("Action","setPower");
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<dist*TICKSPERCENTIMETER&&robot.getBLM().getCurrentPosition() < 100000){delay(1);};
-        telemetry.addData("Action","DonewithWhileLoop");
-        robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
-        robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
-        telemetry.addData("Action","Normalized motor directions");
+            final double EOPDWHITELINELIGHTLEVEL = 0.15;//TODO Karim make sure this is right too
+            //Go straight till EOPD
 
-        //Turn 65
-        //TODO Karim fiddle with this to make sure it faces the beacon head on
-        ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*65.0*TICKSPERCENTIMETER);
-        telemetry.addData("Action","Turn65");
-        autonomousDrive.resetEncoders();
-        autonomousDrive.setRUNTOPOSITION();
-        robot.getBRM().setTargetPosition(ticksToGo);
-        robot.getBRM().setPower(0.3);
-        robot.getBLM().setPower(0.0);
-        while(opModeIsActive()&&robot.getBRM().getCurrentPosition() < ticksToGo&&robot.getBRM().getCurrentPosition() < 100000){delay(1);}
-        robot.getBRM().setPower(0.0);
+            telemetry.addData("Action", "Go straight till line");
+            autonomousDrive.resetEncoders();
+            autonomousDrive.setRUNWITHENCODERS();
+            robot.getBLM().setPower(0.3);
+            robot.getBRM().setPower(0.3);
 
-        //Backup so camera can see whole beacon
-        robot.getBLM().setDirection(DcMotorSimple.Direction.FORWARD);
-        robot.getBRM().setDirection(DcMotorSimple.Direction.REVERSE);
+            while (opModeIsActive() && robot.getBLM().getCurrentPosition() < 100000 && ods.getLightDetected() < EOPDWHITELINELIGHTLEVEL) {
+                delay(1);
+            }
+            robot.getBLM().setPower(0.0);
+            robot.getBRM().setPower(0.0);
 
-        autonomousDrive.resetEncoders();
-        autonomousDrive.setRUNTOPOSITION();
+            //Go back to make room
+            double dist = 15.0;
+
+            telemetry.addData("Action", "GoBackToMakeRoom");
+            robot.getBLM().setDirection(DcMotorSimple.Direction.FORWARD);
+            robot.getBRM().setDirection(DcMotorSimple.Direction.REVERSE);
+            telemetry.addData("Action", "SetMotorDirection");
+            autonomousDrive.resetEncoders();
+            autonomousDrive.setRUNTOPOSITION();
+            telemetry.addData("Action", "setRuntoPos");
+
+            robot.getBLM().setTargetPosition((int) (dist * TICKSPERCENTIMETER));
+            robot.getBRM().setTargetPosition((int) (dist * TICKSPERCENTIMETER));
+            telemetry.addData("Action", "setTargetPos");
+            robot.getBLM().setPower(.75);
+            robot.getBRM().setPower(0.75);
+            telemetry.addData("Action", "setPower");
+
+            while (opModeIsActive() && robot.getBLM().getCurrentPosition() < dist * TICKSPERCENTIMETER && robot.getBLM().getCurrentPosition() < 100000) {
+                delay(1);
+            }
+            ;
+            telemetry.addData("Action", "DonewithWhileLoop");
+            if (opModeIsActive()) {
+                telemetry.addData("OpMode","Active");
+            } else {
+                telemetry.addData("OpMode","Disabled");
+                break;
+            }
+
+            robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
+            robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
+
+            telemetry.addData("Action", "Normalized motor directions");
+
+            //Turn 65
+            //TODO Karim fiddle with this to make sure it faces the beacon head on
+            ticksToGo = (int) (Math.PI * 2.0 * 14.0 * 2.54 / 360.0 * 75.0 * TICKSPERCENTIMETER);
+
+            telemetry.addData("Action", "Turn65");
+            autonomousDrive.resetEncoders();
+            autonomousDrive.setRUNTOPOSITION();
+            robot.getBRM().setTargetPosition(ticksToGo);
+            robot.getBRM().setPower(0.3);
+            robot.getBLM().setPower(0.0);
+
+            while (opModeIsActive() && robot.getBRM().getCurrentPosition() < ticksToGo && robot.getBRM().getCurrentPosition() < 100000) {
+                delay(1);
+            }
+            robot.getBRM().setPower(0.0);
+            if (opModeIsActive()) {
+                telemetry.addData("OpMode","Active");
+            } else {
+                telemetry.addData("OpMode","Disabled");
+                break;
+            }
+
+            //Backup so camera can see whole beacon
+
+            robot.getBLM().setDirection(DcMotorSimple.Direction.FORWARD);
+            robot.getBRM().setDirection(DcMotorSimple.Direction.REVERSE);
+
+            autonomousDrive.resetEncoders();
+            autonomousDrive.setRUNTOPOSITION();
 
 
-        robot.getBLM().setTargetPosition((int)(30.0*TICKSPERCENTIMETER));
-        robot.getBRM().setTargetPosition((int)(30.0*TICKSPERCENTIMETER));
-        robot.getBLM().setPower(.75);
-        robot.getBRM().setPower(0.75);
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<30.0*TICKSPERCENTIMETER){delay(1);};
+            robot.getBLM().setTargetPosition((int) (30.0 * TICKSPERCENTIMETER));
+            robot.getBRM().setTargetPosition((int) (30.0 * TICKSPERCENTIMETER));
+            robot.getBLM().setPower(0.75);
+            robot.getBRM().setPower(0.75);
 
-        robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
-        robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
-        //SHOULD BE FACONG BEACON
+            while (opModeIsActive() && robot.getBLM().getCurrentPosition() < 30.0 * TICKSPERCENTIMETER) {
+                delay(1);
+            }
+            if (opModeIsActive()) {
+                telemetry.addData("OpMode","Active");
+            } else {
+                telemetry.addData("OpMode","Disabled");
+                break;
+            }
+
+            robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
+            robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
+
+            //SHOULD BE FACONG BEACON
 
         /*End Manuver*/
-        //BEGIN read beacon
-        telemetry.addData("Action","Begin read beacon");
-        int redBlue = 0;
-        int blueRed = 0;
-        for(int i=0; i < 5; i++){ //Purposefully not even number
-            if (beacon.getAnalysis().getColorString().equals("red, blue")){
-                redBlue++;
-                telemetry.addData("redBlue",redBlue);
-            }else if (beacon.getAnalysis().getColorString().equals("blue, red")){
-                blueRed++;
-                telemetry.addData("blueRed",blueRed);
-            }else {
-                i--;
-                telemetry.addData("???, ???",beacon.getAnalysis().getColorString());
+            //BEGIN read beacon
+            telemetry.addData("Action", "Begin read beacon");
+            int redBlue = 0;
+            int blueRed = 0;
+            for (int i = 0; i < 5; i++) { //Purposefully not even number
+                if (beacon.getAnalysis().getColorString().equals("red, blue")) {
+                    redBlue++;
+                    telemetry.addData("redBlue", redBlue);
+                } else if (beacon.getAnalysis().getColorString().equals("blue, red")) {
+                    blueRed++;
+                    telemetry.addData("blueRed", blueRed);
+                } else {
+                    i--;
+                    telemetry.addData("???, ???", beacon.getAnalysis().getColorString());
+                }
+                delay(50); //Let vision process a new frame not get same info
             }
-            delay(50); //Let vision process a new frame not get same info
-        }
-        if (redBlue > blueRed){
-            //Press left side b/c we are red
-            telemetry.addData("Analysis","Push right");
-            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
-            //Turn Servo
-            //Drive Forwards to press with lower power, keep pushing for some time
-            autonomousDrive.resetEncoders();
-            autonomousDrive.setRUNWITHENCODERS();
-            robot.getBLM().setPower(0.2);
-            robot.getBRM().setPower(0.2);
-            delay(3000);
-            robot.getBLM().setPower(0.0);
-            robot.getBRM().setPower(0.0);
-        }else{
-            //Press R b/c red
-            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);//Turn Servo
-            telemetry.addData("Analysis","Push left");
-            //Drive Forwards to press with lower power, keep pushing for some time
-            autonomousDrive.resetEncoders();
-            autonomousDrive.setRUNWITHENCODERS();
-            robot.getBLM().setPower(0.2);
-            robot.getBRM().setPower(0.2);
-            delay(3000);
-            robot.getBLM().setPower(0.0);
-            robot.getBRM().setPower(0.0);
+            if (opModeIsActive()) {
+                telemetry.addData("OpMode","Active");
+            } else {
+                telemetry.addData("OpMode","Disabled");
+                break;
+            }
+            if (redBlue > blueRed) {
+                //Press left side b/c we are red
+                telemetry.addData("Analysis", "Push right");
+                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+                //Turn Servo
+                //Drive Forwards to press with lower power, keep pushing for some time
+                autonomousDrive.resetEncoders();
+                autonomousDrive.setRUNWITHENCODERS();
+                robot.getBLM().setPower(0.2);
+                robot.getBRM().setPower(0.2);
+                delay(2000);
+                robot.getBLM().setPower(0.0);
+                robot.getBRM().setPower(0.0);
+            } else {
+                //Press R b/c red
+                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);//Turn Servo
+                telemetry.addData("Analysis", "Push left");
+                //Drive Forwards to press with lower power, keep pushing for some time
+                autonomousDrive.resetEncoders();
+                autonomousDrive.setRUNWITHENCODERS();
+                robot.getBLM().setPower(0.2);
+                robot.getBRM().setPower(0.2);
+                delay(2000);
+                robot.getBLM().setPower(0.0);
+                robot.getBRM().setPower(0.0);
+            }
         }
 
+        robot.getBLM().setPower(0.0);
+        robot.getBRM().setPower(0.0);
+        telemetry.addData("OpMode","Disabled");
         //Backup, go to other beacon
 
         //Backup
-        robot.getBLM().setDirection(DcMotorSimple.Direction.FORWARD);
-        robot.getBRM().setDirection(DcMotorSimple.Direction.REVERSE);
 
-        autonomousDrive.resetEncoders();
-        autonomousDrive.setRUNTOPOSITION();
+        /*    robot.getBLM().setDirection(DcMotorSimple.Direction.FORWARD);
+            robot.getBRM().setDirection(DcMotorSimple.Direction.REVERSE);
+
+            autonomousDrive.resetEncoders();
+            autonomousDrive.setRUNTOPOSITION();
 
 
-        robot.getBLM().setTargetPosition((int)(30.0*TICKSPERCENTIMETER));
-        robot.getBRM().setTargetPosition((int)(30.0*TICKSPERCENTIMETER));
-        robot.getBLM().setPower(.75);
-        robot.getBRM().setPower(0.75);
+            robot.getBLM().setTargetPosition((int) (30.0 * TICKSPERCENTIMETER));
+            robot.getBRM().setTargetPosition((int) (30.0 * TICKSPERCENTIMETER));
+            robot.getBLM().setPower(.75);
+            robot.getBRM().setPower(0.75);
+
         while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<30.0*TICKSPERCENTIMETER){delay(1);};
 
-        robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
-        robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
+            robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
+            robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
 
-        //Turn 130
-        //TODO Karim fiddle with this to make sure it faces the beacon head on
-        ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*100.0*TICKSPERCENTIMETER);
-        telemetry.addData("Action","Turn65");
-        autonomousDrive.resetEncoders();
-        autonomousDrive.setRUNTOPOSITION();
-        robot.getBLM().setTargetPosition(ticksToGo);
-        robot.getBLM().setPower(0.3);
-        robot.getBRM().setPower(0.0);
+            //Turn 130
+            //TODO Karim fiddle with this to make sure it faces the beacon head on
+            ticksToGo = (int) (Math.PI * 2.0 * 14.0 * 2.54 / 360.0 * 100.0 * TICKSPERCENTIMETER);
+            telemetry.addData("Action", "Turn65");
+            autonomousDrive.resetEncoders();
+            autonomousDrive.setRUNTOPOSITION();
+            robot.getBLM().setTargetPosition(ticksToGo);
+            robot.getBLM().setPower(0.3);
+            robot.getBRM().setPower(0.0);
+
         while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < ticksToGo&&robot.getBLM().getCurrentPosition() < 100000){delay(1);}
         robot.getBRM().setPower(0.0);
 
@@ -262,8 +335,10 @@ public class RedAuton extends LinearVisionOpMode {
         telemetry.addData("Action", "Go straight");
         autonomousDrive.resetEncoders();
         autonomousDrive.setRUNWITHENCODERS();
-        robot.getBLM().setPower(.3);
-        robot.getBRM().setPower(.3);
+
+            robot.getBLM().setPower(.3);
+            robot.getBRM().setPower(.3);
+
         while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < 100000&& ods.getLightDetected() < EOPDWHITELINELIGHTLEVEL){delay(1);}
         robot.getBLM().setPower(0.0);
         robot.getBRM().setPower(0.0);
@@ -283,7 +358,7 @@ public class RedAuton extends LinearVisionOpMode {
             }
             delay(50); //Let vision process a new frame not get same info
         }
-        if (redBlue > blueRed){
+        if (redBlue < blueRed){
             //Press Right side b/c we are blue
             servoControllerLib.setDegrees(180);
             autonomousDrive.driveStraightForSetTime(1.5,0.2);
@@ -291,28 +366,28 @@ public class RedAuton extends LinearVisionOpMode {
             autonomousDrive.setRUNWITHENCODERS();
             robot.getBLM().setPower(0.2);
             robot.getBRM().setPower(0.2);
-            delay(3000);
+            delay(2000);
             robot.getBLM().setPower(0.0);
             robot.getBRM().setPower(0.0);
             //Turn Servo
             //Drive Forwards to press with lower power, keep pushing for some time
-        }else{
+        }else {
             //Press Left side b/c we are blue
+
             servoControllerLib.setDegrees(0);
-            autonomousDrive.driveStraightForSetTime(1.5,0.2);
+            autonomousDrive.driveStraightForSetTime(1.5, 0.2);
             //Turn Servo
             //Drive Forwards to press with lower power, keep pushing for some time
             autonomousDrive.resetEncoders();
             autonomousDrive.setRUNWITHENCODERS();
             robot.getBLM().setPower(0.2);
             robot.getBRM().setPower(0.2);
-            delay(3000);
+            delay(2000);
             robot.getBLM().setPower(0.0);
             robot.getBRM().setPower(0.0);
+
         }
-
-
         //Turn around to face center, ram ball and park partially
-
+ */
     }
 }

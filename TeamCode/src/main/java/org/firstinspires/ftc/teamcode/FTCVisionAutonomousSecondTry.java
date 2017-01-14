@@ -103,13 +103,13 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         telemetry.addData("running", "fwd 10 cm");
         robot.getBLM().setTargetPosition((int)(5.0*TICKSPERCENTIMETER));
         robot.getBRM().setTargetPosition((int)(5.0*TICKSPERCENTIMETER));
-        robot.getBLM().setPower(.75);
+        robot.getBLM().setPower(0.75);
         robot.getBRM().setPower(0.75);
         while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<5.0*TICKSPERCENTIMETER){delay(1);};
 
         //Turn 35
         telemetry.addData("Action","Turn35");
-        int ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*35.0*TICKSPERCENTIMETER);
+        int ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*37.0*TICKSPERCENTIMETER);
         autonomousDrive.resetEncoders();
         autonomousDrive.setRUNTOPOSITION();
         robot.getBLM().setTargetPosition(ticksToGo);
