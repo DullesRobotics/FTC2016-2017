@@ -97,6 +97,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         //Drive forwards until ODS is triggered by white tape
         //autonomousDrive.driveStraightForSetTime(2,.75);
         //FWD 10cm
+        telemetry.addData("Action","FWD 10CM");
         autonomousDrive.resetEncoders();
         autonomousDrive.setRUNTOPOSITION();
         telemetry.addData("running", "fwd 10 cm");
@@ -107,6 +108,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<10.0*TICKSPERCENTIMETER){};
 
         //Turn 35
+        telemetry.addData("Action","Turn35");
         int ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*35.0*TICKSPERCENTIMETER);
         autonomousDrive.resetEncoders();
         autonomousDrive.setRUNTOPOSITION();
@@ -118,7 +120,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
 
         final double EOPDWHITELINELIGHTLEVEL = 0.15;//TODO Karim make sure this is right too
         //Go straight till EOPD
-        telemetry.addData("Action", "Go straight 30cm");
+        telemetry.addData("Action", "Go straight till line");
         autonomousDrive.resetEncoders();
         autonomousDrive.setRUNWITHENCODERS();
         robot.getBLM().setPower(.3);
@@ -130,6 +132,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         //Turn 65
         //TODO Karim fiddle with this to make sure it faces the beacon head on
         ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*65.0*TICKSPERCENTIMETER);
+        telemetry.addData("Action","Turn65");
         autonomousDrive.resetEncoders();
         autonomousDrive.setRUNTOPOSITION();
         robot.getBLM().setTargetPosition(ticksToGo);
