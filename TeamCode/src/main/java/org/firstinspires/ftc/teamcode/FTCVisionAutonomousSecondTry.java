@@ -273,9 +273,9 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         blueRed = 0;
 
         for(int i=0; i < 5; i++){ //Purposefully not even number
-            if (beacon.getAnalysis().equals("red, blue")){
+            if (beacon.getAnalysis().getColorString().equals("red, blue")){
                 redBlue++;
-            }else if (beacon.getAnalysis().equals("blue, red")){
+            }else if (beacon.getAnalysis().getColorString().equals("blue, red")){
                 blueRed++;
             }else {
                 i--;
