@@ -138,13 +138,14 @@ public class RedAuton extends LinearVisionOpMode {
         autonomousDrive.setRUNTOPOSITION();
         telemetry.addData("Action","setRuntoPos");
 
-        robot.getBLM().setTargetPosition((int)(5.0*TICKSPERCENTIMETER));
-        robot.getBRM().setTargetPosition((int)(5.0*TICKSPERCENTIMETER));
+        double dist = 10.0;
+        robot.getBLM().setTargetPosition((int)(dist*TICKSPERCENTIMETER));
+        robot.getBRM().setTargetPosition((int)(dist*TICKSPERCENTIMETER));
         telemetry.addData("Action","setTargetPos");
         robot.getBLM().setPower(.75);
         robot.getBRM().setPower(0.75);
         telemetry.addData("Action","setPower");
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<5.0*TICKSPERCENTIMETER&&robot.getBLM().getCurrentPosition() < 100000){delay(1);};
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<dist*TICKSPERCENTIMETER&&robot.getBLM().getCurrentPosition() < 100000){delay(1);};
         telemetry.addData("Action","DonewithWhileLoop");
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
