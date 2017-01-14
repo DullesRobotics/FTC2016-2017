@@ -104,7 +104,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot.getBRM().setTargetPosition((int)(10.0*TICKSPERCENTIMETER));
         robot.getBLM().setPower(.75);
         robot.getBRM().setPower(0.75);
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<10*TICKSPERCENTIMETER){};
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<10.0*TICKSPERCENTIMETER){};
 
         //Turn 35
         int ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*35.0*TICKSPERCENTIMETER);
@@ -116,14 +116,14 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < ticksToGo&&robot.getBLM().getCurrentPosition() < 100000){}
         robot.getBLM().setPower(0.0);
 
-
+        final double EOPDWHITELINELIGHTLEVEL = 0.15;//TODO Karim make sure this is right too
         //Go straight till EOPD
         telemetry.addData("Action", "Go straight 30cm");
         autonomousDrive.resetEncoders();
         autonomousDrive.setRUNWITHENCODERS();
         robot.getBLM().setPower(.3);
         robot.getBRM().setPower(.3);
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < 100000&& ods.getLightDetected() < 0.15){}
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < 100000&& ods.getLightDetected() < EOPDWHITELINELIGHTLEVEL){}
         robot.getBLM().setPower(0.0);
         robot.getBRM().setPower(0.0);
 
@@ -200,6 +200,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
 
         //Backup, go to other beacon
 
+        //Backup
         robot.getBLM().setDirection(DcMotorSimple.Direction.FORWARD);
         robot.getBRM().setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -215,6 +216,19 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
 
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
+
+        //Turn 130
+
+        //Go straight till hit line
+        //Go straight till EOPD
+        telemetry.addData("Action", "Go straight");
+        autonomousDrive.resetEncoders();
+        autonomousDrive.setRUNWITHENCODERS();
+        robot.getBLM().setPower(.3);
+        robot.getBRM().setPower(.3);
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < 100000&& ods.getLightDetected() < EOPDWHITELINELIGHTLEVEL){}
+        robot.getBLM().setPower(0.0);
+        robot.getBRM().setPower(0.0);
 
 
         //2nd Beacon
