@@ -130,21 +130,25 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot.getBRM().setPower(0.0);
 
         //Go back to make room
+        telemetry.addData("Action","GoBackToMakeRoom");
         robot.getBLM().setDirection(DcMotorSimple.Direction.FORWARD);
         robot.getBRM().setDirection(DcMotorSimple.Direction.REVERSE);
-
+        telemetry.addData("Action","SetMotorDirection");
         autonomousDrive.resetEncoders();
         autonomousDrive.setRUNTOPOSITION();
-
+        telemetry.addData("Action","setRuntoPos");
 
         robot.getBLM().setTargetPosition((int)(5.0*TICKSPERCENTIMETER));
         robot.getBRM().setTargetPosition((int)(5.0*TICKSPERCENTIMETER));
+        telemetry.addData("Action","setTargetPos");
         robot.getBLM().setPower(.75);
         robot.getBRM().setPower(0.75);
+        telemetry.addData("Action","setPower");
         while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<30.0*TICKSPERCENTIMETER){delay(1);};
-
+        telemetry.addData("Action","DonewithWhileLoop");
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
+        telemetry.addData("Action","Normalized motor directions");
 
         //Turn 65
         //TODO Karim fiddle with this to make sure it faces the beacon head on
