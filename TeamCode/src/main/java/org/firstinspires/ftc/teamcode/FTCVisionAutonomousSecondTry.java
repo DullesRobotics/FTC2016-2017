@@ -105,7 +105,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot.getBRM().setTargetPosition((int)(5.0*TICKSPERCENTIMETER));
         robot.getBLM().setPower(.75);
         robot.getBRM().setPower(0.75);
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<10.0*TICKSPERCENTIMETER){delay(1);};
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<5.0*TICKSPERCENTIMETER){delay(1);};
 
         //Turn 35
         telemetry.addData("Action","Turn35");
