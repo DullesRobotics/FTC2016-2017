@@ -246,7 +246,7 @@ public class RedAuton extends LinearVisionOpMode {
 
         //Turn 130
         //TODO Karim fiddle with this to make sure it faces the beacon head on
-        ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*110.0*TICKSPERCENTIMETER);
+        ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*100.0*TICKSPERCENTIMETER);
         telemetry.addData("Action","Turn65");
         autonomousDrive.resetEncoders();
         autonomousDrive.setRUNTOPOSITION();
