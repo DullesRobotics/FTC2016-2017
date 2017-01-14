@@ -186,15 +186,15 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         int redBlue = 0;
         int blueRed = 0;
         for(int i=0; i < 5; i++){ //Purposefully not even number
-            if (currentColorOrder.equals("red, blue")){
+            if (beacon.getAnalysis().equals("red, blue")){
                 redBlue++;
                 telemetry.addData("redBlue",redBlue);
-            }else if (currentColorOrder.equals("blue, red")){
+            }else if (beacon.getAnalysis().equals("blue, red")){
                 blueRed++;
                 telemetry.addData("blueRed",blueRed);
             }else {
                 i--;
-                telemetry.addData("???, ???","??????");
+                telemetry.addData("???, ???",beacon.getAnalysis());
             }
             delay(50); //Let vision process a new frame not get same info
         }
@@ -273,9 +273,9 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         blueRed = 0;
 
         for(int i=0; i < 5; i++){ //Purposefully not even number
-            if (currentColorOrder.equals("red, blue")){
+            if (beacon.getAnalysis().equals("red, blue")){
                 redBlue++;
-            }else if (currentColorOrder.equals("blue, red")){
+            }else if (beacon.getAnalysis().equals("blue, red")){
                 blueRed++;
             }else {
                 i--;
