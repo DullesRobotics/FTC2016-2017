@@ -4,6 +4,7 @@ import com.dullesrobotics.ftc.libraries.AutonomousDrive;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
@@ -13,6 +14,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Created by Kenneth on 1/13/2017.
  */
 @Autonomous(name = "adjk")
+@Disabled
 public class test extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     RobotWithFlickerShooter robot;

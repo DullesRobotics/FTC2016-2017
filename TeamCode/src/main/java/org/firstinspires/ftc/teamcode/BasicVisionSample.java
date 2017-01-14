@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.lasarobotics.vision.android.Cameras;
 import org.lasarobotics.vision.ftc.resq.Beacon;
@@ -19,6 +20,7 @@ import org.opencv.core.Size;
  * The VisionOpMode is the base of all vision processing and other styles of OpMode
  * even extend the VisionOpMode class! Be sure to extend it if writing your own OpMode structure.
  */
+@Disabled
 @Autonomous(name = "FTCVision Test")
 public class BasicVisionSample extends VisionOpMode {
 

@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Created by Kenneth on 1/7/2017.
  */
-@Autonomous(name = "SimpleAuton")
+@Autonomous(name = "SimpleAuton - FAILSAFE")
 public class SimpleAuton extends LinearOpMode {
     RobotWithFlickerShooter robot;
     ArcadeDrive ArcDrive;

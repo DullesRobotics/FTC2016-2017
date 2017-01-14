@@ -8,6 +8,7 @@ import android.hardware.SensorManager;
 import com.dullesrobotics.ftc.libraries.ArcadeDrive;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -20,6 +21,7 @@ import java.util.Timer;
 /**
  * Created by Kenneth on 1/4/2017.
  */
+@Disabled
 @Autonomous(name="BLUE Better Autonomous")
 public class BetterAutonomousBlue extends LinearOpMode{
     final double ENCODERTICKSPERREVOLUTION = 1478.4;

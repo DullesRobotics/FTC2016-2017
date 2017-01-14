@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.dullesrobotics.ftc.libraries.ArcadeDrive;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -27,6 +28,7 @@ import java.util.ArrayList;
  * version of the FTC Robot Controller app. Changes to the app may break the LinearVisionOpMode.
  * Should this happen, open up an issue on GitHub. :)
  */
+@Disabled
 @Autonomous(name = "FTCVISION Autonomous")
 public class FTCVisionAutonomousOpBlue extends LinearVisionOpMode {
     //Our Variables

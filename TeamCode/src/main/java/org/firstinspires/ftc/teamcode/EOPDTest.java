@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
  * Created by Kenneth on 1/6/2017.
  */
 
-@TeleOp(name="EOPD Test")
+@Autonomous(name="EOPD Test")
 public class EOPDTest extends OpMode {
     OpticalDistanceSensor odsSensor;  // Hardware Device Object
 

@@ -105,8 +105,8 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot.getBRM().setPower(0.75);
         while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<10*TICKSPERCENTIMETER){};
 
-        //Turn 40
-        int ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*40.0*TICKSPERCENTIMETER);
+        //Turn 35
+        int ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*35.0*TICKSPERCENTIMETER);
         autonomousDrive.resetEncoders();
         autonomousDrive.setRUNTOPOSITION();
         robot.getBLM().setTargetPosition(ticksToGo);
@@ -126,8 +126,8 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot.getBLM().setPower(0.0);
         robot.getBRM().setPower(0.0);
 
-        //Turn 50
-        ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*50.0*TICKSPERCENTIMETER);
+        //Turn 55
+        ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*55.0*TICKSPERCENTIMETER);
         autonomousDrive.resetEncoders();
         autonomousDrive.setRUNTOPOSITION();
         robot.getBLM().setTargetPosition(ticksToGo);
@@ -137,20 +137,13 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot.getBLM().setPower(0.0);
 
 
-
-        //Begin Turn
-        autonomousDrive.resetEncoders();
-
-
-        telemetry.addData("Action", "pt turn 30cm");
-        autonomousDrive.pointTurn(45.0);
-        autonomousDrive.driveStraightTillEOPD(300.0,0.5);//Drive fwd and stop at line
-        autonomousDrive.pointTurn(45.0);//face beacon
+        //SHOULD BE FACONG BEACON
 
         /*End Manuver*/
+        //BEGIN read beacon
         int redBlue = 0;
         int blueRed = 0;
-        for(int i=0; i < 19; i++){ //Purposefully not even number
+        for(int i=0; i < 5; i++){ //Purposefully not even number
             if (currentColorOrder.equals("red, blue")){
                 redBlue++;
             }else if (currentColorOrder.equals("blue, red")){
@@ -163,7 +156,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
             delay(50); //Let vision process a new frame not get same info
         }
         if (redBlue > blueRed){
-            //Press Right side b/c we are blue2
+            //Press Right side b/c we are blue
 
             //Turn Servo
             //Drive Forwards to press with lower power, keep pushing for some time
