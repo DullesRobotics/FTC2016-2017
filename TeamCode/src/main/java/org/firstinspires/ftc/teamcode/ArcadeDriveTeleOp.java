@@ -33,7 +33,7 @@ public class ArcadeDriveTeleOp extends OpMode {
         //robotWithFlickerShooter = new RobotWithFlickerShooter(gamepad1);
         ArcDrive = new ArcadeDrive(robotWithFlickerShooter);
         robotWithFlickerShooter.setDriveTrain(ArcDrive);
-        servController = new ServoControllerLib(hardwareMap.servo.get("BtnServo"));
+        servController = new ServoControllerLib(hardwareMap.servo.get("btnServo"));
     }
 
     @Override

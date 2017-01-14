@@ -37,7 +37,6 @@ public class BetterAutonomousBlue extends LinearOpMode{
 
 
 
-
         //Initialize Variables
         robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1,hardwareMap.dcMotor.get("flickerShooter"));
         //Set to Arcade Drive (Autonomous Arcade Drive)
