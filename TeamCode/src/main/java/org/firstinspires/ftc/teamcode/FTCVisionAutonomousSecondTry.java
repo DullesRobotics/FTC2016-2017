@@ -186,10 +186,10 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         int redBlue = 0;
         int blueRed = 0;
         for(int i=0; i < 5; i++){ //Purposefully not even number
-            if (beacon.getAnalysis().equals("red, blue")){
+            if (beacon.getAnalysis().getColorString().equals("red, blue")){
                 redBlue++;
                 telemetry.addData("redBlue",redBlue);
-            }else if (beacon.getAnalysis().equals("blue, red")){
+            }else if (beacon.getAnalysis().getColorString().equals("blue, red")){
                 blueRed++;
                 telemetry.addData("blueRed",blueRed);
             }else {
@@ -285,8 +285,13 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         if (redBlue > blueRed){
             //Press Right side b/c we are blue
             servoControllerLib.setDegrees(180);
-            autonomousDrive.driveStraightForSetTime(1.5,0.2);
-            
+            autonomousDrive.resetEncoders();
+            autonomousDrive.setRUNWITHENCODERS();
+            robot.getBLM().setPower(0.2);
+            robot.getBRM().setPower(0.2);
+            delay(3000);
+            robot.getBLM().setPower(0.0);
+            robot.getBRM().setPower(0.0);
             //Turn Servo
             //Drive Forwards to press with lower power, keep pushing for some time
         }else{
@@ -295,6 +300,13 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
             autonomousDrive.driveStraightForSetTime(1.5,0.2);
             //Turn Servo
             //Drive Forwards to press with lower power, keep pushing for some time
+            autonomousDrive.resetEncoders();
+            autonomousDrive.setRUNWITHENCODERS();
+            robot.getBLM().setPower(0.2);
+            robot.getBRM().setPower(0.2);
+            delay(3000);
+            robot.getBLM().setPower(0.0);
+            robot.getBRM().setPower(0.0);
         }
 
 

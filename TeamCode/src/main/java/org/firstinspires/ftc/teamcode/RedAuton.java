@@ -186,10 +186,10 @@ public class RedAuton extends LinearVisionOpMode {
         int redBlue = 0;
         int blueRed = 0;
         for(int i=0; i < 5; i++){ //Purposefully not even number
-            if (currentColorOrder.equals("red, blue")){
+            if (beacon.getAnalysis().equals("red, blue")){
                 redBlue++;
                 telemetry.addData("redBlue",redBlue);
-            }else if (currentColorOrder.equals("blue, red")){
+            }else if (beacon.getAnalysis().equals("blue, red")){
                 blueRed++;
                 telemetry.addData("blueRed",blueRed);
             }else {
@@ -250,11 +250,11 @@ public class RedAuton extends LinearVisionOpMode {
         telemetry.addData("Action","Turn65");
         autonomousDrive.resetEncoders();
         autonomousDrive.setRUNTOPOSITION();
-        robot.getBRM().setTargetPosition(ticksToGo);
-        robot.getBRM().setPower(0.3);
-        robot.getBLM().setPower(0.0);
-        while(opModeIsActive()&&robot.getBRM().getCurrentPosition() < ticksToGo&&robot.getBRM().getCurrentPosition() < 100000){delay(1);}
-        robot.getBLM().setPower(0.0);
+        robot.getBLM().setTargetPosition(ticksToGo);
+        robot.getBLM().setPower(0.3);
+        robot.getBRM().setPower(0.0);
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < ticksToGo&&robot.getBLM().getCurrentPosition() < 100000){delay(1);}
+        robot.getBRM().setPower(0.0);
 
         //Go straight till hit line
         //Go straight till EOPD
@@ -273,9 +273,9 @@ public class RedAuton extends LinearVisionOpMode {
         blueRed = 0;
 
         for(int i=0; i < 5; i++){ //Purposefully not even number
-            if (currentColorOrder.equals("red, blue")){
+            if (beacon.getAnalysis().equals("red, blue")){
                 redBlue++;
-            }else if (currentColorOrder.equals("blue, red")){
+            }else if (beacon.getAnalysis().equals("blue, red")){
                 blueRed++;
             }else {
                 i--;
@@ -286,7 +286,13 @@ public class RedAuton extends LinearVisionOpMode {
             //Press Right side b/c we are blue
             servoControllerLib.setDegrees(180);
             autonomousDrive.driveStraightForSetTime(1.5,0.2);
-
+            autonomousDrive.resetEncoders();
+            autonomousDrive.setRUNWITHENCODERS();
+            robot.getBLM().setPower(0.2);
+            robot.getBRM().setPower(0.2);
+            delay(3000);
+            robot.getBLM().setPower(0.0);
+            robot.getBRM().setPower(0.0);
             //Turn Servo
             //Drive Forwards to press with lower power, keep pushing for some time
         }else{
@@ -295,6 +301,13 @@ public class RedAuton extends LinearVisionOpMode {
             autonomousDrive.driveStraightForSetTime(1.5,0.2);
             //Turn Servo
             //Drive Forwards to press with lower power, keep pushing for some time
+            autonomousDrive.resetEncoders();
+            autonomousDrive.setRUNWITHENCODERS();
+            robot.getBLM().setPower(0.2);
+            robot.getBRM().setPower(0.2);
+            delay(3000);
+            robot.getBLM().setPower(0.0);
+            robot.getBRM().setPower(0.0);
         }
 
 
