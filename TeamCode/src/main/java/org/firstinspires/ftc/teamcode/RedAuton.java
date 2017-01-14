@@ -186,22 +186,22 @@ public class RedAuton extends LinearVisionOpMode {
         int redBlue = 0;
         int blueRed = 0;
         for(int i=0; i < 5; i++){ //Purposefully not even number
-            if (beacon.getAnalysis().equals("red, blue")){
+            if (beacon.getAnalysis().getColorString().equals("red, blue")){
                 redBlue++;
                 telemetry.addData("redBlue",redBlue);
-            }else if (beacon.getAnalysis().equals("blue, red")){
+            }else if (beacon.getAnalysis().getColorString().equals("blue, red")){
                 blueRed++;
                 telemetry.addData("blueRed",blueRed);
             }else {
                 i--;
-                telemetry.addData("???, ???","??????");
+                telemetry.addData("???, ???",beacon.getAnalysis().getColorString());
             }
             delay(50); //Let vision process a new frame not get same info
         }
         if (redBlue > blueRed){
-            //Press Right side b/c we are blue
+            //Press left side b/c we are red
             telemetry.addData("Analysis","Push right");
-            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
             //Turn Servo
             //Drive Forwards to press with lower power, keep pushing for some time
             autonomousDrive.resetEncoders();
@@ -212,8 +212,8 @@ public class RedAuton extends LinearVisionOpMode {
             robot.getBLM().setPower(0.0);
             robot.getBRM().setPower(0.0);
         }else{
-            //Press Left side b/c we are blue
-            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);//Turn Servo
+            //Press R b/c red
+            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);//Turn Servo
             telemetry.addData("Analysis","Push left");
             //Drive Forwards to press with lower power, keep pushing for some time
             autonomousDrive.resetEncoders();
@@ -273,9 +273,9 @@ public class RedAuton extends LinearVisionOpMode {
         blueRed = 0;
 
         for(int i=0; i < 5; i++){ //Purposefully not even number
-            if (beacon.getAnalysis().equals("red, blue")){
+            if (beacon.getAnalysis().getColorString().equals("red, blue")){
                 redBlue++;
-            }else if (beacon.getAnalysis().equals("blue, red")){
+            }else if (beacon.getAnalysis().getColorString().equals("blue, red")){
                 blueRed++;
             }else {
                 i--;
