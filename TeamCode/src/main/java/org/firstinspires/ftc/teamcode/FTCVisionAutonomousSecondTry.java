@@ -41,9 +41,10 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         //Initialize Robot
         robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1,hardwareMap.dcMotor.get("flickerShooter"));
         autonomousDrive = new AutonomousDrive(robot,hardwareMap.opticalDistanceSensor.get("EOPD"));
-        servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"),180);
+        servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"),ServoControllerLib.SERVOLEFT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         ods = hardwareMap.opticalDistanceSensor.get("EOPD");
+
         //Sets Up Camera
         //initializes camera
         this.setCamera(Cameras.PRIMARY);
@@ -127,6 +128,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot.getBRM().setPower(0.0);
 
         //Turn 55
+        //TODO Karim fiddle with this to make sure it faces the beacon head on
         ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*55.0*TICKSPERCENTIMETER);
         autonomousDrive.resetEncoders();
         autonomousDrive.setRUNTOPOSITION();
@@ -136,7 +138,22 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < ticksToGo&&robot.getBLM().getCurrentPosition() < 100000){}
         robot.getBLM().setPower(0.0);
 
+        //Backup so camera can see whole beacon
+        robot.getBLM().setDirection(DcMotorSimple.Direction.FORWARD);
+        robot.getBRM().setDirection(DcMotorSimple.Direction.REVERSE);
 
+        autonomousDrive.resetEncoders();
+        autonomousDrive.setRUNTOPOSITION();
+
+
+        robot.getBLM().setTargetPosition((int)(30.0*TICKSPERCENTIMETER));
+        robot.getBRM().setTargetPosition((int)(30.0*TICKSPERCENTIMETER));
+        robot.getBLM().setPower(.75);
+        robot.getBRM().setPower(0.75);
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<30.0*TICKSPERCENTIMETER){};
+
+        robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
+        robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
         //SHOULD BE FACONG BEACON
 
         /*End Manuver*/
@@ -157,14 +174,28 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         }
         if (redBlue > blueRed){
             //Press Right side b/c we are blue
-
+            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
             //Turn Servo
             //Drive Forwards to press with lower power, keep pushing for some time
+            autonomousDrive.resetEncoders();
+            autonomousDrive.setRUNWITHENCODERS();
+            robot.getBLM().setPower(0.2);
+            robot.getBRM().setPower(0.2);
+            delay(3000);
+            robot.getBLM().setPower(0.0);
+            robot.getBRM().setPower(0.0);
         }else{
             //Press Left side b/c we are blue
+            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);//Turn Servo
 
-            //Turn Servo
             //Drive Forwards to press with lower power, keep pushing for some time
+            autonomousDrive.resetEncoders();
+            autonomousDrive.setRUNWITHENCODERS();
+            robot.getBLM().setPower(0.2);
+            robot.getBRM().setPower(0.2);
+            delay(3000);
+            robot.getBLM().setPower(0.0);
+            robot.getBRM().setPower(0.0);
         }
 
         //Backup, go to other beacon

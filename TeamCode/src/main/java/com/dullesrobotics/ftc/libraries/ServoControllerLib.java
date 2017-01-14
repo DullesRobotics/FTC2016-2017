@@ -10,7 +10,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class ServoControllerLib {
     private Servo buttonServo;
-
+    public static final int SERVOLEFT = 0;
+    public static final int SERVORIGHT = 180;
     public ServoControllerLib(Servo btnServ){
         buttonServo = btnServ;
     }
