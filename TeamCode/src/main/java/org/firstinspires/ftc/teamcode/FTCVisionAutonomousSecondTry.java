@@ -178,22 +178,25 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
 
         /*End Manuver*/
         //BEGIN read beacon
+        telemetry.addData("Action","Begin read beacon");
         int redBlue = 0;
         int blueRed = 0;
         for(int i=0; i < 5; i++){ //Purposefully not even number
             if (currentColorOrder.equals("red, blue")){
                 redBlue++;
+                telemetry.addData("redBlue",redBlue);
             }else if (currentColorOrder.equals("blue, red")){
                 blueRed++;
-            }else if (currentColorOrder.equals("???, ???")){
+                telemetry.addData("blueRed",blueRed);
+            }else {
                 i--;
-            }else{
-                throw new Error("currentColorOrder invalid String");
+                telemetry.addData("???, ???","??????");
             }
             delay(50); //Let vision process a new frame not get same info
         }
         if (redBlue > blueRed){
             //Press Right side b/c we are blue
+            telemetry.addData("Analysis","Push right");
             servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
             //Turn Servo
             //Drive Forwards to press with lower power, keep pushing for some time
@@ -207,7 +210,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         }else{
             //Press Left side b/c we are blue
             servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);//Turn Servo
-
+            telemetry.addData("Analysis","Push left");
             //Drive Forwards to press with lower power, keep pushing for some time
             autonomousDrive.resetEncoders();
             autonomousDrive.setRUNWITHENCODERS();
@@ -238,6 +241,16 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
 
         //Turn 130
+        //TODO Karim fiddle with this to make sure it faces the beacon head on
+        ticksToGo = (int) (Math.PI*2.0*14.0*2.54/360.0*110.0*TICKSPERCENTIMETER);
+        telemetry.addData("Action","Turn65");
+        autonomousDrive.resetEncoders();
+        autonomousDrive.setRUNTOPOSITION();
+        robot.getBRM().setTargetPosition(ticksToGo);
+        robot.getBRM().setPower(0.3);
+        robot.getBLM().setPower(0.0);
+        while(opModeIsActive()&&robot.getBRM().getCurrentPosition() < ticksToGo&&robot.getBRM().getCurrentPosition() < 100000){delay(1);}
+        robot.getBLM().setPower(0.0);
 
         //Go straight till hit line
         //Go straight till EOPD
