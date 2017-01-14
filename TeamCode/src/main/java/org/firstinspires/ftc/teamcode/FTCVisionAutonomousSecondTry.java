@@ -105,7 +105,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot.getBRM().setTargetPosition((int)(10.0*TICKSPERCENTIMETER));
         robot.getBLM().setPower(.75);
         robot.getBRM().setPower(0.75);
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<10.0*TICKSPERCENTIMETER){};
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<10.0*TICKSPERCENTIMETER){delay(1);};
 
         //Turn 35
         telemetry.addData("Action","Turn35");
@@ -115,7 +115,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot.getBLM().setTargetPosition(ticksToGo);
         robot.getBLM().setPower(0.3);
         robot.getBRM().setPower(0.0);
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < ticksToGo&&robot.getBLM().getCurrentPosition() < 100000){}
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < ticksToGo&&robot.getBLM().getCurrentPosition() < 100000){delay(1);}
         robot.getBLM().setPower(0.0);
 
         final double EOPDWHITELINELIGHTLEVEL = 0.15;//TODO Karim make sure this is right too
@@ -125,7 +125,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         autonomousDrive.setRUNWITHENCODERS();
         robot.getBLM().setPower(.3);
         robot.getBRM().setPower(.3);
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < 100000&& ods.getLightDetected() < EOPDWHITELINELIGHTLEVEL){}
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < 100000&& ods.getLightDetected() < EOPDWHITELINELIGHTLEVEL){delay(1);}
         robot.getBLM().setPower(0.0);
         robot.getBRM().setPower(0.0);
 
@@ -138,7 +138,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot.getBLM().setTargetPosition(ticksToGo);
         robot.getBLM().setPower(0.3);
         robot.getBRM().setPower(0.0);
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < ticksToGo&&robot.getBLM().getCurrentPosition() < 100000){}
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < ticksToGo&&robot.getBLM().getCurrentPosition() < 100000){delay(1);}
         robot.getBLM().setPower(0.0);
 
         //Backup so camera can see whole beacon
@@ -153,7 +153,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot.getBRM().setTargetPosition((int)(30.0*TICKSPERCENTIMETER));
         robot.getBLM().setPower(.75);
         robot.getBRM().setPower(0.75);
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<30.0*TICKSPERCENTIMETER){};
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<30.0*TICKSPERCENTIMETER){delay(1);};
 
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
@@ -215,7 +215,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot.getBRM().setTargetPosition((int)(30.0*TICKSPERCENTIMETER));
         robot.getBLM().setPower(.75);
         robot.getBRM().setPower(0.75);
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<30.0*TICKSPERCENTIMETER){};
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition()<30.0*TICKSPERCENTIMETER){delay(1);};
 
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
@@ -229,7 +229,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         autonomousDrive.setRUNWITHENCODERS();
         robot.getBLM().setPower(.3);
         robot.getBRM().setPower(.3);
-        while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < 100000&& ods.getLightDetected() < EOPDWHITELINELIGHTLEVEL){}
+        while(opModeIsActive()&&robot.getBLM().getCurrentPosition() < 100000&& ods.getLightDetected() < EOPDWHITELINELIGHTLEVEL){delay(1);}
         robot.getBLM().setPower(0.0);
         robot.getBRM().setPower(0.0);
 
