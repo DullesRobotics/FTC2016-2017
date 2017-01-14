@@ -18,8 +18,8 @@ public class ArcadeDriveTeleOp extends OpMode {
     private String shooterMotor1; //This is for Wheeled Shooter and Flicker Shooter
     private String shooterMotor2; //This is for Wheeled Shooter
     private ServoControllerLib servController;
-    private boolean reversed = false;
-    private boolean prevStateReverse = false;
+    private boolean reversed = true;
+    private boolean prevStateReverse = true;
 
     @Override
     public void init() {
