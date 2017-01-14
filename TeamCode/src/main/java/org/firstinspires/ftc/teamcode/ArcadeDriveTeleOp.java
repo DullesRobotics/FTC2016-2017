@@ -66,7 +66,7 @@ public class ArcadeDriveTeleOp extends OpMode {
         }
         else if(robotWithFlickerShooter.getGamepad1().left_trigger > 0) //change
         {
-            robotWithFlickerShooter.turnBackwards(robotWithFlickerShooter.getGamepad1().left_trigger);
+            robotWithFlickerShooter.turnBackwards(-robotWithFlickerShooter.getGamepad1().left_trigger);
         }
         else if (robotWithFlickerShooter.getGamepad1().dpad_up) {
             //Move Lift Up
