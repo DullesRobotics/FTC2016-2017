@@ -10,9 +10,9 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
 public class AutonomousDrive {
     BasicRobot robot;
-    final double ENCODERTICKSPERREVOLUTION = 1478.4;
-    final double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
-    final double TICKSPERCENTIMETER = CIRCUMFERENCEOFWHEELCENTIMETERS/ENCODERTICKSPERREVOLUTION;
+    final static double ENCODERTICKSPERREVOLUTION = 1478.4;
+    final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
+    final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
     OpticalDistanceSensor ods;
     //SensorListener sensorListener;
     //float heading;
@@ -31,7 +31,7 @@ public class AutonomousDrive {
     }
 
     public boolean driveStraightADistanceWithEncoders(double centimeters){
-        int ticks = (int) (centimeters*TICKSPERCENTIMETER);
+        int ticks = (int) (centimeters*this.TICKSPERCENTIMETER);
         resetEncoders();
         setRUNWITHENCODERS();
         int firstFifth = (int) (ticks*.2);

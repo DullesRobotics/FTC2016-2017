@@ -16,12 +16,12 @@ SensorListener sensorListener;
 
     @Override
     public void init() {
-        sensorListener = ((FtcRobotControllerActivity)hardwareMap.appContext).getSensorListener();
+       // sensorListener = ((FtcRobotControllerActivity)hardwareMap.appContext).getSensorListener();
     }
 
     @Override
     public void loop() {
-        telemetry.addData("Delta Yaw",sensorListener.getYaw());
+        //telemetry.addData("Delta Yaw",sensorListener.getYaw());
     }
 
 }

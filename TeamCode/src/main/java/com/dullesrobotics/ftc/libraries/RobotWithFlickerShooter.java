@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class RobotWithFlickerShooter extends BasicRobot {
     private DcMotor shooterMotor;
+    private DcMotor lift;
     public RobotWithFlickerShooter(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight, Gamepad g1, DcMotor shooter){
         super(frontLeft,frontRight,backLeft,backRight, g1);
         shooterMotor = shooter;
@@ -16,11 +17,18 @@ public class RobotWithFlickerShooter extends BasicRobot {
         super(frontLeft,frontRight,backLeft,backRight, g1);
         shooterMotor = shooter;
     }
+
     public RobotWithFlickerShooter(DcMotor backLeft, DcMotor backRight, Gamepad g1, DcMotor shooter){
         super(backLeft,backRight, g1);
         shooterMotor = shooter;
     }
 
+    /*
+    public RobotWithFlickerShooter (DcMotor backLeft, DcMotor backRight, Gamepad g1, DcMotor lift){
+        super(backLeft,backRight, g1);
+        lift =
+    }
+*/
     public RobotWithFlickerShooter(DcMotor shooter,Gamepad g1){
         super(g1);
         shooterMotor = shooter;

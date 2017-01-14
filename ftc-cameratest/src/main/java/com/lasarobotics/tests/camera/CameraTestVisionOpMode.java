@@ -83,7 +83,7 @@ public class CameraTestVisionOpMode extends TestableVisionOpMode {
          */
         rotation.setIsUsingSecondaryCamera(false);
         rotation.disableAutoRotate();
-        rotation.setActivityOrientationFixed(ScreenOrientation.LANDSCAPE);
+        //rotation.setActivityOrientationFixed(ScreenOrientation.);
         //rotation.setZeroOrientation(ScreenOrientation.LANDSCAPE_REVERSE);
 
         /**

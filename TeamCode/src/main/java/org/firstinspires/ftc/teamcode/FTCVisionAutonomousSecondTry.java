@@ -4,6 +4,8 @@ import com.dullesrobotics.ftc.libraries.ArcadeDrive;
 import com.dullesrobotics.ftc.libraries.AutonomousDrive;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.lasarobotics.vision.android.Cameras;
@@ -18,7 +20,7 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 /**
  * Created by Kenneth on 1/7/2017.
  */
-
+@Autonomous(name = "UseThis")
 public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     RobotWithFlickerShooter robot;
@@ -35,6 +37,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1,hardwareMap.dcMotor.get("flickerShooter"));
         autonomousDrive = new AutonomousDrive(robot,hardwareMap.opticalDistanceSensor.get("EOPD"));
         servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"),180);
+        robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         //Sets Up Camera
         //initializes camera
         this.setCamera(Cameras.PRIMARY);
@@ -51,7 +54,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         cameraControl.setColorTemperature(CameraControlExtension.ColorTemperature.AUTO);
         cameraControl.setAutoExposureCompensation();
 
-
+/*
         //Allow Setting a time delay
         final int programedDelay = 10;
         final boolean overrideControls = false;
@@ -78,13 +81,14 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
             prevStateBtnA = gamepad1.a;
             prevStateBtnB = gamepad1.b;
         }
-
+*/
         waitForStart(); //Wait for START Button Press on DS
         delay(sleepTime*1000);
 
         //START
 
         //Drive forwards until ODS is triggered by white tape
+        //autonomousDrive.driveStraightForSetTime(2,.75);
         autonomousDrive.driveStraightADistanceWithEncoders(30.0);
         autonomousDrive.pointTurn(45.0);
         autonomousDrive.driveStraightTillEOPD(300.0,0.5);//Drive fwd and stop at line
