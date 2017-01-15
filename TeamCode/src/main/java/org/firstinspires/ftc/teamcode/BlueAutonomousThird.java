@@ -38,7 +38,7 @@ public class BlueAutonomousThird extends LinearVisionOpMode {
     public void runOpMode() throws InterruptedException {
         //Initialize Robot
         robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1, hardwareMap.dcMotor.get("flickerShooter"));
-        autonomousDrive = new AutonomousDrive(robot, hardwareMap.opticalDistanceSensor.get("EOPD"));
+        autonomousDrive = new AutonomousDrive(this, robot, hardwareMap.opticalDistanceSensor.get("EOPD"));
         servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         ods = hardwareMap.opticalDistanceSensor.get("EOPD");

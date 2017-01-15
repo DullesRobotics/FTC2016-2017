@@ -21,6 +21,9 @@ public class AutonomousDrive {
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;
     final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
     final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
+    final static double DISTANCEBETWEENWHEELSINCHES = 14.0;
+    final static double POINTTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES/2.0*2.54;
+    final static double SWINGTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES * 2.54;
     final double EOPDWHITELINELIGHTLEVEL = 0.15;
     private boolean isReversed = false;
     OpticalDistanceSensor ods;
@@ -102,6 +105,30 @@ public class AutonomousDrive {
         robot.getBRM().setPower(0.0);
     }
 
+    public void pointTurn(double power,double deg,double timeoutS){
+        if(deg == 0.0){
+            return;
+        }
+        double leftDistCM = 2.0 * Math.PI * POINTTURNRADIUSCM * deg / 360.0;
+        double rightDistCM = -leftDistCM;
+        encoderDrive(power,leftDistCM,rightDistCM,timeoutS);
+    }
+
+    public void swingTurn(double power,double deg,double timeoutS){
+        if(deg==0){
+            return;
+        }else if(deg > 0){
+            double leftDistCM = 2.0 * Math.PI * SWINGTURNRADIUSCM * deg / 360.0;
+            double rightDistCM = 0.0;
+            encoderDrive(power,leftDistCM,rightDistCM,timeoutS);
+        }else{
+            deg = Math.abs(deg);
+            double leftDistCM = 0.0;
+            double rightDistCM = 2.0 * Math.PI * SWINGTURNRADIUSCM * deg / 360.0;
+            encoderDrive(power,leftDistCM,rightDistCM,timeoutS);
+        }
+    }
+
     public boolean encoderDrive(double speed,
                              double leftCM, double rightCM,
                              double timeoutS) {
@@ -176,4 +203,29 @@ public class AutonomousDrive {
         robot.getBRM().setPower(0.0);
     }
 
+    public void turnTillLine(double power, double EOPDThreshold, boolean turnLeft){
+        setRUNWITHENCODERS();
+        if(turnLeft){
+            robot.getBRM().setPower(power);
+            while(ods.getLightDetected() < EOPDThreshold&&opMode.opModeIsActive()){}
+            robot.getBRM().setPower(0.0);
+        }else{
+            robot.getBLM().setPower(power);
+            while(ods.getLightDetected() < EOPDThreshold&&opMode.opModeIsActive()){}
+            robot.getBLM().setPower(0.0);
+        }
+    }
+    public void turnRightTillOffLine(double power, double EOPDThreshold){
+        robot.getBLM().setPower(power);
+        while(opMode.opModeIsActive()&&ods.getLightDetected() > EOPDThreshold){}
+        robot.getBLM().setPower(0.0);
+    }
+    public void followLine(double power,double EOPDThreshold,double timeoutS,boolean leftFirst){
+        turnTillLine(power,EOPDThreshold,leftFirst);
+        runtime.reset();
+        while(opMode.opModeIsActive()&&runtime.seconds()<timeoutS){
+            turnRightTillOffLine(power,EOPDThreshold);
+            turnTillLine(power,EOPDThreshold,true);
+        }
+    }
 }
