@@ -25,7 +25,7 @@ public class AutonomousDrive {
     private boolean isReversed = false;
     OpticalDistanceSensor ods;
     LinearVisionOpMode opMode;
-    private ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime runtime;
     //SensorListener sensorListener;
     //float heading;
 /*
@@ -42,6 +42,7 @@ public class AutonomousDrive {
         ods = o;
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         opMode = op;
+        runtime  = new ElapsedTime();
     }
 
     public int getMaxCurrentPos(){
@@ -162,14 +163,17 @@ public class AutonomousDrive {
     public void runForSetTime(double power, double seconds){
         setRUNWITHENCODERS();
         runtime.reset();
-        robot.getBLM().setPower(Math.abs(power));
-        robot.getBRM().setPower(Math.abs(power));
+        robot.getBLM().setPower(power);
+        robot.getBRM().setPower(power);
 
         while (opMode.opModeIsActive()&&runtime.seconds()<seconds){
             opMode.telemetry.addData("Running for set time",seconds);
             opMode.telemetry.addData("Current time",runtime.seconds());
             opMode.telemetry.update();
         }
+
+        robot.getBLM().setPower(0.0);
+        robot.getBRM().setPower(0.0);
     }
 
 }
