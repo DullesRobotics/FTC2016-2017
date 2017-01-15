@@ -40,7 +40,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
 
         //Initialize Robot
         robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1,hardwareMap.dcMotor.get("flickerShooter"));
-        autonomousDrive = new AutonomousDrive(robot,hardwareMap.opticalDistanceSensor.get("EOPD"));
+        autonomousDrive = new AutonomousDrive(this,robot,hardwareMap.opticalDistanceSensor.get("EOPD"));
         servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"),ServoControllerLib.SERVOLEFT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         ods = hardwareMap.opticalDistanceSensor.get("EOPD");
@@ -52,7 +52,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         enableExtension(Extensions.BEACON);
         enableExtension(Extensions.ROTATION);
         enableExtension(Extensions.CAMERA_CONTROL);
-        beacon.setAnalysisMethod(Beacon.AnalysisMethod.FAST);
+        beacon.setAnalysisMethod(Beacon.AnalysisMethod.COMPLEX);
         beacon.setColorToleranceRed(0);
         beacon.setColorToleranceBlue(0);
         rotation.setIsUsingSecondaryCamera(false);
@@ -95,7 +95,6 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         //START
 
         //Drive forwards until ODS is triggered by white tape
-        //autonomousDrive.driveStraightForSetTime(2,.75);
         //FWD 10cm
         telemetry.addData("Action","FWD 10CM");
         autonomousDrive.resetEncoders();
@@ -186,8 +185,9 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         telemetry.addData("Action","Begin read beacon");
         int redBlue = 0;
         int blueRed = 0;
-        for(int i=0; i < 5; i++){ //Purposefully not even number
+        for(int i=0; i < 5 && opModeIsActive(); i++){ //Purposefully not even number
             if (beacon.getAnalysis().getColorString().equals("red, blue")){
+
                 redBlue++;
                 telemetry.addData("redBlue",redBlue);
             }else if (beacon.getAnalysis().getColorString().equals("blue, red")){
@@ -298,7 +298,7 @@ public class FTCVisionAutonomousSecondTry extends LinearVisionOpMode {
         }else{
             //Press Left side b/c we are blue
             servoControllerLib.setDegrees(0);
-            autonomousDrive.driveStraightForSetTime(1.5,0.2);
+
             //Turn Servo
             //Drive Forwards to press with lower power, keep pushing for some time
             autonomousDrive.resetEncoders();

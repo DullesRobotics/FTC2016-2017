@@ -1,8 +1,16 @@
 package com.dullesrobotics.ftc.libraries;
 
 import com.dullesrobotics.ftc.mods.SensorListener;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.lasarobotics.vision.opmode.LinearVisionOpMode;
+
+import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 
 /**
  * Created by Kenneth on 1/8/2017.
@@ -13,7 +21,11 @@ public class AutonomousDrive {
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;
     final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
     final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
+    final double EOPDWHITELINELIGHTLEVEL = 0.15;
+    private boolean isReversed = false;
     OpticalDistanceSensor ods;
+    LinearVisionOpMode opMode;
+    private ElapsedTime runtime = new ElapsedTime();
     //SensorListener sensorListener;
     //float heading;
 /*
@@ -25,146 +37,16 @@ public class AutonomousDrive {
     public AutonomousDrive(BasicRobot r) {
         robot = r;
     }
-    public AutonomousDrive(BasicRobot r,OpticalDistanceSensor o) {
+    public AutonomousDrive(LinearVisionOpMode op, BasicRobot r, OpticalDistanceSensor o) {
         robot = r;
         ods = o;
-    }
-
-    public boolean driveStraightADistanceWithEncoders(double centimeters){
-        int ticks = (int) (centimeters*this.TICKSPERCENTIMETER);
-        resetEncoders();
-        setRUNWITHENCODERS();
-        int firstFifth = (int) (ticks*.2);
-        int lastFifth = (int)(ticks*.8);
-        final double MAXPOWER = 0.75;
-        double power = 0;
-        while(robot.getBLM().getCurrentPosition()<=ticks || robot.getBRM().getCurrentPosition()<=ticks){
-            if(robot.getBRM().getCurrentPosition()<firstFifth && robot.getBRM().getCurrentPosition()<firstFifth){
-                power = getMaxCurrentPos()*5.0/ticks*MAXPOWER;
-                robot.getBRM().setPower(power);
-                robot.getBLM().setPower(power);
-            } else if(robot.getBLM().getCurrentPosition()>=lastFifth||robot.getBRM().getCurrentPosition()>=lastFifth){
-                power = MAXPOWER - (getMaxCurrentPos()/ticks*MAXPOWER);
-                robot.getBRM().setPower(power);
-                robot.getBLM().setPower(power);
-            }else{
-                power = MAXPOWER;
-                robot.getBRM().setPower(power);
-                robot.getBLM().setPower(power);
-            }
-        }
-        return true;
-    }
-    public boolean driveStraightTillEOPD(double maxDistCM, double EOPDThreshold){
-        int ticks = (int) (maxDistCM*TICKSPERCENTIMETER);
-        resetEncoders();
-        setRUNWITHENCODERS();
-        int firstFifth = (int) (ticks*.2);
-        int lastFifth = (int)(ticks*.8);
-        final double MAXPOWER = 0.75;
-        double power = 0;
-        while(robot.getBLM().getCurrentPosition()<=ticks || robot.getBRM().getCurrentPosition()<=ticks){
-            double lightLevel = ods.getLightDetected();
-            if(lightLevel >= EOPDThreshold){
-                robot.getBRM().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                robot.getBLM().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                robot.getBRM().setPower(0.0);
-                robot.getBLM().setPower(0.0);
-                return true;
-            }
-            if(robot.getBRM().getCurrentPosition()<firstFifth && robot.getBRM().getCurrentPosition()<firstFifth){
-                power = getMaxCurrentPos()*5.0/ticks*MAXPOWER;
-                robot.getBRM().setPower(power);
-                robot.getBLM().setPower(power);
-            } else if(robot.getBLM().getCurrentPosition()>=lastFifth||robot.getBRM().getCurrentPosition()>=lastFifth){
-                power = MAXPOWER - (getMaxCurrentPos()/ticks*MAXPOWER);
-                robot.getBRM().setPower(power);
-                robot.getBLM().setPower(power);
-            }else{
-                power = MAXPOWER;
-                robot.getBRM().setPower(power);
-                robot.getBLM().setPower(power);
-            }
-        }
-        return false;
-    }
-
-    public void pointTurn(double angleInDeg){
-        double percentOfCircle = angleInDeg/360.0;
-        double turnRadiusCM = 5*2.54;
-        double ticksNeededToTurn = 2*Math.PI*turnRadiusCM*TICKSPERCENTIMETER*percentOfCircle;
-        resetEncoders();
-        setRUNTOPOSITION();
-        robot.getBRM().setTargetPosition((int) (ticksNeededToTurn/2.0));
-        robot.getBLM().setTargetPosition((int) (ticksNeededToTurn/2.0));
-        robot.getBLM().setPower(0.2);
-        robot.getBRM().setPower(0.2);
-    }
-
-    public void swingTurn(double angleInDeg){
-        double percentOfCircle = (angleInDeg>0)? angleInDeg:angleInDeg*-1.0;
-        double turnRadiusCM = 5*2.54;
-        double ticksNeededToTurn = 2*Math.PI*turnRadiusCM*TICKSPERCENTIMETER*percentOfCircle;
-        resetEncoders();
-        setRUNTOPOSITION();
-        if(angleInDeg>0){
-            //Turn Right
-            robot.getBLM().setTargetPosition((int)(ticksNeededToTurn));
-        }else{
-            robot.getBRM().setTargetPosition((int)(ticksNeededToTurn));
-        }
-        robot.getBLM().setPower(0.2);
-        robot.getBRM().setPower(0.2);
-    }
-
-    public void driveStraightForSetTimeScaleUp(double seconds){
-        long millis = (long) (seconds*1000.0);
-        long start = System.currentTimeMillis();
-        resetEncoders();
-        setRUNWITHENCODERS();
-        long firstFifth = (long) ((millis*.2)+start);
-        long lastFifth = (long)(millis*.8)+start;
-        final double MAXPOWER = 0.75;
-        double power = 0;
-        long end = start + millis;
-        while(System.currentTimeMillis()<= end){
-            long curTime = System.currentTimeMillis();
-            if(curTime<=firstFifth){
-                power = (((double)(curTime)-((double)start))*5.0/((double)(millis)))*MAXPOWER;
-                robot.getBRM().setPower(power);
-                robot.getBLM().setPower(power);
-            } else if(curTime >= lastFifth){
-                power = MAXPOWER - (((double)(curTime)-((double)start))*5.0/((double)(millis)))*MAXPOWER;
-                robot.getBRM().setPower(power);
-                robot.getBLM().setPower(power);
-            }else{
-                power = MAXPOWER;
-                robot.getBRM().setPower(power);
-                robot.getBLM().setPower(power);
-            }
-        }
-    }
-
-    public void driveStraightForSetTime(double seconds, double power){
-        long startTime = System.currentTimeMillis();
-        long millis = (long) (seconds*1000);
-        long endTime = startTime + millis;
-        robot.getBLM().setPower(power);
-        robot.getBRM().setPower(power);
-        while(System.currentTimeMillis() < endTime){
-            //Do Nothing
-        }
-        robot.getBLM().setPower(0.0);
-        robot.getBRM().setPower(0.0);
+        robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
+        opMode = op;
     }
 
     public int getMaxCurrentPos(){
         return Math.max(robot.getBLM().getCurrentPosition(),robot.getBRM().getCurrentPosition());
     }
-
-
-
-
 
     public void setRUNWITHENCODERS(){
         robot.getBLM().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -182,4 +64,112 @@ public class AutonomousDrive {
         robot.getBLM().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.getBRM().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
+    public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior zeroPowerBehavior){
+        robot.getBLM().setZeroPowerBehavior(zeroPowerBehavior);
+        robot.getBRM().setZeroPowerBehavior(zeroPowerBehavior);
+    }
+    public void switchDirection(){
+        if(isReversed){
+            //Unreverse
+            robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
+            robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
+            isReversed = false;
+        }else{
+            robot.getBLM().setDirection(DcMotorSimple.Direction.FORWARD);
+            robot.getBRM().setDirection(DcMotorSimple.Direction.REVERSE);
+            isReversed = true;
+        }
+    }
+    public void setDirectionReverse(){
+        robot.getBLM().setDirection(DcMotorSimple.Direction.FORWARD);
+        robot.getBRM().setDirection(DcMotorSimple.Direction.REVERSE);
+        isReversed = true;
+    }
+    public void setDirectionNotReversed(){
+        //Unreverse
+        robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
+        robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
+        isReversed = false;
+    }
+    public void driveTillLine(double power,double timeoutS,double EOPDTriggerLevel){
+        //Go straight till EOPD
+        setRUNWITHENCODERS();
+        robot.getBLM().setPower(power);
+        robot.getBRM().setPower(power);
+        while(opMode.opModeIsActive()&& ods.getLightDetected() < EOPDTriggerLevel){delay(1);}
+        robot.getBLM().setPower(0.0);
+        robot.getBRM().setPower(0.0);
+    }
+
+    public boolean encoderDrive(double speed,
+                             double leftCM, double rightCM,
+                             double timeoutS) {
+        int newLeftTarget;
+        int newRightTarget;
+        boolean hitTimeOut = false;
+        // Ensure that the opmode is still active
+        if (opMode.opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            newLeftTarget = robot.getBLM().getCurrentPosition() + (int)(leftCM * TICKSPERCENTIMETER);
+            newRightTarget = robot.getBRM().getCurrentPosition() + (int)(rightCM * TICKSPERCENTIMETER);
+            robot.getBLM().setTargetPosition(newLeftTarget);
+            robot.getBRM().setTargetPosition(newRightTarget);
+
+            // Turn On RUN_TO_POSITION
+            robot.getBLM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.getBRM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            robot.getBLM().setPower(Math.abs(speed));
+            robot.getBRM().setPower(Math.abs(speed));
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (opMode.opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (robot.getBLM().isBusy() && robot.getBRM().isBusy())) {
+
+                // Display it for the driver.
+                opMode.telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
+                opMode.telemetry.addData("Path2",  "Running at %7d :%7d",
+                        robot.getBLM().getCurrentPosition(),
+                        robot.getBRM().getCurrentPosition());
+                opMode.telemetry.update();
+                if(runtime.seconds() < timeoutS){
+                    hitTimeOut = true;
+                }
+            }
+
+            // Stop all motion;
+            robot.getBLM().setPower(0);
+            robot.getBRM().setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            robot.getBLM().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.getBRM().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+            //  sleep(250);   // optional pause after each move
+
+        }
+        return hitTimeOut;
+    }
+    public boolean isReversed(){
+        return isReversed;
+    }
+
+    public void runForSetTime(double power, double seconds){
+        setRUNWITHENCODERS();
+        runtime.reset();
+        robot.getBLM().setPower(Math.abs(power));
+        robot.getBRM().setPower(Math.abs(power));
+
+        while (opMode.opModeIsActive()&&runtime.seconds()<seconds){
+            opMode.telemetry.addData("Running for set time",seconds);
+            opMode.telemetry.addData("Current time",runtime.seconds());
+            opMode.telemetry.update();
+        }
+    }
+
 }
