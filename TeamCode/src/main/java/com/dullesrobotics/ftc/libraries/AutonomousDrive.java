@@ -45,6 +45,13 @@ public class AutonomousDrive {
         runtime  = new ElapsedTime();
     }
 
+    public AutonomousDrive(BasicRobot r,OpticalDistanceSensor o){
+        robot = r;
+        ods = o;
+        robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
+        runtime  = new ElapsedTime();
+    }
+
     public int getMaxCurrentPos(){
         return Math.max(robot.getBLM().getCurrentPosition(),robot.getBRM().getCurrentPosition());
     }
