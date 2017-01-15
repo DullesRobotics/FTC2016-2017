@@ -291,6 +291,7 @@ public class RedAuton extends LinearVisionOpMode {
                 robot.getBLM().setPower(0.0);
                 robot.getBRM().setPower(0.0);
             }
+            break;
         }
 
         robot.getBLM().setPower(0.0);

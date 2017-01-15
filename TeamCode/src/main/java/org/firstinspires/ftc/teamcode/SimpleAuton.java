@@ -32,10 +32,10 @@ public class SimpleAuton extends LinearOpMode {
 
 
         delay(15000);
-        if(robot.getFLM() != null) robot.getFLM().setPower(0.5);
-        if(robot.getFRM() != null) robot.getFRM().setPower(-0.5);
-        if (robot.getBLM() != null) robot.getBLM().setPower(0.5);
-        if (robot.getBRM() != null) robot.getBRM().setPower(-0.5);
+        if(robot.getFLM() != null) robot.getFLM().setPower(-0.5);
+        if(robot.getFRM() != null) robot.getFRM().setPower(0.5);
+        if (robot.getBLM() != null) robot.getBLM().setPower(-0.5);
+        if (robot.getBRM() != null) robot.getBRM().setPower(0.5);
 
         delay(3000);
 

@@ -291,6 +291,7 @@ public class BlueAutonomousThird extends LinearVisionOpMode {
                 robot.getBLM().setPower(0.0);
                 robot.getBRM().setPower(0.0);
             }
+            break;
         }
 
         robot.getBLM().setPower(0.0);
