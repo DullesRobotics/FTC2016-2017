@@ -24,7 +24,7 @@ public class AutonomousDrive {
     final static double DISTANCEBETWEENWHEELSINCHES = 14.0;
     final static double POINTTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES/2.0*2.54;
     final static double SWINGTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES * 2.54;
-    final double EOPDWHITELINELIGHTLEVEL = 0.15;
+    public final static double EOPDWHITELINELIGHTLEVEL = 0.15;
     private boolean isReversed = false;
     OpticalDistanceSensor ods;
     LinearVisionOpMode opMode;
@@ -234,5 +234,7 @@ public class AutonomousDrive {
             turnRightTillOffLine(power,EOPDThreshold);
             turnTillLine(power,EOPDThreshold,true);
         }
+        robot.getBLM().setPower(0.0);
+        robot.getBRM().setPower(0.0);
     }
 }
