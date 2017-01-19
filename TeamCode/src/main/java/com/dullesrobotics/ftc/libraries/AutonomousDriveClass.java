@@ -16,7 +16,7 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
  * Created by Kenneth on 1/8/2017.
  */
 
-public class AutonomousDrive {
+public class AutonomousDriveClass {
     BasicRobot robot;
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;
     final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
@@ -37,10 +37,10 @@ public class AutonomousDrive {
         sensorListener = s;
     }
 */
-    public AutonomousDrive(BasicRobot r) {
+    public AutonomousDriveClass(BasicRobot r) {
         robot = r;
     }
-    public AutonomousDrive(LinearVisionOpMode op, BasicRobot r, OpticalDistanceSensor o) {
+    public AutonomousDriveClass(LinearVisionOpMode op, BasicRobot r, OpticalDistanceSensor o) {
         robot = r;
         ods = o;
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
@@ -48,7 +48,7 @@ public class AutonomousDrive {
         runtime  = new ElapsedTime();
     }
 
-    public AutonomousDrive(BasicRobot r,OpticalDistanceSensor o){
+    public AutonomousDriveClass(BasicRobot r,OpticalDistanceSensor o){
         robot = r;
         ods = o;
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
@@ -102,17 +102,18 @@ public class AutonomousDrive {
         robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
         isReversed = false;
     }
-    public void driveTillLine(double power,double timeoutS,double EOPDTriggerLevel){
+    public void driveTillLine(double power,double timeoutS,double EOPDTriggerLevel) throws InterruptedException{
         //Go straight till EOPD
         setRUNWITHENCODERS();
         robot.getBLM().setPower(power);
         robot.getBRM().setPower(power);
-        while(opMode.opModeIsActive()&& ods.getLightDetected() < EOPDTriggerLevel){delay(1);}
+        while(opMode.opModeIsActive()&& ods.getLightDetected() < EOPDTriggerLevel){opMode.waitOneFullHardwareCycle();}
         robot.getBLM().setPower(0.0);
         robot.getBRM().setPower(0.0);
     }
 
-    public void pointTurn(double power,double deg,double timeoutS){
+    public void pointTurn(double power,double deg,double timeoutS) throws InterruptedException {
+        //delay(3000);
         if(deg == 0.0){
             return;
         }
@@ -121,7 +122,10 @@ public class AutonomousDrive {
         encoderDrive(power,leftDistCM,rightDistCM,timeoutS);
     }
 
-    public void swingTurn(double power,double deg,double timeoutS){
+    public void swingTurn(double power,double deg,double timeoutS) throws InterruptedException {
+        //opMode.telemetry.addData("Old deg vs New deg",deg + " vs " + deg * 20);
+        //opMode.telemetry.update();
+        deg *= 200;
         if(deg==0){
             return;
         }else if(deg > 0){
@@ -136,34 +140,46 @@ public class AutonomousDrive {
         }
     }
 
-    public boolean encoderDrive(double speed,
+    public boolean encoderDrive  (double speed,
                              double leftCM, double rightCM,
-                             double timeoutS) {
+                             double timeoutS) throws InterruptedException {
         int newLeftTarget;
         int newRightTarget;
+        //robot.getBLM().set
+        this.resetEncoders();
         boolean hitTimeOut = false;
         // Ensure that the opmode is still active
+        //delay(250);
         if (opMode.opModeIsActive()) {
-
+            debug(1);
+            //delay(250);
             // Determine new target position, and pass to motor controller
             newLeftTarget = robot.getBLM().getCurrentPosition() + (int)(leftCM * TICKSPERCENTIMETER);
             newRightTarget = robot.getBRM().getCurrentPosition() + (int)(rightCM * TICKSPERCENTIMETER);
             robot.getBLM().setTargetPosition(newLeftTarget);
             robot.getBRM().setTargetPosition(newRightTarget);
-
+            debug(2);
+            delay(250);
             // Turn On RUN_TO_POSITION
             robot.getBLM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.getBRM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+            debug(3);
+            delay(250);
             // reset the timeout time and start motion.
             runtime.reset();
             robot.getBLM().setPower(Math.abs(speed));
             robot.getBRM().setPower(Math.abs(speed));
-
+            debug(4);
+            delay(250);
             // keep looping while we are still active, and there is time left, and both motors are running.
+            opMode.telemetry.addData("Status1",opMode.opModeIsActive());
+            opMode.telemetry.addData("Status2",(runtime.seconds() < timeoutS));
+            opMode.telemetry.addData("Status3",(robot.getBLM().isBusy() && robot.getBRM().isBusy()));
+            opMode.telemetry.update();
             while (opMode.opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
                     (robot.getBLM().isBusy() && robot.getBRM().isBusy())) {
+                opMode.waitOneFullHardwareCycle();
 
                 // Display it for the driver.
                 opMode.telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
@@ -171,11 +187,18 @@ public class AutonomousDrive {
                         robot.getBLM().getCurrentPosition(),
                         robot.getBRM().getCurrentPosition());
                 opMode.telemetry.update();
-                if(runtime.seconds() < timeoutS){
+                debug(5);
+                if(runtime.seconds() > timeoutS){
                     hitTimeOut = true;
+                    break;
                 }
+                debug(6);
+               // if (!opMode.opModeIsActive()){
+                   // opMode.stop();
+                    //break;
+                //}
             }
-
+            debug(7);
             // Stop all motion;
             robot.getBLM().setPower(0);
             robot.getBRM().setPower(0);
@@ -183,18 +206,24 @@ public class AutonomousDrive {
             // Turn off RUN_TO_POSITION
             robot.getBLM().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.getBRM().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            //if (!opMode.opModeIsActive()){
+                //opMode.stop();
+            ///}
 
+             //delay(250);   // optional pause after each move
 
-            //  sleep(250);   // optional pause after each move
-
+        } else {
+            debug(-1);
+            //opMode.stop();
         }
+        debug(10);
         return hitTimeOut;
     }
     public boolean isReversed(){
         return isReversed;
     }
 
-    public void runForSetTime(double power, double seconds){
+    public void runForSetTime(double power, double seconds) throws InterruptedException {
         setRUNWITHENCODERS();
         runtime.reset();
         robot.getBLM().setPower(power);
@@ -204,6 +233,7 @@ public class AutonomousDrive {
             opMode.telemetry.addData("Running for set time",seconds);
             opMode.telemetry.addData("Current time",runtime.seconds());
             opMode.telemetry.update();
+            opMode.waitOneFullHardwareCycle();
         }
 
         robot.getBLM().setPower(0.0);
@@ -227,14 +257,30 @@ public class AutonomousDrive {
         while(opMode.opModeIsActive()&&ods.getLightDetected() > EOPDThreshold){}
         robot.getBLM().setPower(0.0);
     }
-    public void followLine(double power,double EOPDThreshold,double timeoutS,boolean leftFirst){
+    public void followLine(double power,double EOPDThreshold,double timeoutS,boolean leftFirst) throws InterruptedException {
         turnTillLine(power,EOPDThreshold,leftFirst);
         runtime.reset();
         while(opMode.opModeIsActive()&&runtime.seconds()<timeoutS){
             turnRightTillOffLine(power,EOPDThreshold);
             turnTillLine(power,EOPDThreshold,true);
+            opMode.waitOneFullHardwareCycle();
         }
         robot.getBLM().setPower(0.0);
         robot.getBRM().setPower(0.0);
+    }
+    final boolean DEBUG = true;
+    public void debug(int i) throws InterruptedException {
+        String num = Integer.toString(i);
+        if(DEBUG){
+            opMode.telemetry.addData("AutonomousDrive flag",num);
+            opMode.telemetry.addData("Status",opMode.opModeIsActive());
+            opMode.telemetry.update();
+            //delay(250);
+            opMode.waitOneFullHardwareCycle();
+            //delay(100);
+            return;
+        }else{
+            return;
+        }
     }
 }

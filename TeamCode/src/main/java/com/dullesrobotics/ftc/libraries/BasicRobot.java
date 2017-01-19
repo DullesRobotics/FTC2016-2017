@@ -55,6 +55,9 @@ public class BasicRobot {
     public void driveWithGamepad(){
         driveTrain.driveWithGamepad();
     }
+
+    public void driveQuicklyWithGamepad(){ driveTrain.driveQuicklyWithGamepad();}
+    //public void reverseQuicklyGamepad(){ driveTrain.reverseQuicklyGamepad();}
     public void reverseGamepad() { driveTrain.reverseGamepad();}
     public DcMotor getBLM() {
         return BLM;
@@ -105,5 +108,7 @@ public class BasicRobot {
     }
 
 
-
+    public void reverseQuicklyGamepad() {
+        driveTrain.reverseQuicklyGamepad();
+    }
 }

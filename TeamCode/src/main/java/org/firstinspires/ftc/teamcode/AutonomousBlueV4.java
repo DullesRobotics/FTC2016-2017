@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.dullesrobotics.ftc.libraries.ArcadeDrive;
-import com.dullesrobotics.ftc.libraries.AutonomousDrive;
+import com.dullesrobotics.ftc.libraries.AutonomousDriveClass;
+import com.dullesrobotics.ftc.libraries.AutonomousDriveClass;
 import com.dullesrobotics.ftc.libraries.FTCVisionManager;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
@@ -30,7 +31,7 @@ public class AutonomousBlueV4 extends LinearVisionOpMode {
     final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
     private ElapsedTime runtime = new ElapsedTime();
     RobotWithFlickerShooter robot;
-    AutonomousDrive autonomousDrive;
+    AutonomousDriveClass autonomousDrive;
     String currentColorOrder = "???, ???";
     int sleepTime = 0;
     ServoControllerLib servoControllerLib;
@@ -44,7 +45,7 @@ public class AutonomousBlueV4 extends LinearVisionOpMode {
         debug(1);
         //Initialize Robot
         robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1, hardwareMap.dcMotor.get("flickerShooter"));
-        autonomousDrive = new AutonomousDrive(this, robot, hardwareMap.opticalDistanceSensor.get("EOPD"));
+        autonomousDrive = new AutonomousDriveClass(this, robot, hardwareMap.opticalDistanceSensor.get("EOPD"));
         servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         ods = hardwareMap.opticalDistanceSensor.get("EOPD");
@@ -56,15 +57,15 @@ public class AutonomousBlueV4 extends LinearVisionOpMode {
         waitForStart(); //Wait for START Button Press on DS
         debug(3);
         //START
-        autonomousDrive.swingTurn(0.2, 37.0, 5.0); //Power, degree, timeout
+        autonomousDrive.swingTurn(0.4, 32.0, 5.0); //Power, degree, timeout
         debug(4);
         autonomousDrive.encoderDrive(0.4, 60.0, 60.0, 10.0); //Speed, Left, Right, timeout
         debug(5);
-        autonomousDrive.driveTillLine(0.2, 10.0, AutonomousDrive.EOPDWHITELINELIGHTLEVEL);//Power threshold, turnLeft
+        autonomousDrive.driveTillLine(0.4, 10.0, AutonomousDriveClass.EOPDWHITELINELIGHTLEVEL);//Power threshold, turnLeft
         debug(6);
-        autonomousDrive.encoderDrive(0.2, 5.0, 5.0, 5.0);
+        autonomousDrive.encoderDrive(0.2, -50.0, -50.0, 5.0);
         debug(7);
-        autonomousDrive.turnTillLine(0.2, AutonomousDrive.EOPDWHITELINELIGHTLEVEL, false);
+        /*autonomousDrive.turnTillLine(0.2, AutonomousDriveClass.EOPDWHITELINELIGHTLEVEL, false);
         debug(8);
         autonomousDrive.encoderDrive(0.4, -30.0, -30.0, 8.0);
         debug(9);
@@ -92,16 +93,16 @@ public class AutonomousBlueV4 extends LinearVisionOpMode {
         //Drive Forwards to press with lower power, keep pushing for some time
         autonomousDrive.encoderDrive(0.2, 15.0, 15.0, 8.0);
         debug(13);
-        autonomousDrive.followLine(0.2, AutonomousDrive.EOPDWHITELINELIGHTLEVEL, 4.0, false);
+        autonomousDrive.followLine(0.2, AutonomousDriveClass.EOPDWHITELINELIGHTLEVEL, 4.0, false);
         debug(14);
         //Backup, go to other beacon
         autonomousDrive.encoderDrive(0.4, -40.0, -40.0, 5.0);
         debug(15);
         autonomousDrive.pointTurn(0.2, -100.0, 5.0);
         debug(16);
-        autonomousDrive.driveTillLine(0.4, 8.0, AutonomousDrive.EOPDWHITELINELIGHTLEVEL);
+        autonomousDrive.driveTillLine(0.4, 8.0, AutonomousDriveClass.EOPDWHITELINELIGHTLEVEL);
         debug(17);
-        autonomousDrive.turnTillLine(0.2,AutonomousDrive.EOPDWHITELINELIGHTLEVEL,false);
+        autonomousDrive.turnTillLine(0.2,AutonomousDriveClass.EOPDWHITELINELIGHTLEVEL,false);
         debug(18);
         autonomousDrive.encoderDrive(0.4,-10.0,-10.0,5.0);
         debug(19);
@@ -123,12 +124,13 @@ public class AutonomousBlueV4 extends LinearVisionOpMode {
         }
         autonomousDrive.encoderDrive(0.2, 15.0, 15.0, 8.0);
         debug(23);
-        autonomousDrive.followLine(0.2, AutonomousDrive.EOPDWHITELINELIGHTLEVEL, 4.0, false);
+        autonomousDrive.followLine(0.2, AutonomousDriveClass.EOPDWHITELINELIGHTLEVEL, 4.0, false);
         debug(24);
+        stop();
     }
 
-    public void debug(int i){
-        String num = Integer.toString(i);
+    public void debug(double i){
+        String num = Double.toString(i);
         if(DEBUG){
             telemetry.addData("Debug flag",num);
             return;

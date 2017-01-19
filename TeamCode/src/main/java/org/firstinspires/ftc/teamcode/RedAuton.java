@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.dullesrobotics.ftc.libraries.ArcadeDrive;
-import com.dullesrobotics.ftc.libraries.AutonomousDrive;
+import com.dullesrobotics.ftc.libraries.AutonomousDriveClass;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -28,7 +28,7 @@ public class RedAuton extends LinearVisionOpMode {
     final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
     private ElapsedTime runtime = new ElapsedTime();
     RobotWithFlickerShooter robot;
-    AutonomousDrive autonomousDrive;
+    AutonomousDriveClass autonomousDrive;
     String currentColorOrder = "???, ???";
     int sleepTime = 0;
     ServoControllerLib servoControllerLib;
@@ -38,7 +38,7 @@ public class RedAuton extends LinearVisionOpMode {
     public void runOpMode() throws InterruptedException {
         //Initialize Robot
         robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1, hardwareMap.dcMotor.get("flickerShooter"));
-        autonomousDrive = new AutonomousDrive(robot, hardwareMap.opticalDistanceSensor.get("EOPD"));
+        autonomousDrive = new AutonomousDriveClass(robot, hardwareMap.opticalDistanceSensor.get("EOPD"));
         servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         ods = hardwareMap.opticalDistanceSensor.get("EOPD");
