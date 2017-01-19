@@ -126,13 +126,11 @@ public class AutonomousDriveClass {
         //opMode.telemetry.addData("Old deg vs New deg",deg + " vs " + deg * 20);
         //opMode.telemetry.update();
         deg *= 200;
-        if(deg==0){
-            return;
-        }else if(deg > 0){
+        if(deg > 0){
             double leftDistCM = 2.0 * Math.PI * SWINGTURNRADIUSCM * deg / 360.0;
             double rightDistCM = 0.0;
             encoderDrive(power,leftDistCM,rightDistCM,timeoutS);
-        }else{
+        }else if (deg < 0){
             deg = Math.abs(deg);
             double leftDistCM = 0.0;
             double rightDistCM = 2.0 * Math.PI * SWINGTURNRADIUSCM * deg / 360.0;
@@ -240,21 +238,21 @@ public class AutonomousDriveClass {
         robot.getBRM().setPower(0.0);
     }
 
-    public void turnTillLine(double power, double EOPDThreshold, boolean turnLeft){
+    public void turnTillLine(double power, double EOPDThreshold, boolean turnLeft) throws InterruptedException {
         setRUNWITHENCODERS();
         if(turnLeft){
             robot.getBRM().setPower(power);
-            while(ods.getLightDetected() < EOPDThreshold&&opMode.opModeIsActive()){}
+            while(ods.getLightDetected() < EOPDThreshold&&opMode.opModeIsActive()){ opMode.waitOneFullHardwareCycle();}
             robot.getBRM().setPower(0.0);
         }else{
             robot.getBLM().setPower(power);
-            while(ods.getLightDetected() < EOPDThreshold&&opMode.opModeIsActive()){}
+            while(ods.getLightDetected() < EOPDThreshold&&opMode.opModeIsActive()){opMode.waitOneFullHardwareCycle();}
             robot.getBLM().setPower(0.0);
         }
     }
-    public void turnRightTillOffLine(double power, double EOPDThreshold){
+    public void turnRightTillOffLine(double power, double EOPDThreshold) throws InterruptedException {
         robot.getBLM().setPower(power);
-        while(opMode.opModeIsActive()&&ods.getLightDetected() > EOPDThreshold){}
+        while(opMode.opModeIsActive()&&ods.getLightDetected() > EOPDThreshold){opMode.waitOneFullHardwareCycle();}
         robot.getBLM().setPower(0.0);
     }
     public void followLine(double power,double EOPDThreshold,double timeoutS,boolean leftFirst) throws InterruptedException {
