@@ -49,6 +49,8 @@ public class AutonomousBlueV4 extends LinearVisionOpMode {
         servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         ods = hardwareMap.opticalDistanceSensor.get("EOPD");
+        servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+        autonomousDrive.resetEncoders();
         debug(2);
         //Sets Up Camera
         ftcVisionManager = new FTCVisionManager(this, Beacon.AnalysisMethod.FAST);

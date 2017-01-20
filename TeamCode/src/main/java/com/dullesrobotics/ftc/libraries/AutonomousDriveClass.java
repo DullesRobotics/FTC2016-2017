@@ -46,6 +46,7 @@ public class AutonomousDriveClass {
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         opMode = op;
         runtime  = new ElapsedTime();
+
     }
 
     public AutonomousDriveClass(BasicRobot r,OpticalDistanceSensor o){
@@ -117,7 +118,7 @@ public class AutonomousDriveClass {
         if(deg == 0.0){
             return;
         }
-        double leftDistCM = 2.0 * Math.PI * POINTTURNRADIUSCM * deg / 360.0;
+        double leftDistCM = 2.0 * Math.PI * POINTTURNRADIUSCM * deg / 360.0 * TICKSPERCENTIMETER;
         double rightDistCM = -leftDistCM;
         encoderDrive(power,leftDistCM,rightDistCM,timeoutS);
     }
@@ -125,15 +126,15 @@ public class AutonomousDriveClass {
     public void swingTurn(double power,double deg,double timeoutS) throws InterruptedException {
         //opMode.telemetry.addData("Old deg vs New deg",deg + " vs " + deg * 20);
         //opMode.telemetry.update();
-        deg *= 200;
+        //deg *= 200;
         if(deg > 0){
-            double leftDistCM = 2.0 * Math.PI * SWINGTURNRADIUSCM * deg / 360.0;
+            double leftDistCM = 2.0 * Math.PI * SWINGTURNRADIUSCM * deg / 360.0 * TICKSPERCENTIMETER;
             double rightDistCM = 0.0;
             encoderDrive(power,leftDistCM,rightDistCM,timeoutS);
         }else if (deg < 0){
             deg = Math.abs(deg);
             double leftDistCM = 0.0;
-            double rightDistCM = 2.0 * Math.PI * SWINGTURNRADIUSCM * deg / 360.0;
+            double rightDistCM = 2.0 * Math.PI * SWINGTURNRADIUSCM * deg / 360.0 * TICKSPERCENTIMETER;
             encoderDrive(power,leftDistCM,rightDistCM,timeoutS);
         }
     }
