@@ -42,6 +42,7 @@ public class AutonomousBlueV4 extends LinearVisionOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         waitForVisionStart();
+        //this.resetStartTime();
         debug(1);
         //Initialize Robot
         robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1, hardwareMap.dcMotor.get("flickerShooter"));
@@ -59,17 +60,23 @@ public class AutonomousBlueV4 extends LinearVisionOpMode {
         waitForStart(); //Wait for START Button Press on DS
         debug(3);
         //START
-        autonomousDrive.swingTurn(0.4, 32.0, 5.0); //Power, degree, timeout
+        autonomousDrive.swingTurn(0.35, 30.0, 2.5); //Power, degree, timeout
         debug(4);
-        autonomousDrive.encoderDrive(0.4, 0.0, 0.0, 10.0); //Speed, Left, Right, timeout
+        //autonomousDrive.encoderDrive(0.4, 0.0, 0.0, 10.0); //Speed, Left, Right, timeout
         debug(5);
-        autonomousDrive.driveTillLine(0.4, 10.0, AutonomousDriveClass.EOPDWHITELINELIGHTLEVEL);//Power threshold, turnLeft
+        autonomousDrive.driveTillLine(.4, 10.0, AutonomousDriveClass.EOPDWHITELINELIGHTLEVEL);//Power threshold, turnLeft
         debug(6);
-        autonomousDrive.encoderDrive(0.2, -50.0, -50.0, 5.0);
+        autonomousDrive.encoderDrive(0.2, 2.5, 2.5, 5.0);
         debug(7);
-        /*autonomousDrive.turnTillLine(0.2, AutonomousDriveClass.EOPDWHITELINELIGHTLEVEL, false);
+        autonomousDrive.swingTurn(.35,40,3.0);
+        debug(7.1);
+        autonomousDrive.encoderDrive(.2,-5,-5,5.0);
+        debug(7.2);
+        autonomousDrive.driveTillLine(.4,10.0,AutonomousDriveClass.EOPDWHITELINELIGHTLEVEL);
+        debug(7.3);
+        autonomousDrive.turnLeftTillLine(0.2, AutonomousDriveClass.EOPDWHITELINELIGHTLEVEL, false);
         debug(8);
-        autonomousDrive.encoderDrive(0.4, -30.0, -30.0, 8.0);
+        autonomousDrive.encoderDrive(0.4, -5.0, -5.0, 5.0);
         debug(9);
 
 
@@ -85,7 +92,6 @@ public class AutonomousBlueV4 extends LinearVisionOpMode {
             telemetry.addData("Analysis", "Push right");
             servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
             //Turn Servo
-
         } else {
             //Press Left side b/c we are blue
             servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);//Turn Servo
@@ -100,7 +106,7 @@ public class AutonomousBlueV4 extends LinearVisionOpMode {
         //Backup, go to other beacon
         autonomousDrive.encoderDrive(0.4, -40.0, -40.0, 5.0);
         debug(15);
-        autonomousDrive.pointTurn(0.2, -100.0, 5.0);
+        autonomousDrive.pointTurn(0.2, -80.0, 5.0);
         debug(16);
         autonomousDrive.driveTillLine(0.4, 8.0, AutonomousDriveClass.EOPDWHITELINELIGHTLEVEL);
         debug(17);
