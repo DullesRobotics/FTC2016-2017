@@ -61,7 +61,7 @@ public class AutonomousBlueV4 extends LinearVisionOpMode {
         //START
         autonomousDrive.swingTurn(0.4, 32.0, 5.0); //Power, degree, timeout
         debug(4);
-        autonomousDrive.encoderDrive(0.4, 60.0, 60.0, 10.0); //Speed, Left, Right, timeout
+        autonomousDrive.encoderDrive(0.4, 0.0, 0.0, 10.0); //Speed, Left, Right, timeout
         debug(5);
         autonomousDrive.driveTillLine(0.4, 10.0, AutonomousDriveClass.EOPDWHITELINELIGHTLEVEL);//Power threshold, turnLeft
         debug(6);

@@ -24,7 +24,7 @@ public class AutonomousDriveClass {
     final static double DISTANCEBETWEENWHEELSINCHES = 14.0;
     final static double POINTTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES/2.0*2.54;
     final static double SWINGTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES * 2.54;
-    public final static double EOPDWHITELINELIGHTLEVEL = 0.15;
+    public final static double EOPDWHITELINELIGHTLEVEL = 0.025;
     private boolean isReversed = false;
     OpticalDistanceSensor ods;
     LinearVisionOpMode opMode;
@@ -107,7 +107,11 @@ public class AutonomousDriveClass {
         setRUNWITHENCODERS();
         robot.getBLM().setPower(power);
         robot.getBRM().setPower(power);
-        while(opMode.opModeIsActive()&& ods.getLightDetected() < EOPDTriggerLevel){opMode.waitOneFullHardwareCycle();}
+        while(opMode.opModeIsActive()&& ods.getLightDetected() < EOPDTriggerLevel){
+            opMode.telemetry.addData("EOPD",ods.getLightDetected());
+            delay(1);
+            //opMode.waitOneFullHardwareCycle();
+        }
         robot.getBLM().setPower(0.0);
         robot.getBRM().setPower(0.0);
     }
@@ -126,6 +130,9 @@ public class AutonomousDriveClass {
         //opMode.telemetry.addData("Old deg vs New deg",deg + " vs " + deg * 20);
         //opMode.telemetry.update();
         deg *= 200;
+
+        //degreee greater than 0 is right
+        //degree less than 0 is left
         if(deg > 0){
             double leftDistCM = 2.0 * Math.PI * SWINGTURNRADIUSCM * deg / 360.0;
             double rightDistCM = 0.0;
@@ -263,6 +270,7 @@ public class AutonomousDriveClass {
         while(opMode.opModeIsActive()&&runtime.seconds()<timeoutS){
             turnRightTillOffLine(power,EOPDThreshold);
             turnTillLine(power,EOPDThreshold,true);
+
             opMode.waitOneFullHardwareCycle();
         }
         robot.getBLM().setPower(0.0);

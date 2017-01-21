@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.dullesrobotics.ftc.libraries.ArcadeDrive;
+import com.dullesrobotics.ftc.libraries.FlickerShooterClass;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.RobotWithWheeledShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 
 /**
  * Created by Kenneth on 11/6/2016.
@@ -14,6 +17,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class ArcadeDriveTeleOp extends OpMode {
     //private RobotWithWheeledShooter robotWithWheeledShooter;
     private RobotWithFlickerShooter robotWithFlickerShooter;
+    private FlickerShooterClass shooter;
     private ArcadeDrive ArcDrive;
     private String shooterMotor1; //This is for Wheeled Shooter and Flicker Shooter
     private String shooterMotor2; //This is for Wheeled Shooter
@@ -23,6 +27,7 @@ public class ArcadeDriveTeleOp extends OpMode {
 
     private boolean quickly = true;
     private boolean prevStateQuickly = quickly;
+    private boolean shooting = false;
 
     @Override
     public void init() {
@@ -37,6 +42,7 @@ public class ArcadeDriveTeleOp extends OpMode {
         ArcDrive = new ArcadeDrive(robotWithFlickerShooter);
         robotWithFlickerShooter.setDriveTrain(ArcDrive);
         servController = new ServoControllerLib(hardwareMap.servo.get("btnServo"));
+        shooter = new FlickerShooterClass(hardwareMap.dcMotor.get("Shooter"),this);
     }
 
     @Override
@@ -72,6 +78,16 @@ public class ArcadeDriveTeleOp extends OpMode {
             if (quickly) {
                 robotWithFlickerShooter.reverseQuicklyGamepad();
             }
+        }
+
+        if (robotWithFlickerShooter.getGamepad1().left_bumper && !shooting){
+            shooting = true;
+            shooter.runMotorFullSpeed();
+            delay(1000);
+            shooter.stopMotor();
+            delay(250);
+            shooter.releaseMotor();
+            shooting = false;
         }
 
         if (robotWithFlickerShooter.getGamepad1().right_trigger > 0)  //change
