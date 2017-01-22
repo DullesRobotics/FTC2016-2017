@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import static com.dullesrobotics.ftc.libraries.commonMethods.*;
 
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
@@ -46,8 +47,30 @@ public class AutonDriveClassV2Tester extends LinearVisionOpMode {
         /**
          * INSERT CODE TO TEST BELOW THIS COMMENT
          */
-
+        logAction("Begin  + SwingTurn");
         autonomousDrive2.swingTurn(0.5,90.0,5.0);
+        logAction("End  + Swing Turn");
 
+        delay(2000);
+
+        logAction("Begin  - SwingTurn");
+        autonomousDrive2.swingTurn(0.5,-90.0,5.0);
+        logAction("End  - Swing Turn");
+
+        delay(2000);
+
+        logAction("Begin  + Point Turn");
+        autonomousDrive2.pointTurn(0.5,90.0,5.0);
+        logAction("End  + Point Turn");
+
+        delay(2000);
+
+        logAction("Begin  - Point Turn");
+        autonomousDrive2.pointTurn(0.5,-90.0,5.0);
+        logAction("End  - Point Turn");
+
+    }
+    public void logAction(String s){
+        telemetry.addData("Action",s);
     }
 }
