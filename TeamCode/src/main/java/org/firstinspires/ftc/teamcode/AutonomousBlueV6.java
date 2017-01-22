@@ -55,6 +55,7 @@ public class AutonomousBlueV6 extends LinearVisionOpMode {
         autonomousDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         autonomousDrive.resetAll();
         waitForStart(); //Wait for START Button Press on DS
+
         debug(3);
         autonomousDrive.encoderDrive(.4,170,170,4.6); //4 seconds = blue
         debug(4);
