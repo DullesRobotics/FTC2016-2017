@@ -48,11 +48,12 @@ public class FTCVisionManager {
      * @param times make sure this is an odd number to prevent a forced decision. A recommended value is between 3 and 11 - I like 5
      * @param timeoutS Set timeout - if processing is not done by this time, return best guess
      */
-    public String readBeacon(int times,double timeoutS){
+    public String readBeacon(int times,double timeoutS) throws InterruptedException {
         int redBlue = 0;
         int blueRed = 0;
         runtime.reset();
-        for(int i=0; i < 5 && opMode.opModeIsActive() && runtime.seconds() < timeoutS; i++){ //Purposefully not even number
+        for(int i=0; i < times && opMode.opModeIsActive() && runtime.seconds() < timeoutS; i++){ //Purposefully not even number
+            opMode.waitOneFullHardwareCycle();
             if (opMode.beacon.getAnalysis().getColorString().equals("red, blue")){
                 redBlue++;
                 opMode.telemetry.addData("redBlue",redBlue);
@@ -61,12 +62,14 @@ public class FTCVisionManager {
                 opMode.telemetry.addData("blueRed",blueRed);
             }else {
                 i--;
-                opMode.telemetry.addData("???, ???",opMode.beacon.getAnalysis());
+                opMode.telemetry.addData("???, ???",opMode.beacon.getAnalysis().getColorString());
             }
-            delay(50); //Let vision process a new frame not get same info
+            delay(75); //Let vision process a new frame not get same info
+            opMode.telemetry.update();
         }
         if(redBlue > blueRed){
             return "redBlue";
+            //return "left";
         }else{
             return "blueRed";
         }

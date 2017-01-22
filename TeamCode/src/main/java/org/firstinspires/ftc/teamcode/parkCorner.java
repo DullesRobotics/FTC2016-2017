@@ -18,8 +18,8 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
  */
 
 
-@Autonomous(name = "AutonV5_BLUE_right")
-public class AutonomousBlueV5 extends LinearVisionOpMode {
+@Autonomous(name = "ParkCorner")
+public class parkCorner extends LinearVisionOpMode {
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;
     final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
     final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
@@ -53,26 +53,14 @@ public class AutonomousBlueV5 extends LinearVisionOpMode {
         autonomousDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         autonomousDrive.resetAll();
         waitForStart(); //Wait for START Button Press on DS
+        autonomousDrive.encoderDrive(1,100,100,1);
         debug(3);
-        autonomousDrive.encoderDrive(.4,170,170,4); //4 seconds = blue
+        autonomousDrive.pointTurn(.5,-15,1.25);
         debug(4);
-        autonomousDrive.pointTurn(.4,22.5,2); //Turn right roughly 90
+        autonomousDrive.encoderDrive(1,-100,-100,4);
         debug(5);
-        servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
-        //autonomousDrive.swipeTillLine(.4,3,autonomousDrive.EOPDWHITELINELIGHTLEVEL);
-        //autonomousDrive.pointTurn(.4,-5,1);
-        //debug(5.1);
-        autonomousDrive.encoderDrive(.4,200,200,3); //Forward
-        debug(6);
-        autonomousDrive.encoderDrive(.2,200,200,2); //Forward slower for beacon
-        //autonomousDrive.pointTurn(.4,-5,1);
-        debug(7);
-        //autonomousDrive.followLine2(6,autonomousDrive.EOPDWHITELINELIGHTLEVEL,4,false);
-        //autonomousDrive.followLine(.4,autonomousDrive.EOPDWHITELINELIGHTLEVEL,10,false);
-        //debug(8);
         stop();
     }
-
     public void debug(double i){
         String num = Double.toString(i);
         if(DEBUG){

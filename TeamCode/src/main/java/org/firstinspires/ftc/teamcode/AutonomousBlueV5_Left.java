@@ -18,8 +18,8 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
  */
 
 
-@Autonomous(name = "AutonV5_BLUE_right")
-public class AutonomousBlueV5 extends LinearVisionOpMode {
+@Autonomous(name = "AutonV5_BLUE_left")
+public class AutonomousBlueV5_Left extends LinearVisionOpMode {
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;
     final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
     final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
@@ -54,11 +54,11 @@ public class AutonomousBlueV5 extends LinearVisionOpMode {
         autonomousDrive.resetAll();
         waitForStart(); //Wait for START Button Press on DS
         debug(3);
-        autonomousDrive.encoderDrive(.4,170,170,4); //4 seconds = blue
+        autonomousDrive.encoderDrive(.4,170,170,4.25); //4 seconds = blue
         debug(4);
         autonomousDrive.pointTurn(.4,22.5,2); //Turn right roughly 90
         debug(5);
-        servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+        servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
         //autonomousDrive.swipeTillLine(.4,3,autonomousDrive.EOPDWHITELINELIGHTLEVEL);
         //autonomousDrive.pointTurn(.4,-5,1);
         //debug(5.1);

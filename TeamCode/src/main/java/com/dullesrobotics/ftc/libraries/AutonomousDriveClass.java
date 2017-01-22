@@ -26,8 +26,8 @@ public class AutonomousDriveClass {
     final static double DISTANCEBETWEENWHEELSINCHES = 14.0;
     final static double POINTTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES/2.0*2.54;
     final static double SWINGTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES * 2.54;
-    //public final static double EOPDWHITELINELIGHTLEVEL = 0.025;
-    public final static double EOPDWHITELINELIGHTLEVEL = 0.084;
+    public final static double EOPDWHITELINELIGHTLEVEL = 0.1;
+    //public final static double EOPDWHITELINELIGHTLEVEL = 0.084;
     private boolean isReversed = false;
     OpticalDistanceSensor ods;
     LinearVisionOpMode opMode;
@@ -146,6 +146,9 @@ public class AutonomousDriveClass {
         //delay(3000);
         if(deg == 0.0){
             return;
+        }
+        if (deg < 0){
+            deg *= 2;
         }
         double leftDistCM = 2.0 * Math.PI * POINTTURNRADIUSCM * deg / 360.0;
         double rightDistCM = -leftDistCM;
