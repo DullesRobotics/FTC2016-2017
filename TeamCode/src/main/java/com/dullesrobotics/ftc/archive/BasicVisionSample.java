@@ -1,33 +1,32 @@
-package org.firstinspires.ftc.teamcode;
+package com.dullesrobotics.ftc.archive;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.lasarobotics.vision.android.Cameras;
 import org.lasarobotics.vision.ftc.resq.Beacon;
-import org.lasarobotics.vision.opmode.LinearVisionOpMode;
+import org.lasarobotics.vision.opmode.VisionOpMode;
 import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
 import org.lasarobotics.vision.util.ScreenOrientation;
-import org.opencv.core.Mat;
 import org.opencv.core.Size;
 
 /**
- * Linear Vision Sample
+ * Basic Vision Sample
  * <p/>
- * Use this in a typical linear op mode. A LinearVisionOpMode allows using
+ * Use this in a typical op mode. A VisionOpMode allows using
  * Vision Extensions, which do a lot of processing for you. Just enable the extension
  * and set its options to your preference!
  * <p/>
- * Please note that the LinearVisionOpMode is specially designed to target a particular
- * version of the FTC Robot Controller app. Changes to the app may break the LinearVisionOpMode.
- * Should this happen, open up an issue on GitHub. :)
+ * The VisionOpMode is the base of all vision processing and other styles of OpMode
+ * even extend the VisionOpMode class! Be sure to extend it if writing your own OpMode structure.
  */
-public class LinearVisionSample extends LinearVisionOpMode {
-
-    //Frame counter
-    int frameCount = 0;
+@Disabled
+@Autonomous(name = "FTCVision Test")
+public class BasicVisionSample extends VisionOpMode {
 
     @Override
-    public void runOpMode() throws InterruptedException {
-        //Wait for vision to initialize - this should be the first thing you do
-        waitForVisionStart();
+    public void init() {
+        super.init();
 
         /**
          * Set the camera used for detection
@@ -55,7 +54,7 @@ public class LinearVisionSample extends LinearVisionOpMode {
          * Set the beacon analysis method
          * Try them all and see what works!
          */
-        beacon.setAnalysisMethod(Beacon.AnalysisMethod.FAST);
+        beacon.setAnalysisMethod(Beacon.AnalysisMethod.COMPLEX);
 
         /**
          * Set color tolerances
@@ -100,43 +99,23 @@ public class LinearVisionSample extends LinearVisionOpMode {
          */
         cameraControl.setColorTemperature(CameraControlExtension.ColorTemperature.AUTO);
         cameraControl.setAutoExposureCompensation();
+    }
 
-        //Wait for the match to begin
-        waitForStart();
+    @Override
+    public void loop() {
+        super.loop();
 
-        //Main loop
-        //Camera frames and OpenCV analysis will be delivered to this method as quickly as possible
-        //This loop will exit once the opmode is closed
-        while (opModeIsActive()) {
-            //Log a few things
-            telemetry.addData("Beacon Color", beacon.getAnalysis().getColorString());
-            telemetry.addData("Beacon Center", beacon.getAnalysis().getLocationString());
-            telemetry.addData("Beacon Confidence", beacon.getAnalysis().getConfidenceString());
-            telemetry.addData("Beacon Buttons", beacon.getAnalysis().getButtonString());
-            telemetry.addData("Screen Rotation", rotation.getScreenOrientationActual());
-            telemetry.addData("Frame Rate", fps.getFPSString() + " FPS");
-            telemetry.addData("Frame Size", "Width: " + width + " Height: " + height);
-            telemetry.addData("Frame Counter", frameCount);
+        telemetry.addData("Beacon Color", beacon.getAnalysis().getColorString());
+        telemetry.addData("Beacon Center", beacon.getAnalysis().getLocationString());
+        telemetry.addData("Beacon Confidence", beacon.getAnalysis().getConfidenceString());
+        telemetry.addData("Beacon Buttons", beacon.getAnalysis().getButtonString());
+        telemetry.addData("Screen Rotation", rotation.getScreenOrientationActual());
+        telemetry.addData("Frame Rate", fps.getFPSString() + " FPS");
+        telemetry.addData("Frame Size", "Width: " + width + " Height: " + height);
+    }
 
-            //You can access the most recent frame data and modify it here using getFrameRgba() or getFrameGray()
-            //Vision will run asynchronously (parallel) to any user code so your programs won't hang
-            //You can use hasNewFrame() to test whether vision processed a new frame
-            //Once you copy the frame, discard it immediately with discardFrame()
-            if (hasNewFrame()) {
-                //Get the frame
-                Mat rgba = getFrameRgba();
-                Mat gray = getFrameGray();
-
-                //Discard the current frame to allow for the next one to render
-                discardFrame();
-
-                //Do all of your custom frame processing here
-                //For this demo, let's just add to a frame counter
-                frameCount++;
-            }
-
-            //Wait for a hardware cycle to allow other processes to run
-            waitOneFullHardwareCycle();
-        }
+    @Override
+    public void stop() {
+        super.stop();
     }
 }

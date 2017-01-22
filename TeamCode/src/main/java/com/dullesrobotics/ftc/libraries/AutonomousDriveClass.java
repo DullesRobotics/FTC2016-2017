@@ -26,7 +26,7 @@ public class AutonomousDriveClass {
     final static double DISTANCEBETWEENWHEELSINCHES = 14.0;
     final static double POINTTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES/2.0*2.54;
     final static double SWINGTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES * 2.54;
-    public final static double EOPDWHITELINELIGHTLEVEL = 0.1;
+    public final static double EOPDWHITELINELIGHTLEVEL = 0.2;
     //public final static double EOPDWHITELINELIGHTLEVEL = 0.084;
     private boolean isReversed = false;
     OpticalDistanceSensor ods;

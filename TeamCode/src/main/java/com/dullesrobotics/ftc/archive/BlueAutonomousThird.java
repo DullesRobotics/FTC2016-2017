@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package com.dullesrobotics.ftc.archive;
 
 import com.dullesrobotics.ftc.libraries.ArcadeDrive;
 import com.dullesrobotics.ftc.libraries.AutonomousDriveClass;
@@ -21,8 +21,8 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 /**
  * Created by Kenneth on 1/7/2017.
  */
-@Autonomous(name = "RedAcidsRoar(BigRed)[RedAuton])")
-public class RedAuton extends LinearVisionOpMode {
+@Autonomous(name = "BlueAutoThird")
+public class BlueAutonomousThird extends LinearVisionOpMode {
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;
     final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
     final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
@@ -38,7 +38,7 @@ public class RedAuton extends LinearVisionOpMode {
     public void runOpMode() throws InterruptedException {
         //Initialize Robot
         robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1, hardwareMap.dcMotor.get("flickerShooter"));
-        autonomousDrive = new AutonomousDriveClass(robot, hardwareMap.opticalDistanceSensor.get("EOPD"));
+        autonomousDrive = new AutonomousDriveClass(this, robot, hardwareMap.opticalDistanceSensor.get("EOPD"));
         servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         ods = hardwareMap.opticalDistanceSensor.get("EOPD");
@@ -92,7 +92,7 @@ public class RedAuton extends LinearVisionOpMode {
             prevStateBtnB = gamepad1.b;
         }
 */
-             //Wait for START Button Press on DS
+            //Wait for START Button Press on DS
             //delay(sleepTime*1000);
 
             //START
@@ -106,7 +106,7 @@ public class RedAuton extends LinearVisionOpMode {
             telemetry.addData("running", "fwd 10 cm");
             robot.getBLM().setTargetPosition((int) (5.0 * TICKSPERCENTIMETER));
             robot.getBRM().setTargetPosition((int) (5.0 * TICKSPERCENTIMETER));
-            robot.getBLM().setPower(0.75);
+            robot.getBLM().setPower(.75);
             robot.getBRM().setPower(0.75);
             while (opModeIsActive() && robot.getBLM().getCurrentPosition() < 5.0 * TICKSPERCENTIMETER) {
                 delay(1);
@@ -118,17 +118,17 @@ public class RedAuton extends LinearVisionOpMode {
                 telemetry.addData("OpMode","Disabled");
                 break;
             }
-            int ticksToGo = (int) (Math.PI * 2.0 * 14.0 * 2.54 / 360.0 * 40.0 * TICKSPERCENTIMETER);
+            int ticksToGo = (int) (Math.PI * 2.0 * 14.0 * 2.54 / 360.0 * 37.0 * TICKSPERCENTIMETER);
 
             //Turn 35
             telemetry.addData("Action", "Turn35");
             autonomousDrive.resetEncoders();
             autonomousDrive.setRUNTOPOSITION();
-            robot.getBRM().setTargetPosition(ticksToGo);
-            robot.getBRM().setPower(0.3);
-            robot.getBLM().setPower(0.0);
+            robot.getBLM().setTargetPosition(ticksToGo);
+            robot.getBLM().setPower(0.3);
+            robot.getBRM().setPower(0.0);
 
-            while (opModeIsActive() && robot.getBRM().getCurrentPosition() < ticksToGo && robot.getBRM().getCurrentPosition() < 100000) {
+            while (opModeIsActive() && robot.getBLM().getCurrentPosition() < ticksToGo && robot.getBLM().getCurrentPosition() < 100000) {
                 delay(1);
             }
             robot.getBRM().setPower(0.0);
@@ -146,8 +146,8 @@ public class RedAuton extends LinearVisionOpMode {
             telemetry.addData("Action", "Go straight till line");
             autonomousDrive.resetEncoders();
             autonomousDrive.setRUNWITHENCODERS();
-            robot.getBLM().setPower(0.3);
-            robot.getBRM().setPower(0.3);
+            robot.getBLM().setPower(.3);
+            robot.getBRM().setPower(.3);
 
             while (opModeIsActive() && robot.getBLM().getCurrentPosition() < 100000 && ods.getLightDetected() < EOPDWHITELINELIGHTLEVEL) {
                 delay(1);
@@ -169,7 +169,7 @@ public class RedAuton extends LinearVisionOpMode {
             robot.getBLM().setTargetPosition((int) (dist * TICKSPERCENTIMETER));
             robot.getBRM().setTargetPosition((int) (dist * TICKSPERCENTIMETER));
             telemetry.addData("Action", "setTargetPos");
-            robot.getBLM().setPower(.75);
+            robot.getBLM().setPower(0.75);
             robot.getBRM().setPower(0.75);
             telemetry.addData("Action", "setPower");
 
@@ -192,19 +192,19 @@ public class RedAuton extends LinearVisionOpMode {
 
             //Turn 65
             //TODO Karim fiddle with this to make sure it faces the beacon head on
-            ticksToGo = (int) (Math.PI * 2.0 * 14.0 * 2.54 / 360.0 * 75.0 * TICKSPERCENTIMETER);
+            ticksToGo = (int) (Math.PI * 2.0 * 14.0 * 2.54 / 360.0 * 65.0 * TICKSPERCENTIMETER);
 
             telemetry.addData("Action", "Turn65");
             autonomousDrive.resetEncoders();
             autonomousDrive.setRUNTOPOSITION();
-            robot.getBRM().setTargetPosition(ticksToGo);
-            robot.getBRM().setPower(0.3);
-            robot.getBLM().setPower(0.0);
+            robot.getBLM().setTargetPosition(ticksToGo);
+            robot.getBLM().setPower(0.3);
+            robot.getBRM().setPower(0.0);
 
-            while (opModeIsActive() && robot.getBRM().getCurrentPosition() < ticksToGo && robot.getBRM().getCurrentPosition() < 100000) {
+            while (opModeIsActive() && robot.getBLM().getCurrentPosition() < ticksToGo && robot.getBLM().getCurrentPosition() < 100000) {
                 delay(1);
             }
-            robot.getBRM().setPower(0.0);
+            robot.getBLM().setPower(0.0);
             if (opModeIsActive()) {
                 telemetry.addData("OpMode","Active");
             } else {
@@ -239,7 +239,7 @@ public class RedAuton extends LinearVisionOpMode {
             robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
             robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
 
-            //SHOULD BE FACONG BEACON
+            //SHOULD BE FACING BEACON
 
         /*End Manuver*/
             //BEGIN read beacon

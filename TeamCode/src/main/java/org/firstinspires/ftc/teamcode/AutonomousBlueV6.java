@@ -24,10 +24,10 @@ public class AutonomousBlueV6 extends LinearVisionOpMode {
     final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
     final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
     private ElapsedTime runtime = new ElapsedTime();
-    RobotWithFlickerShooter robot;
-    AutonomousDriveClass autonomousDrive;
     String currentColorOrder = "???, ???";
     int sleepTime = 0;
+    RobotWithFlickerShooter robot;
+    AutonomousDriveClass autonomousDrive;
     ServoControllerLib servoControllerLib;
     OpticalDistanceSensor ods;
     FTCVisionManager ftcVisionManager;
