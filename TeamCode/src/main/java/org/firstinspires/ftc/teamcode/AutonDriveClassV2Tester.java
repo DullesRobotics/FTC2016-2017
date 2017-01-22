@@ -47,7 +47,7 @@ public class AutonDriveClassV2Tester extends LinearVisionOpMode {
          * INSERT CODE TO TEST BELOW THIS COMMENT
          */
 
-
+        autonomousDrive2.swingTurn(0.5,90.0,5.0);
 
     }
 }

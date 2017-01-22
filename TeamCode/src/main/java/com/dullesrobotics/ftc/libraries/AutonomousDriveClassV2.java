@@ -136,34 +136,46 @@ public class AutonomousDriveClassV2 {
     }
 
     public void pointTurn(double power,double deg,double timeoutS) throws InterruptedException {
-        //delay(3000);
         if(deg == 0.0){
             return;
         }
+        /*
         if (deg < 0){
             deg *= 2;
         }
+        */
         double leftDistCM = 2.0 * Math.PI * POINTTURNRADIUSCM * deg / 360.0;
         double rightDistCM = -leftDistCM;
         encoderDrive(power,leftDistCM,rightDistCM,timeoutS);
     }
 
     public void swingTurn(double power,double deg,double timeoutS) throws InterruptedException {
-        //opMode.telemetry.addData("Old deg vs New deg",deg + " vs " + deg * 20);
-        //opMode.telemetry.update();
-        deg *= 200;
+
+
 
         //degreee greater than 0 is right
         //degree less than 0 is left
         if(deg > 0){
             double leftDistCM = 2.0 * Math.PI * SWINGTURNRADIUSCM * deg / 360.0;
             double rightDistCM = 0;
-            encoderDrive(power,leftDistCM,rightDistCM,timeoutS);
+            resetEncoders();
+            robot.getBLM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.getBRM().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.getBLM().setTargetPosition((int) (TICKSPERCENTIMETER*leftDistCM));
+            robot.getBLM().setPower(power);
+            robot.getBRM().setPower(0.0);
+            while (robot.getBLM().isBusy()){delay(1);}
         }else if (deg < 0){
             deg = Math.abs(deg);
             double leftDistCM = 0;
             double rightDistCM = 2.0 * Math.PI * SWINGTURNRADIUSCM * deg / 360.0;
-            encoderDrive(power,leftDistCM,rightDistCM,timeoutS);
+            resetEncoders();
+            robot.getBRM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.getBLM().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.getBRM().setTargetPosition((int) (TICKSPERCENTIMETER*leftDistCM));
+            robot.getBRM().setPower(power);
+            robot.getBLM().setPower(0.0);
+            while(robot.getBRM().isBusy()){delay(1);}
         }
     }
 
