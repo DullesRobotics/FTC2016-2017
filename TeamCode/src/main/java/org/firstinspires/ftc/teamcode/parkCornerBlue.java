@@ -18,8 +18,8 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
  */
 
 
-@Autonomous(name = "ParkCorner")
-public class parkCorner extends LinearVisionOpMode {
+@Autonomous(name = "ParkCorner_BLUE")
+public class parkCornerBlue extends LinearVisionOpMode {
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;
     final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
     final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
