@@ -189,44 +189,36 @@ public class AutonomousDriveClassV2 {
         runtime.reset();
         boolean hitTimeOut = false;
         // Ensure that the opmode is still active
-        //delay(250);
-        leftCM *= 5;
-        rightCM *= 5;
         if (opMode.opModeIsActive()) {
             debug(1);
-            //delay(250);
             // Determine new target position, and pass to motor controller
             newLeftTarget = robot.getBLM().getCurrentPosition() + (int)(leftCM * TICKSPERCENTIMETER);
             newRightTarget = robot.getBRM().getCurrentPosition() + (int)(rightCM * TICKSPERCENTIMETER);
             robot.getBLM().setTargetPosition(newLeftTarget);
             robot.getBRM().setTargetPosition(newRightTarget);
             debug(2);
-            delay(250);
             // Turn On RUN_TO_POSITION
             robot.getBLM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.getBRM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
             debug(3);
-            delay(250);
-            // reset the timeout time and start motion.
             runtime.reset();
             robot.getBLM().setPower(Math.abs(speed));
             robot.getBRM().setPower(Math.abs(speed));
             debug(4);
-            delay(250);
             // keep looping while we are still active, and there is time left, and both motors are running.
-            opMode.telemetry.addData("Status1",opMode.opModeIsActive());
-            opMode.telemetry.addData("Status2",(runtime.seconds() < timeoutS));
-            opMode.telemetry.addData("Status3",(robot.getBLM().isBusy() && robot.getBRM().isBusy()));
+            opMode.telemetry.addData("opModeisActive",opMode.opModeIsActive());
+            opMode.telemetry.addData("runtime.seconds() < timeoutS",(runtime.seconds() < timeoutS));
+            opMode.telemetry.addData("at least one motor Busy",(robot.getBLM().isBusy() || robot.getBRM().isBusy()));
             opMode.telemetry.update();
 
             while (opMode.opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.getBLM().isBusy() && robot.getBRM().isBusy())) {
-                opMode.waitOneFullHardwareCycle();
+                    (robot.getBLM().isBusy() || robot.getBRM().isBusy())) {
+                delay(1);
 
                 // Display it for the driver.
-                opMode.telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
-                opMode.telemetry.addData("Path2",  "Running at %7d :%7d",
+                opMode.telemetry.addData("Targets",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
+                opMode.telemetry.addData("CurrentPos",  "Running at %7d :%7d",
                         robot.getBLM().getCurrentPosition(),
                         robot.getBRM().getCurrentPosition());
                 opMode.telemetry.update();
@@ -236,10 +228,7 @@ public class AutonomousDriveClassV2 {
                     break;
                 }
                 debug(6);
-                // if (!opMode.opModeIsActive()){
-                // opMode.stop();
-                //break;
-                //}
+
             }
             debug(7);
             // Stop all motion;
