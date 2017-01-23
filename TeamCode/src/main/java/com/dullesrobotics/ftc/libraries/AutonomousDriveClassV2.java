@@ -256,6 +256,82 @@ public class AutonomousDriveClassV2 {
         debug(10);
         return hitTimeOut;
     }
+
+    public boolean encoderDriveInches  (double speed,
+                                  double leftIn, double rightIn,
+                                  double timeoutS) throws InterruptedException {
+        int newLeftTarget;
+        int newRightTarget;
+        leftIn *= 2.54;
+        rightIn *= 2.54;
+        //robot.getBLM().set
+        this.resetEncoders();
+        runtime.reset();
+        boolean hitTimeOut = false;
+        // Ensure that the opmode is still active
+        if (opMode.opModeIsActive()) {
+            debug(1);
+            // Determine new target position, and pass to motor controller
+            newLeftTarget = robot.getBLM().getCurrentPosition() + (int)(leftIn * TICKSPERCENTIMETER);
+            newRightTarget = robot.getBRM().getCurrentPosition() + (int)(rightIn * TICKSPERCENTIMETER);
+            robot.getBLM().setTargetPosition(newLeftTarget);
+            robot.getBRM().setTargetPosition(newRightTarget);
+            debug(2);
+            // Turn On RUN_TO_POSITION
+            robot.getBLM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.getBRM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            debug(3);
+            runtime.reset();
+            robot.getBLM().setPower(Math.abs(speed));
+            robot.getBRM().setPower(Math.abs(speed));
+            debug(4);
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            opMode.telemetry.addData("opModeisActive",opMode.opModeIsActive());
+            opMode.telemetry.addData("runtime.seconds() < timeoutS",(runtime.seconds() < timeoutS));
+            opMode.telemetry.addData("at least one motor Busy",(robot.getBLM().isBusy() || robot.getBRM().isBusy()));
+            opMode.telemetry.update();
+
+            while (opMode.opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (robot.getBLM().isBusy() || robot.getBRM().isBusy())) {
+                delay(1);
+
+                // Display it for the driver.
+                opMode.telemetry.addData("Targets",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
+                opMode.telemetry.addData("CurrentPos",  "Running at %7d :%7d",
+                        robot.getBLM().getCurrentPosition(),
+                        robot.getBRM().getCurrentPosition());
+                opMode.telemetry.update();
+                debug(5);
+                if(runtime.seconds() > timeoutS){
+                    hitTimeOut = true;
+                    break;
+                }
+                debug(6);
+
+            }
+            debug(7);
+            // Stop all motion;
+            robot.getBLM().setPower(0);
+            robot.getBRM().setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            robot.getBLM().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.getBRM().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            //if (!opMode.opModeIsActive()){
+            //opMode.stop();
+            ///}
+
+            //delay(250);   // optional pause after each move
+
+        } else {
+            debug(-1);
+            //opMode.stop();
+        }
+        debug(10);
+        return hitTimeOut;
+    }
+
     public boolean isReversed(){
         return isReversed;
     }
