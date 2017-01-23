@@ -13,6 +13,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
+import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
+
 /**
  * Created by nimir on 1/22/2017.
  */
@@ -36,17 +38,16 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         this.resetStartTime();
         debug(1);
         //Initialize Robot
+        ftcVisionManager = new FTCVisionManager(this, Beacon.AnalysisMethod.FAST);
+        ftcVisionManager.initFTCVision();
         robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1, hardwareMap.dcMotor.get("flickerShooter"));
-        autonomousDrive = new AutonomousDriveClassV2(this, robot, hardwareMap.opticalDistanceSensor.get("EOPD"));
+        autonomousDrive = new AutonomousDriveClassV2(this, robot, hardwareMap.opticalDistanceSensor.get("EOPD"),servoControllerLib,ftcVisionManager);
         servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         ods = hardwareMap.opticalDistanceSensor.get("EOPD");
         servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
         autonomousDrive.resetEncoders();
         debug(2);
-        //Sets Up Camera
-        ftcVisionManager = new FTCVisionManager(this, Beacon.AnalysisMethod.FAST);
-        ftcVisionManager.initFTCVision();
         autonomousDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         autonomousDrive.resetAll();
         waitForStart(); //Wait for START Button Press on DS
@@ -66,36 +67,8 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         autonomousDrive.encoderDrive(1,30,30,1); //Go forward around 1 foot to get closer to beacon
         debug(10);
         String beaconAnalysisOne = ftcVisionManager.readBeacon(9,10); //redBlue = blue on left, blueRed = blue on right
-        readAndPush(beaconAnalysisOne); //Theoretically should push beacon till its changed
-        debug(23);
-    }
-
-    public void readAndPush(String analysis) throws InterruptedException{
-        //Assuming the beacon is randomized, which it should be.....
-        waitOneFullHardwareCycle();
-        if (analysis.equals("redBlue")) { //Blue is on left
-            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
-            autonomousDrive.encoderDrive(.4, 100, 100, 5);
-            autonomousDrive.encoderDrive(.4, -100, -100, 5);
-            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
-            telemetry.addData("read and push status","Pushed left");
-            telemetry.update();
-        } else {
-            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
-            autonomousDrive.encoderDrive(.4, 100, 100, 5);
-            autonomousDrive.encoderDrive(.4, -100, -100, 5);
-            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
-            telemetry.addData("read and push status","Pushed right");
-            telemetry.update();
-        }
-        String ourAnalysis = ftcVisionManager.readBeacon(9,10);
-        if (ourAnalysis.equals(analysis)){
-            telemetry.addData("read and push status","Trying again");
-            telemetry.update();
-            readAndPush(ourAnalysis);
-        }
-        telemetry.addData("read and push status","Successfully completed!");
-        telemetry.update();
+        autonomousDrive.readAndPush(beaconAnalysisOne,3); //Theoretically should push beacon 3 times unless its changed
+        debug(11);
     }
 
     public void debug(double i) throws InterruptedException{

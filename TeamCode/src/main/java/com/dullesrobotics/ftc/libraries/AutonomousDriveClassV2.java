@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
@@ -32,6 +33,8 @@ public class AutonomousDriveClassV2 {
     OpticalDistanceSensor ods;
     LinearVisionOpMode opMode;
     private ElapsedTime runtime;
+    ServoControllerLib servoControllerLib;
+    FTCVisionManager ftcVisionManager;
     //SensorListener sensorListener;
     //float heading;
 /*
@@ -43,39 +46,41 @@ public class AutonomousDriveClassV2 {
     public AutonomousDriveClassV2(BasicRobot r) {
         robot = r;
     }
-    public AutonomousDriveClassV2(LinearVisionOpMode op, BasicRobot r, OpticalDistanceSensor o) {
+    public AutonomousDriveClassV2(LinearVisionOpMode op, BasicRobot r, OpticalDistanceSensor o, ServoControllerLib servoLib, FTCVisionManager vision) {
         robot = r;
         ods = o;
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         opMode = op;
         runtime  = new ElapsedTime();
+        servoControllerLib = servoLib;
+        ftcVisionManager = vision;
     }
 
-    public int getMaxCurrentPos(){
+    public int getMaxCurrentPos() throws InterruptedException{
         return Math.max(robot.getBLM().getCurrentPosition(),robot.getBRM().getCurrentPosition());
     }
 
-    public void setRUNWITHENCODERS(){
+    public void setRUNWITHENCODERS() throws InterruptedException{
         robot.getBLM().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.getBRM().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    public void setRUNWITHOUTENCODERS(){
+    public void setRUNWITHOUTENCODERS() throws InterruptedException{
         robot.getBLM().setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.getBRM().setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
-    public void setRUNTOPOSITION(){
+    public void setRUNTOPOSITION() throws InterruptedException{
         robot.getBLM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.getBRM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
-    public void resetEncoders(){
+    public void resetEncoders() throws InterruptedException{
         robot.getBLM().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.getBRM().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
-    public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior zeroPowerBehavior){
+    public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior zeroPowerBehavior) throws InterruptedException{
         robot.getBLM().setZeroPowerBehavior(zeroPowerBehavior);
         robot.getBRM().setZeroPowerBehavior(zeroPowerBehavior);
     }
-    public void switchDirection(){
+    public void switchDirection() throws InterruptedException{
         if(isReversed){
             //Unreverse
             robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
@@ -87,12 +92,12 @@ public class AutonomousDriveClassV2 {
             isReversed = true;
         }
     }
-    public void setDirectionReverse(){
+    public void setDirectionReverse() throws InterruptedException{
         robot.getBLM().setDirection(DcMotorSimple.Direction.FORWARD);
         robot.getBRM().setDirection(DcMotorSimple.Direction.REVERSE);
         isReversed = true;
     }
-    public void setDirectionNotReversed(){
+    public void setDirectionNotReversed() throws InterruptedException{
         //Unreverse
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         robot.getBRM().setDirection(DcMotorSimple.Direction.FORWARD);
@@ -394,7 +399,43 @@ public class AutonomousDriveClassV2 {
         }
     }
 
-    public void resetAll(){
+    public void readAndPush(String analysis,int goalTries) throws InterruptedException{
+        //Assuming the beacon is randomized, which it should be.....
+        int tries = 0;
+        opMode.waitOneFullHardwareCycle();
+        if (analysis.equals("redBlue")) { //Blue is on left
+            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+            encoderDrive(.4, 100, 100, 5);
+            encoderDrive(.4, -100, -100, 5);
+            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+            opMode.telemetry.addData("read and push status","Pushed left");
+            opMode.telemetry.update();
+        } else {
+            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+            encoderDrive(.4, 100, 100, 5);
+            encoderDrive(.4, -100, -100, 5);
+            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+            opMode.telemetry.addData("read and push status","Pushed right");
+            opMode.telemetry.update();
+        }
+        String ourAnalysis = ftcVisionManager.readBeacon(9,10);
+        if (ourAnalysis.equals(analysis)){
+            opMode.telemetry.addData("read and push status","Trying again");
+            opMode.telemetry.update();
+            if (tries < goalTries) {
+                delay(5000); //Waits 5 seconds
+                tries++;
+                readAndPush(ourAnalysis,goalTries);
+            } else {
+                opMode.telemetry.addData("read and push status","Ran out of tries :(");
+                opMode.telemetry.update();
+            }
+        }
+        opMode.telemetry.addData("read and push status","Successfully completed! Tries: " + tries);
+        opMode.telemetry.update();
+    }
+
+    public void resetAll() throws InterruptedException{
         this.resetEncoders();
         runtime.reset();
     }
