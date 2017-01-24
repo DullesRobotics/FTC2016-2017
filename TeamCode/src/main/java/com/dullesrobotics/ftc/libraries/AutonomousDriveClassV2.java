@@ -23,7 +23,9 @@ public class AutonomousDriveClassV2 {
     BasicRobot robot;
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;
     final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
-    final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
+    //final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
+    final static double TICKSPERCENTIMETER = 72.907553222513852435112277631963;
+    //final static double TICKSPERCENTIMETER = 109.36132983377077865266841644794;
     final static double DISTANCEBETWEENWHEELSINCHES = 14.0;
     final static double POINTTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES/(2.0*2.54);
     final static double SWINGTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES * 2.54;
@@ -151,7 +153,8 @@ public class AutonomousDriveClassV2 {
             deg *= 2;
         }
         */
-        double leftDistCM = (2.0 * Math.PI * POINTTURNRADIUSCM * deg)/ 360.0;
+        //double leftDistCM = (2.0 * Math.PI * POINTTURNRADIUSCM * deg)/ 360.0;
+        double leftDistCM = (((deg/360) * 2.0 * Math.PI)* 7.0) * 2.54;
         double rightDistCM = -leftDistCM;
         encoderDrive(power,leftDistCM,rightDistCM,timeoutS);
     }
