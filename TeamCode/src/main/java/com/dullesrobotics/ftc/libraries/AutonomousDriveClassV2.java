@@ -156,6 +156,8 @@ public class AutonomousDriveClassV2 {
         //double leftDistCM = (2.0 * Math.PI * POINTTURNRADIUSCM * deg)/ 360.0;
         double leftDistCM = (((deg/360) * 2.0 * Math.PI)* 7.0) * 2.54;
         double rightDistCM = -leftDistCM;
+        opMode.telemetry.addData("leftDistCM",leftDistCM);
+        opMode.telemetry.update();
         encoderDrive(power,leftDistCM,rightDistCM,timeoutS);
     }
 
