@@ -146,13 +146,6 @@ public class AutonomousDriveClassV2 {
         if(deg == 0.0){
             return;
         }
-        //deg *= 360;
-        //deg *= 5;
-        /*
-        if (deg < 0){
-            deg *= 2;
-        }
-        */
         //double leftDistCM = (2.0 * Math.PI * POINTTURNRADIUSCM * deg)/ 360.0;
         double leftDistCM = (((deg/360) * 2.0 * Math.PI)* 7.0) * 2.54;
         double rightDistCM = -leftDistCM;
@@ -162,9 +155,6 @@ public class AutonomousDriveClassV2 {
     }
 
     public void swingTurn(double power,double deg,double timeoutS) throws InterruptedException {
-
-
-
         //degreee greater than 0 is right
         //degree less than 0 is left
         if(deg > 0){
@@ -176,7 +166,7 @@ public class AutonomousDriveClassV2 {
             robot.getBLM().setTargetPosition((int) (TICKSPERCENTIMETER*leftDistCM));
             robot.getBLM().setPower(power);
             robot.getBRM().setPower(0.0);
-            while (robot.getBLM().isBusy()){delay(1);}
+            while (robot.getBLM().isBusy() && opMode.opModeIsActive()){delay(1); opMode.waitOneFullHardwareCycle();}
         }else if (deg < 0){
             deg = Math.abs(deg);
             double leftDistCM = 0;
@@ -187,7 +177,7 @@ public class AutonomousDriveClassV2 {
             robot.getBRM().setTargetPosition((int) (TICKSPERCENTIMETER*leftDistCM));
             robot.getBRM().setPower(power);
             robot.getBLM().setPower(0.0);
-            while(robot.getBRM().isBusy()){delay(1);}
+            while(robot.getBRM().isBusy() && opMode.opModeIsActive()){delay(1);opMode.waitOneFullHardwareCycle();}
         }
     }
 
@@ -222,12 +212,10 @@ public class AutonomousDriveClassV2 {
             opMode.telemetry.addData("runtime.seconds() < timeoutS",(runtime.seconds() < timeoutS));
             opMode.telemetry.addData("at least one motor Busy",(robot.getBLM().isBusy() || robot.getBRM().isBusy()));
             opMode.telemetry.update();
-
             while (opMode.opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
                     (robot.getBLM().isBusy() || robot.getBRM().isBusy())) {
                 delay(1);
-
                 // Display it for the driver.
                 opMode.telemetry.addData("Targets",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
                 opMode.telemetry.addData("CurrentPos",  "Running at %7d :%7d",
