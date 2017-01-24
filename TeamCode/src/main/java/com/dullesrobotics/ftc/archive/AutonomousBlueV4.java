@@ -7,6 +7,7 @@ import com.dullesrobotics.ftc.libraries.FTCVisionManager;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
@@ -24,6 +25,7 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 /**
  * Created by Kenneth on 1/7/2017.
  */
+@Disabled
 @Autonomous(name = "AutonV4BLUE")
 public class AutonomousBlueV4 extends LinearVisionOpMode {
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;

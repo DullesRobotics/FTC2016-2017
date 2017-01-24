@@ -5,6 +5,7 @@ import com.dullesrobotics.ftc.libraries.AutonomousDriveClassV2;
 import com.dullesrobotics.ftc.libraries.FTCVisionManager;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
@@ -19,6 +20,7 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
  * Created by nimir on 1/22/2017.
  */
 
+@Autonomous(name = "AutonomousV6.1 BLUE")
 public class AutonomousBlueV6_1 extends LinearVisionOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     String currentColorOrder = "???, ???";
@@ -52,19 +54,19 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         autonomousDrive.resetAll();
         waitForStart(); //Wait for START Button Press on DS
         debug(3);
-        autonomousDrive.encoderDrive(1,60.96,60.96,2); //Go forward 2 feet
+        autonomousDrive.encoderDriveInches(.4,12,12,2.5);
         debug(4);
-        autonomousDrive.pointTurn(1,22.25,2); //Turn right
+        autonomousDrive.pointTurn(.4,45,3); //Turn right
         debug(5);
-        autonomousDrive.encoderDrive(1,15.24,15.25,1); //Go forward 6 inches
+        autonomousDrive.encoderDriveInches(.4,6,6,1); //Go forward 6 inches
         debug(6);
-        autonomousDrive.pointTurn(1,-22.25,2); //Turn left
+        autonomousDrive.pointTurn(.4,-45,2); //Turn left
         debug(7);
-        autonomousDrive.encoderDrive(1,91.44,91.44,4.5); //Forward 3 feet (robot should be in front of beacon now)
+        autonomousDrive.encoderDriveInches(.4,24,24,4.5); //Forward 3 feet (robot should be in front of beacon now)
         debug(8);
-        autonomousDrive.pointTurn(1,22.25,2); //Turn roughly 90 to face beacon
+        autonomousDrive.pointTurn(.4,90,2); //Turn roughly 90 to face beacon
         debug(9);
-        autonomousDrive.encoderDrive(1,30,30,1); //Go forward around 1 foot to get closer to beacon
+        autonomousDrive.encoderDriveInches(.4,12,12,1); //Go forward around 1 foot to get closer to beacon
         debug(10);
         String beaconAnalysisOne = ftcVisionManager.readBeacon(9,10); //redBlue = blue on left, blueRed = blue on right
         autonomousDrive.readAndPush(beaconAnalysisOne,3); //Theoretically should push beacon 3 times unless its changed

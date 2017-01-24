@@ -1,5 +1,6 @@
 package com.dullesrobotics.ftc.archive;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 /**
  * Created by Kenneth on 11/3/2016.
  */
+@Disabled
 @TeleOp(name = "Tank Drive")
 public class TankDrive extends OpMode {
     DcMotor leftMotor;

@@ -25,7 +25,7 @@ public class AutonomousDriveClassV2 {
     final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
     final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
     final static double DISTANCEBETWEENWHEELSINCHES = 14.0;
-    final static double POINTTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES/2.0*2.54;
+    final static double POINTTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES/(2.0*2.54);
     final static double SWINGTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES * 2.54;
     public final static double EOPDWHITELINELIGHTLEVEL = 0.2;
     //public final static double EOPDWHITELINELIGHTLEVEL = 0.084;
@@ -144,12 +144,14 @@ public class AutonomousDriveClassV2 {
         if(deg == 0.0){
             return;
         }
+        //deg *= 360;
+        //deg *= 5;
         /*
         if (deg < 0){
             deg *= 2;
         }
         */
-        double leftDistCM = 2.0 * Math.PI * POINTTURNRADIUSCM * deg / 360.0;
+        double leftDistCM = (2.0 * Math.PI * POINTTURNRADIUSCM * deg)/ 360.0;
         double rightDistCM = -leftDistCM;
         encoderDrive(power,leftDistCM,rightDistCM,timeoutS);
     }

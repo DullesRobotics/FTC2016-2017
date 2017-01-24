@@ -26,6 +26,7 @@ public class EncoderDistanceMeasure extends LinearOpMode {
     OpticalDistanceSensor ods;
     @Override
     public void runOpMode() throws InterruptedException {
+        waitForStart();
         robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1, hardwareMap.dcMotor.get("flickerShooter"));
         servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
@@ -40,8 +41,8 @@ public class EncoderDistanceMeasure extends LinearOpMode {
         robot.getBLM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.getBRM().setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        robot.getBLM().setTargetPosition(10000);
-        robot.getBRM().setTargetPosition(10000);
+        robot.getBLM().setTargetPosition(5000);
+        robot.getBRM().setTargetPosition(5000); //54 inhces
 
         telemetry.addData("Starting Left Pos",robot.getBLM().getCurrentPosition());
         telemetry.addData("Starting Right Pos",robot.getBRM().getCurrentPosition());
