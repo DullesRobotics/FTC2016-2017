@@ -54,7 +54,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         autonomousDrive.resetAll();
         waitForStart(); //Wait for START Button Press on DS
         debug(3);
-        autonomousDrive.encoderDriveInches(.4,12,12,2.5);
+        autonomousDrive.encoderDriveInches(.4,12,12,2.5); //Forward 1 ft
         debug(4);
         autonomousDrive.pointTurn(.4,45,3); //Turn right
         debug(5);
@@ -62,7 +62,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         debug(6);
         autonomousDrive.pointTurn(.4,-45,2); //Turn left
         debug(7);
-        autonomousDrive.encoderDriveInches(.4,24,24,4.5); //Forward 3 feet (robot should be in front of beacon now)
+        autonomousDrive.encoderDriveInches(.4,24,24,4.5); //Forward 3 feet (robot should be in front of beacon now, not facing)
         debug(8);
         autonomousDrive.pointTurn(.4,90,2); //Turn roughly 90 to face beacon
         debug(9);
