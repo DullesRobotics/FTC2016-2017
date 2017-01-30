@@ -403,33 +403,49 @@ public class AutonomousDriveClassV2 {
         }
     }
 
-    public void readAndPush(String analysis,int goalTries) throws InterruptedException{
+    public void readAndPush(String analysis,int goalTries, String teamOn) throws InterruptedException{ //Might not work if blue is on right...
         //Assuming the beacon is randomized, which it should be.....
         int tries = 0;
         opMode.waitOneFullHardwareCycle();
         if (analysis.equals("redBlue")) { //Blue is on left
-            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+            if (teamOn.toLowerCase().equals("blue")) {
+                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+            } else {
+                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+            }
             encoderDrive(.4, 100, 100, 5);
             encoderDrive(.4, -100, -100, 5);
-            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+            if (teamOn.toLowerCase().equals("blue")) {
+                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+            } else {
+                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+            }
             opMode.telemetry.addData("read and push status","Pushed left");
             opMode.telemetry.update();
         } else {
-            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+            if (teamOn.toLowerCase().equals("red")) {
+                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+            } else {
+                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+            }
             encoderDrive(.4, 100, 100, 5);
             encoderDrive(.4, -100, -100, 5);
-            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+            if (teamOn.toLowerCase().equals("red")) {
+                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+            } else {
+                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+            }
             opMode.telemetry.addData("read and push status","Pushed right");
             opMode.telemetry.update();
         }
         String ourAnalysis = ftcVisionManager.readBeacon(9,10);
-        if (ourAnalysis.equals(analysis)){
-            opMode.telemetry.addData("read and push status","Trying again");
+        if (ourAnalysis.equals(analysis)){ //Add && !(analysis.equals("blueRed")) if it doesnt work with Blue on the right
+            opMode.telemetry.addData("read and push status","Trying again in 5 seconds");
             opMode.telemetry.update();
             if (tries < goalTries) {
                 delay(5000); //Waits 5 seconds
                 tries++;
-                readAndPush(ourAnalysis,goalTries);
+                readAndPush(ourAnalysis,goalTries,teamOn);
             } else {
                 opMode.telemetry.addData("read and push status","Ran out of tries :(");
                 opMode.telemetry.update();
