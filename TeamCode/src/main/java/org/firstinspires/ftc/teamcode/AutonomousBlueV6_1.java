@@ -69,7 +69,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         autonomousDrive.encoderDriveInches(.4,12,12,1); //Go forward around 1 foot to get closer to beacon
         debug(10);
         String beaconAnalysisOne = ftcVisionManager.readBeacon(9,10); //redBlue = blue on left, blueRed = blue on right
-        autonomousDrive.readAndPush(beaconAnalysisOne,3); //Theoretically should push beacon till it changes (3 = max tries)
+        autonomousDrive.readAndPush(beaconAnalysisOne,3,"blue"); //Theoretically should push beacon till it changes (3 = max tries)
         debug(11);
     }
 

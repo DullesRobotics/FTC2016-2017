@@ -518,6 +518,10 @@ public final class Beacon {
                     (right == BeaconColor.BLUE_BRIGHT || right == BeaconColor.RED_BRIGHT);
         }
 
+
+        public boolean isBeaconRed(){
+            return (left == BeaconColor.RED && right == BeaconColor.RED);
+        }
         /**
          * Get a string representing the colors of the beacon
          *

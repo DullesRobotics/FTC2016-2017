@@ -155,10 +155,15 @@ public class CameraTestVisionOpMode extends TestableVisionOpMode {
 
         //Display Beacon Center
         Drawing.drawText(rgba, "Center: " + beacon.getAnalysis().getCenter().toString(), new Point(0, 78), 1.0f, new ColorRGBA("#ffffff"));
-
+/*
         //Display analysis method
         Drawing.drawText(rgba, beacon.getAnalysisMethod().toString() + " Analysis",
                 new Point(width - 300, 40), 1.0f, new ColorRGBA("#FFC107"));
+*/
+        //Display analysis method
+        Drawing.drawText(rgba, beacon.getAnalysis().isLeftBlue() + " Analysis K" + beacon.getAnalysis().isBeaconRed(),
+                new Point(width - 300, 40), 1.0f, new ColorRGBA("#FFC107"));
+
 
         //Display rotation sensor compensation
         Drawing.drawText(rgba, "Rot: " + rotation.getRotationCompensationAngle()
