@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.lasarobotics.vision.ftc.resq.Beacon;
@@ -34,6 +35,14 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
     final boolean bothBeacons = false;
     final boolean parkCorner = false;
 
+    final static double CATAPAULT_ONE_INIT = 0;
+    final static double CATAPAULT_TWO_INIT = 0;
+
+    final static double CATAPAULT_ONE_FIRE = 0;
+    final static double CATAPAULT_TWO_FIRE = 0;
+
+    private Servo[] servos = {hardwareMap.servo.get("btnServo"), hardwareMap.servo.get("catapaultOne"),hardwareMap.servo.get("catapaultTwo")};
+
     @Override
     public void runOpMode() throws InterruptedException {
         waitForVisionStart();
@@ -44,7 +53,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         ftcVisionManager.initFTCVision();
         robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1, hardwareMap.dcMotor.get("flickerShooter"));
         autonomousDrive = new AutonomousDriveClassV2(this, robot, hardwareMap.opticalDistanceSensor.get("EOPD"),servoControllerLib,ftcVisionManager);
-        servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
+        servoControllerLib = new ServoControllerLib(servos);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         ods = hardwareMap.opticalDistanceSensor.get("EOPD");
         servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
@@ -52,7 +61,12 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         debug(2);
         autonomousDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         autonomousDrive.resetAll();
+        servoControllerLib.setDegrees(CATAPAULT_ONE_INIT,1);
+        servoControllerLib.setDegrees(CATAPAULT_TWO_INIT,2);
         waitForStart(); //Wait for START Button Press on DS
+        delay(1000);
+        autonomousDrive.fireCatapault(CATAPAULT_ONE_FIRE,1);
+        autonomousDrive.fireCatapault(CATAPAULT_TWO_FIRE,2);
         debug(3);
         autonomousDrive.encoderDriveInches(.4,12,12,2.5); //Forward 1 ft
         debug(4);
