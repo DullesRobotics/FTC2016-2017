@@ -22,6 +22,13 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
  *
  * EXPLANATION:
  * This OpMode should make the robot:
+ * -Init Servos
+ * -Wait For Start Button
+ * -Wait an additional one second
+ * -Fire Catapult One
+ * -Wait one second
+ * -Fire Catapult Two
+ * -Wait one second
  * -Go forward 1 foot
  * -Turn Right
  * -Go forward 6 inches
