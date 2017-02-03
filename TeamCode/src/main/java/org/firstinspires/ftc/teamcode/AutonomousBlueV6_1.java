@@ -35,11 +35,11 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
     final boolean bothBeacons = false;
     final boolean parkCorner = false;
 
-    final static double CATAPAULT_ONE_INIT = 0;
-    final static double CATAPAULT_TWO_INIT = 0;
+    final static double CATAPULT_ONE_INIT = 0; //Degrees to move to during Init
+    final static double CATAPULT_TWO_INIT = 0;
 
-    final static double CATAPAULT_ONE_FIRE = 0;
-    final static double CATAPAULT_TWO_FIRE = 0;
+    final static double CATAPULT_ONE_FIRE = 0; //Degrees to move to to fire catapault
+    final static double CATAPULT_TWO_FIRE = 0;
 
     private Servo[] servos = {hardwareMap.servo.get("btnServo"), hardwareMap.servo.get("catapaultOne"),hardwareMap.servo.get("catapaultTwo")};
 
@@ -61,12 +61,12 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         debug(2);
         autonomousDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         autonomousDrive.resetAll();
-        servoControllerLib.setDegrees(CATAPAULT_ONE_INIT,1);
-        servoControllerLib.setDegrees(CATAPAULT_TWO_INIT,2);
+        servoControllerLib.setDegrees(CATAPULT_ONE_INIT,1);
+        servoControllerLib.setDegrees(CATAPULT_TWO_INIT,2);
         waitForStart(); //Wait for START Button Press on DS
         delay(1000);
-        autonomousDrive.fireCatapault(CATAPAULT_ONE_FIRE,1);
-        autonomousDrive.fireCatapault(CATAPAULT_TWO_FIRE,2);
+        autonomousDrive.fireCatapult(CATAPULT_ONE_FIRE,1);
+        autonomousDrive.fireCatapult(CATAPULT_TWO_FIRE,2);
         debug(3);
         autonomousDrive.encoderDriveInches(.4,12,12,2.5); //Forward 1 ft
         debug(4);
