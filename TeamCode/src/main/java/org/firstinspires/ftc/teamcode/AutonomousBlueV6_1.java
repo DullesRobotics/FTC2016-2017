@@ -19,6 +19,20 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 
 /**
  * Created by nimir on 1/22/2017.
+ *
+ * EXPLANATION:
+ * This OpMode should make the robot:
+ * -Go forward 1 foot
+ * -Turn Right
+ * -Go forward 6 inches
+ * -Turn Left
+ * (It should now be facing forward, but infront of the corner vortex, this will make it less prone to hitting the cap-ball)
+ * -Go forward 3 feet (Robot should now be in front of beacon, but not facing it)
+ * -Turn right (Facing beacon now)
+ * -Go forward 1 foot (to get closer to beacon)
+ * --TODO: Attempt to add FollowLine here
+ * -Begins reading beacon and attempts to push it till the beacon is the correct color
+ * --End of OpMode
  */
 
 @Autonomous(name = "AutonomousV6.1 BLUE")
@@ -66,7 +80,9 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         waitForStart(); //Wait for START Button Press on DS
         delay(1000);
         autonomousDrive.fireCatapult(CATAPULT_ONE_FIRE,1);
+        delay(1000);
         autonomousDrive.fireCatapult(CATAPULT_TWO_FIRE,2);
+        delay(1000);
         debug(3);
         autonomousDrive.encoderDriveInches(.4,12,12,2.5); //Forward 1 ft
         debug(4);
