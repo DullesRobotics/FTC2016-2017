@@ -60,7 +60,7 @@ public class AutonomousDriveClassV2 {
         ftcVisionManager = vision;
     }
 
-    public void fireCatapault(double degrees,int servoIndex){
+    public void fireCatapult(double degrees,int servoIndex) throws InterruptedException{
         servoControllerLib.setDegrees(degrees,servoIndex);
     }
 
