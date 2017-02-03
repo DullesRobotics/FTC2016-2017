@@ -21,11 +21,12 @@ public class FTCVisionManager {
     Beacon.AnalysisMethod analysisMethod;
     public ElapsedTime runtime;
 
-    public FTCVisionManager(LinearVisionOpMode op, Beacon.AnalysisMethod aM){
+    public FTCVisionManager(LinearVisionOpMode op, Beacon.AnalysisMethod aM) {
         opMode = op;
         analysisMethod = aM;
         runtime = new ElapsedTime();
     }
+
     public void initFTCVision() throws InterruptedException {
         opMode.waitForVisionStart();
         opMode.setCamera(Cameras.PRIMARY);
@@ -44,63 +45,66 @@ public class FTCVisionManager {
     }
 
     /**
-     *
-     * @param times make sure this is an odd number to prevent a forced decision. A recommended value is between 3 and 11 - I like 5
+     * @param times    make sure this is an odd number to prevent a forced decision. A recommended value is between 3 and 11 - I like 5
      * @param timeoutS Set timeout - if processing is not done by this time, return best guess
      */
-    public String readBeacon(int times,double timeoutS) throws InterruptedException {
+    public String readBeacon(int times, double timeoutS) throws InterruptedException {
         int redBlue = 0;
         int blueRed = 0;
         runtime.reset();
-        if(times%2 == 0)
+        if (times % 2 == 0)
             times++;
-        for(int i=0; i < times && opMode.opModeIsActive() && runtime.seconds() < timeoutS; i++){ //Purposefully not even number
+        for (int i = 0; i < times && opMode.opModeIsActive() && runtime.seconds() < timeoutS; i++) { //Purposefully not even number
             opMode.waitOneFullHardwareCycle();
-            if (opMode.beacon.getAnalysis().getColorString().equals("red, blue")){
+            if (opMode.beacon.getAnalysis().getColorString().equals("red, blue")) {
                 redBlue++;
-                opMode.telemetry.addData("redBlue",redBlue);
-            }else if (opMode.beacon.getAnalysis().getColorString().equals("blue, red")){
+                opMode.telemetry.addData("redBlue", redBlue);
+            } else if (opMode.beacon.getAnalysis().getColorString().equals("blue, red")) {
                 blueRed++;
-                opMode.telemetry.addData("blueRed",blueRed);
-            }else {
+                opMode.telemetry.addData("blueRed", blueRed);
+            } else {
                 i--;
-                opMode.telemetry.addData("???, ???",opMode.beacon.getAnalysis().getColorString());
+                opMode.telemetry.addData("???, ???", opMode.beacon.getAnalysis().getColorString());
             }
             delay(75); //Let vision process a new frame not get same info
             opMode.telemetry.update();
         }
-        if(redBlue > blueRed){
+        if (redBlue > blueRed) {
             return "redBlue";
             //return "left";
-        }else{
+        } else {
             return "blueRed";
         }
     }
-    public String readBeaconAfterPress(int times, double timeoutS) throws InterruptedException{
+
+    public String readBeaconAfterPress(int times, double timeoutS) throws InterruptedException {
         int redRed = 0;
         int blueBlue = 0;
-        if(times%2 == 0)
+        int redBlue = 0;
+        int blueRed = 0;
+        if (times % 2 == 0)
             times++;
         runtime.reset();
-        for(int i=0; i < times && opMode.opModeIsActive() && runtime.seconds() < timeoutS; i++){ //Purposefully not even number
+        for (int i = 0; i < times && opMode.opModeIsActive() && runtime.seconds() < timeoutS; i++) { //Purposefully not even number
             opMode.waitOneFullHardwareCycle();
-            if (opMode.beacon.getAnalysis().getColorString().equals("red, red")){
+            if (opMode.beacon.getAnalysis().getColorString().equals("red, red")) {
                 redBlue++;
-                opMode.telemetry.addData("redRed",redBlue);
-            }else if (opMode.beacon.getAnalysis().getColorString().equals("blue, blue")){
+                opMode.telemetry.addData("redRed", redBlue);
+            } else if (opMode.beacon.getAnalysis().getColorString().equals("blue, blue")) {
                 blueRed++;
-                opMode.telemetry.addData("blueBlue",blueRed);
-            }else {
+                opMode.telemetry.addData("blueBlue", blueRed);
+            } else {
                 i--;
-                opMode.telemetry.addData("???, ???",opMode.beacon.getAnalysis().getColorString());
+                opMode.telemetry.addData("???, ???", opMode.beacon.getAnalysis().getColorString());
             }
             delay(75); //Let vision process a new frame not get same info
             opMode.telemetry.update();
         }
-        if(redRed > blueBlue){
+        if (redRed > blueBlue) {
             return "redRed";
             //return "left";
-        }else{
+        } else {
             return "blueBlue";
-        }    
+        }
+    }
 }

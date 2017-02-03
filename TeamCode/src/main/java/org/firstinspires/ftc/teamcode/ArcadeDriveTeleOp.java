@@ -25,8 +25,8 @@ public class ArcadeDriveTeleOp extends OpMode {
     private boolean reversed = true;
     private boolean prevStateReverse = reversed;
 
-    private boolean quickly = true;
-    private boolean prevStateQuickly = quickly;
+    //private boolean quickly = true;
+    //private boolean prevStateQuickly = quickly;
     private boolean shooting = false;
 
     @Override
@@ -58,26 +58,20 @@ public class ArcadeDriveTeleOp extends OpMode {
             robotWithWheeledShooter.stopShooter();
             */
         boolean curState = robotWithFlickerShooter.getGamepad1().right_bumper;
-        boolean curStateQuickly = robotWithFlickerShooter.getGamepad1().left_bumper;
-        if (curStateQuickly && (prevStateQuickly == false)&&curStateQuickly == true){
+        //boolean curStateQuickly = robotWithFlickerShooter.getGamepad1().left_bumper;
+        /*if (curStateQuickly && (prevStateQuickly == false)&&curStateQuickly == true){
             quickly = !quickly;
-        }
+        }*/
         if (curState && (prevStateReverse == false)&&curState == true){
             reversed = !reversed;
         }
         prevStateReverse = curState;
-        prevStateQuickly = curStateQuickly;
+        //prevStateQuickly = curStateQuickly;
         if (!reversed) {
             robotWithFlickerShooter.driveWithGamepad();
-            if (quickly) {
-                robotWithFlickerShooter.driveQuicklyWithGamepad();
-            }
         } else
         {
             robotWithFlickerShooter.reverseGamepad();
-            if (quickly) {
-                robotWithFlickerShooter.reverseQuicklyGamepad();
-            }
         }
 
         /*if (robotWithFlickerShooter.getGamepad1().left_bumper && !shooting){

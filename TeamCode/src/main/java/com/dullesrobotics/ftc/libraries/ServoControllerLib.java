@@ -15,10 +15,22 @@ public class ServoControllerLib {
     public ServoControllerLib(Servo btnServ){
         buttonServo = btnServ;
     }
+    public Servo[] servos;
 
     public ServoControllerLib(Servo btnServ, double degrees){
         buttonServo = btnServ;
         buttonServo.setPosition(degrees);
+    }
+
+    public ServoControllerLib(Servo[] servos,double degrees){
+        this.servos = servos;
+        for (Servo s : this.servos){
+            s.setPosition(degrees);
+        }
+    }
+
+    public ServoControllerLib(Servo[] servos){
+        this.servos = servos;
     }
 
     public ServoControllerLib(Servo btnServ, Servo.Direction dir){
@@ -26,13 +38,38 @@ public class ServoControllerLib {
         buttonServo.setDirection(dir);
     }
 
+    public ServoControllerLib(Servo[] servos,Servo.Direction dir){
+        this.servos = servos;
+        for (Servo s : this.servos){
+            s.setDirection(dir);
+        }
+    }
+
     public void setDegrees(double degrees){
         buttonServo.setPosition(degrees);
+    }
+
+    public void setDegrees(double degrees, int index){ servos[index].setPosition(degrees); }
+
+    public void setDegreesAll(double degrees){
+        for (Servo s:servos)
+            s.setPosition(degrees);
     }
 
     public void setDirection(Servo.Direction dir){
         buttonServo.setDirection(dir);
     }
+
+    public void setDirection(Servo.Direction dir, int index){
+        servos[index].setDirection(dir);
+    }
+
+    public void setDirectionAll(Servo.Direction dir){
+        for (Servo s:servos)
+            s.setDirection(dir);
+    }
+
+
 
     public Servo returnServo(){
         return buttonServo;
