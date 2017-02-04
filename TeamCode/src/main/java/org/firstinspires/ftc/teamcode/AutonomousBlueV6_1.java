@@ -64,15 +64,15 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         autonomousDrive.encoderDriveInches(.4,18,18,7);
         debug(4);
 
-        autonomousDrive.pointTurn(0.4,180.0,5.0);//TURN 180
+        autonomousDrive.pointTurn(0.4,180.0,2.0);//TURN 180
         /* Shoot Balls */
-        autonomousDrive.pointTurn(0.4,205.0,5.0);
+        autonomousDrive.pointTurn(0.4,205.0,3.0);
 
         //Turn 45deg
         autonomousDrive.pointTurn(0.4,30.0,5.0);
         //Drive till line
         autonomousDrive.driveTillLine(0.4,6.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
-        autonomousDrive.encoderDrive(0.4,18,18,5.0);//Go fwd a bit
+        autonomousDrive.encoderDrive(0.4,20,20,5.0);//Go fwd a bit
         autonomousDrive.pointTurn(0.4,55.0,3.0);
         //autonomousDrive.turnTillLine(0.25,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL,false);
         autonomousDrive.encoderDriveInches(0.25,-5,-5,5.0);
@@ -98,7 +98,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         debug(8);
         autonomousDrive.encoderDriveInches(0.3,14,14,5);
         debug(9);
-        autonomousDrive.encoderDriveInches(.4,-18,-18,5);
+        autonomousDrive.encoderDriveInches(.4,-10,-10,5);
         debug(10);
         autonomousDrive.pointTurn(.4,-90.0,2);
         debug(11);
