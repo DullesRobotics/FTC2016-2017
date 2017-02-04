@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.lasarobotics.vision.ftc.resq.Beacon;
@@ -19,27 +18,6 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 
 /**
  * Created by nimir on 1/22/2017.
- *
- * EXPLANATION:
- * This OpMode should make the robot:
- * -Init Servos
- * -Wait For Start Button
- * -Wait an additional one second
- * -Fire Catapult One
- * -Wait one second
- * -Fire Catapult Two
- * -Wait one second
- * -Go forward 1 foot
- * -Turn Right
- * -Go forward 6 inches
- * -Turn Left
- * (It should now be facing forward, but infront of the corner vortex, this will make it less prone to hitting the cap-ball)
- * -Go forward 3 feet (Robot should now be in front of beacon, but not facing it)
- * -Turn right (Facing beacon now)
- * -Go forward 1 foot (to get closer to beacon)
- * --TODO: Attempt to add FollowLine here
- * -Begins reading beacon and attempts to push it till the beacon is the correct color
- * --End of OpMode
  */
 
 @Autonomous(name = "AutonomousV6.1 BLUE")
@@ -55,14 +33,8 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
     final boolean DEBUG = true;
     final boolean bothBeacons = false;
     final boolean parkCorner = false;
+    //ServoControllerLib leftShooter,rightShooter;
 
-    final static double CATAPULT_ONE_INIT = 0; //Degrees to move to during Init
-    final static double CATAPULT_TWO_INIT = 0;
-
-    final static double CATAPULT_ONE_FIRE = 0; //Degrees to move to to fire catapault
-    final static double CATAPULT_TWO_FIRE = 0;
-
-    private Servo[] servos = {hardwareMap.servo.get("btnServo"), hardwareMap.servo.get("catapaultOne"),hardwareMap.servo.get("catapaultTwo")};
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -72,47 +44,69 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         //Initialize Robot
         ftcVisionManager = new FTCVisionManager(this, Beacon.AnalysisMethod.FAST);
         ftcVisionManager.initFTCVision();
-        robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1, hardwareMap.dcMotor.get("flickerShooter"));
+        robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1);
         autonomousDrive = new AutonomousDriveClassV2(this, robot, hardwareMap.opticalDistanceSensor.get("EOPD"),servoControllerLib,ftcVisionManager);
-        servoControllerLib = new ServoControllerLib(servos);
+        servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
+        //leftShooter = new ServoControllerLib(hardwareMap.servo.get("catapultOne"));
+        //rightShooter = new ServoControllerLib(hardwareMap.servo.get("catapultTwo"));
+        //leftShooter.setDegrees(ServoControllerLib.SERVOLEFT);
+        //rightShooter.setDegrees(ServoControllerLib.SERVORIGHT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         ods = hardwareMap.opticalDistanceSensor.get("EOPD");
-        servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+        servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
         autonomousDrive.resetEncoders();
         debug(2);
         autonomousDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         autonomousDrive.resetAll();
-        servoControllerLib.setDegrees(CATAPULT_ONE_INIT,1);
-        servoControllerLib.setDegrees(CATAPULT_TWO_INIT,2);
         waitForStart(); //Wait for START Button Press on DS
-        delay(1000);
-        autonomousDrive.fireCatapult(CATAPULT_ONE_FIRE,1);
-        delay(1000);
-        autonomousDrive.fireCatapult(CATAPULT_TWO_FIRE,2);
-        delay(1000);
         debug(3);
-        autonomousDrive.encoderDriveInches(.4,12,12,2.5); //Forward 1 ft
+        autonomousDrive.encoderDriveInches(.4,57.25,57.25,7); //Forward 1 ft
         debug(4);
-
-        //Turn 45deg
-        autonomousDrive.pointTurn(.4,45,3); //Turn right
-        debug(5);
-        //Drive till Line
-        autonomousDrive.driveTillLine(0.4,10.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
-
-        /*
-        autonomousDrive.encoderDriveInches(.4,6,6,1); //Go forward 6 inches
-        debug(6);
-        autonomousDrive.pointTurn(.4,-45,2); //Turn left
+        autonomousDrive.pointTurn(.4,102.5,2); //Turn left
         debug(7);
-        autonomousDrive.encoderDriveInches(.4,24,24,4.5); //Forward 3 feet (robot should be in front of beacon now, not facing)
+        autonomousDrive.encoderDriveInches(.4,22,22,2);
+        String result = ftcVisionManager.readBeacon(7,10);
+        if(result.equals("redBlue")){
+            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+            telemetry.addData("Reader","BLUE_RIGHT");
+            telemetry.update();
+        }else{
+            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+            telemetry.addData("Reader","BLUE_LEFT");
+            telemetry.update();
+        }
+        debug(8);
+        autonomousDrive.encoderDriveInches(0.3,14,14,5);
+        debug(9);
+        autonomousDrive.encoderDriveInches(.4,-36,-36,5);
+        debug(10);
+        autonomousDrive.pointTurn(.4,-102.5,2);
+        debug(11);
+        autonomousDrive.encoderDriveInches(.3,48,48,6);
+        debug(12);
+        autonomousDrive.pointTurn(.4,105,2);
+        debug(13);
+        autonomousDrive.encoderDriveInches(.4,24,24,2);
+        debug(14);
+        result = ftcVisionManager.readBeacon(7,10);
+        if(result.equals("redBlue")){
+            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+            telemetry.addData("Reader","BLUE_RIGHT");
+            telemetry.update();
+        }else{
+            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+            telemetry.addData("Reader","BLUE_LEFT");
+            telemetry.update();
+        }
+        debug(15);
+        autonomousDrive.encoderDriveInches(.3,12,12,5);
+        /*autonomousDrive.encoderDriveInches(.4,24,24,4.5); //Forward 3 feet (robot should be in front of beacon now, not facing)
         debug(8);
         autonomousDrive.pointTurn(.4,90,2); //Turn roughly 90 to face beacon
         debug(9);
         autonomousDrive.encoderDriveInches(.4,12,12,1); //Go forward around 1 foot to get closer to beacon
         debug(10);
-        String beaconAnalysisOne = ftcVisionManager.readBeacon(9,10); //redBlue = blue on left, blueRed = blue on right
-        autonomousDrive.readAndPush(beaconAnalysisOne,3,"blue"); //Theoretically should push beacon till it changes (3 = max tries)
+
         debug(11);
         */
     }

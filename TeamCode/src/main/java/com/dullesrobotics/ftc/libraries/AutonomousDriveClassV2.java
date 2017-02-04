@@ -24,7 +24,7 @@ public class AutonomousDriveClassV2 {
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;
     final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
     //final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
-    final static double TICKSPERCENTIMETER = 72.907553222513852435112277631963;
+    final static double TICKSPERCENTIMETER = (5000.0/39.0/2.54);
     //final static double TICKSPERCENTIMETER = 109.36132983377077865266841644794;
     final static double DISTANCEBETWEENWHEELSINCHES = 14.0;
     final static double POINTTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES/(2.0*2.54);
@@ -39,7 +39,6 @@ public class AutonomousDriveClassV2 {
     FTCVisionManager ftcVisionManager;
     //SensorListener sensorListener;
     //float heading;
-
 /*
     public AutonomousDrive(BasicRobot r, SensorListener s) {
         robot = r;
@@ -49,7 +48,6 @@ public class AutonomousDriveClassV2 {
     public AutonomousDriveClassV2(BasicRobot r) {
         robot = r;
     }
-
     public AutonomousDriveClassV2(LinearVisionOpMode op, BasicRobot r, OpticalDistanceSensor o, ServoControllerLib servoLib, FTCVisionManager vision) {
         robot = r;
         ods = o;
@@ -59,11 +57,6 @@ public class AutonomousDriveClassV2 {
         servoControllerLib = servoLib;
         ftcVisionManager = vision;
     }
-
-    public void fireCatapult(double degrees,int servoIndex) throws InterruptedException{
-        servoControllerLib.setDegrees(degrees,servoIndex);
-    }
-
 
     public int getMaxCurrentPos() throws InterruptedException{
         return Math.max(robot.getBLM().getCurrentPosition(),robot.getBRM().getCurrentPosition());
@@ -232,7 +225,7 @@ public class AutonomousDriveClassV2 {
                 debug(5);
                 if(runtime.seconds() > timeoutS){
                     hitTimeOut = true;
-                    break;
+                    return hitTimeOut;
                 }
                 debug(6);
 
@@ -412,43 +405,37 @@ public class AutonomousDriveClassV2 {
 
     public void readAndPush(String analysis,int goalTries, String teamOn) throws InterruptedException{ //Might not work if blue is on right...
         //Assuming the beacon is randomized, which it should be.....
+        opMode.telemetry.addData("AutoStatus","Attempting to read and push");
+        opMode.telemetry.update();
         int tries = 0;
         opMode.waitOneFullHardwareCycle();
         if (analysis.equals("redBlue")) { //Blue is on left
             if (teamOn.toLowerCase().equals("blue")) {
-                //servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
-                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT,0);
+                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
             } else {
-                //servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
-                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT,0);
+                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
             }
             encoderDrive(.4, 100, 100, 5);
             encoderDrive(.4, -100, -100, 5);
             if (teamOn.toLowerCase().equals("blue")) {
-                //servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
-                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT,0);
+                servoControllerLib.setDegrees(0);
             } else {
-                //servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
-                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT,0);
+                servoControllerLib.setDegrees(180);
             }
             opMode.telemetry.addData("read and push status","Pushed left");
             opMode.telemetry.update();
         } else {
             if (teamOn.toLowerCase().equals("red")) {
-                //servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
-                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT,0);
+                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
             } else {
-                //servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
-                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT,0);
+                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
             }
             encoderDrive(.4, 100, 100, 5);
             encoderDrive(.4, -100, -100, 5);
             if (teamOn.toLowerCase().equals("red")) {
-                //servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
-                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT,0);
+                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
             } else {
-                //servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
-                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT,0);
+                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
             }
             opMode.telemetry.addData("read and push status","Pushed right");
             opMode.telemetry.update();
