@@ -73,7 +73,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         //Drive till line
         autonomousDrive.driveTillLine(0.4,6.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
         autonomousDrive.encoderDrive(0.4,7,7,5.0);//Go fwd a bit
-        autonomousDrive.turnTillLine(0.25,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL,false);
+        autonomousDrive.turnTillLine(0.25,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL,true);
         autonomousDrive.encoderDriveInches(0.25,-5,-5,5.0);
         /*
         autonomousDrive.pointTurn(.4,102.5,2); //Turn left
@@ -104,7 +104,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         autonomousDrive.driveTillLine(0.4,5.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
         debug(12);
         autonomousDrive.encoderDriveInches(0.4,7.0,7.0,5.0);
-        autonomousDrive.turnTillLine(0.4,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL,false);//Should be facing beacon
+        autonomousDrive.turnTillLine(0.4,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL,true);//Should be facing beacon
         result = ftcVisionManager.readBeacon(7,10);
         if(result.equals("redBlue")){
             servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
