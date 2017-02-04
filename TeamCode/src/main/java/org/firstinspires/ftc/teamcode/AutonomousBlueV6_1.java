@@ -66,7 +66,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
 
         autonomousDrive.pointTurn(0.4,180.0,5.0);//TURN 180
         /* Shoot Balls */
-        autonomousDrive.pointTurn(0.4,180.0,5.0);
+        autonomousDrive.pointTurn(0.4,195.0,5.0);
 
         //Turn 45deg
         autonomousDrive.pointTurn(0.4,40.0,5.0);
