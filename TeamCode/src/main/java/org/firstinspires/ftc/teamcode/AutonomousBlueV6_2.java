@@ -13,6 +13,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
+import static android.R.attr.delay;
+
 /**
  * Created by kk200 on 2/4/2017.
  */
@@ -58,15 +60,35 @@ public class AutonomousBlueV6_2 extends LinearVisionOpMode{
         waitForStart(); //Wait for START Button Press on DS
         debug(3);
         //autonomousDrive.encoderDriveInches(.4,57.25,57.25,7); //Forward 1 ft
-        autonomousDrive.encoderDriveInches(.4,18,18,7);
+        autonomousDrive.encoderDriveInches(.4,18,18,3);
         debug(4);
-
         autonomousDrive.pointTurn(0.4,183.0,2.0);//TURN 180
         /* Shoot Balls */
         leftShooter.setDegrees(ServoControllerLib.SERVORIGHT);
         rightShooter.setDegrees(ServoControllerLib.SERVOLEFT);
-        autonomousDrive.pointTurn(0.4,205.0,3.0);
-
+        autonomousDrive.pointTurn(0.4,195.0,2.5);
+        debug(5);
+        autonomousDrive.encoderDriveInches(.4,40,40,4);
+        debug(6);
+        autonomousDrive.pointTurn(.4,115,2);
+        debug(7);
+        autonomousDrive.encoderDriveInches(.4,24,24,5);
+        debug(8);
+        String result = ftcVisionManager.readBeacon(7,4);
+        if (result.equals("redBlue")){
+            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+        } else {
+            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+        }
+        debug(9);
+        autonomousDrive.encoderDriveInches(.25,10,10,5);
+        debug(10);
+        autonomousDrive.encoderDriveInches(.4,-21,-21,5);
+        debug(11);
+        autonomousDrive.pointTurn(.4,-105,2);
+        debug(12);
+        autonomousDrive.encoderDriveInches(.4,45,45,4);
+        debug(13);
     }
 
     public void debug(double i) throws InterruptedException{
