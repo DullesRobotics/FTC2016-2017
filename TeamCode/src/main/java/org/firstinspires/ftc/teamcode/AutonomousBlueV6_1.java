@@ -93,8 +93,14 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         debug(3);
         autonomousDrive.encoderDriveInches(.4,12,12,2.5); //Forward 1 ft
         debug(4);
+
+        //Turn 45deg
         autonomousDrive.pointTurn(.4,45,3); //Turn right
         debug(5);
+        //Drive till Line
+        autonomousDrive.driveTillLine(0.4,10.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
+
+        /*
         autonomousDrive.encoderDriveInches(.4,6,6,1); //Go forward 6 inches
         debug(6);
         autonomousDrive.pointTurn(.4,-45,2); //Turn left
@@ -108,6 +114,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         String beaconAnalysisOne = ftcVisionManager.readBeacon(9,10); //redBlue = blue on left, blueRed = blue on right
         autonomousDrive.readAndPush(beaconAnalysisOne,3,"blue"); //Theoretically should push beacon till it changes (3 = max tries)
         debug(11);
+        */
     }
 
     public void debug(double i) throws InterruptedException{
