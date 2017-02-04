@@ -66,7 +66,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         debug(7);
         autonomousDrive.encoderDriveInches(.4,22,22,2);
         String result = ftcVisionManager.readBeacon(7,10);
-        if(result.equals("redBlue")){
+        if(result.equals("redBlue")){  
             servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
             telemetry.addData("Reader","BLUE_RIGHT");
             telemetry.update();
