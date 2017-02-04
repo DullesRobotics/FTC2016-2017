@@ -69,7 +69,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         autonomousDrive.pointTurn(0.4,205.0,5.0);
 
         //Turn 45deg
-        autonomousDrive.pointTurn(0.4,25.0,5.0);
+        autonomousDrive.pointTurn(0.4,30.0,5.0);
         //Drive till line
         autonomousDrive.driveTillLine(0.4,6.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
         autonomousDrive.encoderDrive(0.4,7,7,5.0);//Go fwd a bit
