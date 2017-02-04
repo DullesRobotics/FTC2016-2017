@@ -49,8 +49,8 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
         leftShooter = new ServoControllerLib(hardwareMap.servo.get("catapultOne"));
         rightShooter = new ServoControllerLib(hardwareMap.servo.get("catapultTwo"));
-        //leftShooter.setDegrees(ServoControllerLib.SERVOLEFT);
-        //rightShooter.setDegrees(ServoControllerLib.SERVORIGHT);
+        leftShooter.setDegrees(ServoControllerLib.SERVOLEFT);
+        rightShooter.setDegrees(ServoControllerLib.SERVORIGHT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         ods = hardwareMap.opticalDistanceSensor.get("EOPD");
         servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
@@ -66,6 +66,8 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
 
         autonomousDrive.pointTurn(0.4,180.0,2.0);//TURN 180
         /* Shoot Balls */
+        leftShooter.setDegrees(ServoControllerLib.SERVORIGHT);
+        rightShooter.setDegrees(ServoControllerLib.SERVOLEFT);
         autonomousDrive.pointTurn(0.4,205.0,3.0);
 
         //Turn 45deg
