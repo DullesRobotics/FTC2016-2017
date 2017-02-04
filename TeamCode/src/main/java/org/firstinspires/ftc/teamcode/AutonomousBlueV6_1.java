@@ -33,7 +33,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
     final boolean DEBUG = true;
     final boolean bothBeacons = false;
     final boolean parkCorner = false;
-    //ServoControllerLib leftShooter,rightShooter;
+    ServoControllerLib leftShooter,rightShooter;
 
 
     @Override
@@ -47,8 +47,8 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1);
         autonomousDrive = new AutonomousDriveClassV2(this, robot, hardwareMap.opticalDistanceSensor.get("EOPD"),servoControllerLib,ftcVisionManager);
         servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
-        //leftShooter = new ServoControllerLib(hardwareMap.servo.get("catapultOne"));
-        //rightShooter = new ServoControllerLib(hardwareMap.servo.get("catapultTwo"));
+        leftShooter = new ServoControllerLib(hardwareMap.servo.get("catapultOne"));
+        rightShooter = new ServoControllerLib(hardwareMap.servo.get("catapultTwo"));
         //leftShooter.setDegrees(ServoControllerLib.SERVOLEFT);
         //rightShooter.setDegrees(ServoControllerLib.SERVORIGHT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
@@ -73,6 +73,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         autonomousDrive.pointTurn(.4,102.5,2); //Turn left
         debug(7);
         autonomousDrive.encoderDriveInches(.4,22,22,2);
+        
         */
         String result = ftcVisionManager.readBeacon(7,10);
         if(result.equals("redBlue")){  
