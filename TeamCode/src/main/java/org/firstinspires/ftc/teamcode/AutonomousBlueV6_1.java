@@ -63,17 +63,21 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         autonomousDrive.encoderDriveInches(.4,57.25,57.25,7); //Forward 1 ft
         debug(4);
 
+        autonomousDrive.pointTurn(0.4,180.0,5.0);//TURN 180
+        /* Shoot Balls */
+        autonomousDrive.pointTurn(0.4,180.0,5.0);
+
         //Turn 45deg
         autonomousDrive.pointTurn(0.4,45.0,5.0);
         //Drive till line
         autonomousDrive.driveTillLine(0.4,6.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
         autonomousDrive.encoderDrive(0.4,7,7,5.0);//Go fwd a bit
-        autonomousDrive.pointTurn(0.4,45.0,5.0);//Turn 45
+        autonomousDrive.turnTillLine(0.25,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL,false);
         /*
         autonomousDrive.pointTurn(.4,102.5,2); //Turn left
         debug(7);
         autonomousDrive.encoderDriveInches(.4,22,22,2);
-        
+
         */
         String result = ftcVisionManager.readBeacon(7,10);
         if(result.equals("redBlue")){  
