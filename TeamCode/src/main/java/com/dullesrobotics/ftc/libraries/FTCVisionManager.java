@@ -52,41 +52,36 @@ public class FTCVisionManager {
         int redBlue = 0;
         int blueRed = 0;
         runtime.reset();
-<<<<<<< HEAD
         if (times % 2 == 0)
             times++;
         for (int i = 0; i < times && opMode.opModeIsActive() && runtime.seconds() < timeoutS; i++) { //Purposefully not even number
-=======
-        for(int i=0; i < times && opMode.opModeIsActive() && runtime.seconds() < timeoutS; i++){ //Purposefully not even number
->>>>>>> parent of eb92579... Updated FTCVisionManager.java to check after press
-            opMode.waitOneFullHardwareCycle();
-            if (opMode.beacon.getAnalysis().getColorString().equals("red, blue")) {
-                redBlue++;
-                opMode.telemetry.addData("redBlue", redBlue);
-            } else if (opMode.beacon.getAnalysis().getColorString().equals("blue, red")) {
-                blueRed++;
-                opMode.telemetry.addData("blueRed", blueRed);
-            } else {
-                i--;
-                opMode.telemetry.addData("???, ???", opMode.beacon.getAnalysis().getColorString());
+            for (int j = 0; i < times && opMode.opModeIsActive() && runtime.seconds() < timeoutS; i++) { //Purposefully not even number
+                opMode.waitOneFullHardwareCycle();
+                if (opMode.beacon.getAnalysis().getColorString().equals("red, blue")) {
+                    redBlue++;
+                    opMode.telemetry.addData("redBlue", redBlue);
+                } else if (opMode.beacon.getAnalysis().getColorString().equals("blue, red")) {
+                    blueRed++;
+                    opMode.telemetry.addData("blueRed", blueRed);
+                } else {
+                    i--;
+                    opMode.telemetry.addData("???, ???", opMode.beacon.getAnalysis().getColorString());
+                }
+                delay(75); //Let vision process a new frame not get same info
+                opMode.telemetry.update();
             }
-            delay(75); //Let vision process a new frame not get same info
-            opMode.telemetry.update();
+            if (redBlue > blueRed) {
+                return "redBlue";
+                //return "left";
+            } else {
+                return "blueRed";
+            }
         }
-        if (redBlue > blueRed) {
-            return "redBlue";
-            //return "left";
-        } else {
-            return "blueRed";
-        }
-    }
-
-<<<<<<< HEAD
-    public String readBeaconAfterPress(int times, double timeoutS) throws InterruptedException {
+    /*public String readBeaconAfterPress(int times, double timeoutS) throws InterruptedException {
         int redRed = 0;
         int blueBlue = 0;
-        int redBlue = 0;
-        int blueRed = 0;
+        redBlue = 0;
+        blueRed = 0;
         if (times % 2 == 0)
             times++;
         runtime.reset();
@@ -111,7 +106,7 @@ public class FTCVisionManager {
         } else {
             return "blueBlue";
         }
+    }*/
+        return "??";
     }
-=======
->>>>>>> parent of eb92579... Updated FTCVisionManager.java to check after press
 }
