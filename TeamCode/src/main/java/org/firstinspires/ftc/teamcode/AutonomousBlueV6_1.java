@@ -88,6 +88,9 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         }else{
             servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
             telemetry.addData("Reader","BLUE_LEFT");
+            if(result.equals("???, ???")){
+                telemetry.addData("Reader","Couldn't determine - Defaulting to Left");
+            };
             telemetry.update();
         }
         debug(8);
