@@ -52,9 +52,13 @@ public class FTCVisionManager {
         int redBlue = 0;
         int blueRed = 0;
         runtime.reset();
+<<<<<<< HEAD
         if (times % 2 == 0)
             times++;
         for (int i = 0; i < times && opMode.opModeIsActive() && runtime.seconds() < timeoutS; i++) { //Purposefully not even number
+=======
+        for(int i=0; i < times && opMode.opModeIsActive() && runtime.seconds() < timeoutS; i++){ //Purposefully not even number
+>>>>>>> parent of eb92579... Updated FTCVisionManager.java to check after press
             opMode.waitOneFullHardwareCycle();
             if (opMode.beacon.getAnalysis().getColorString().equals("red, blue")) {
                 redBlue++;
@@ -77,6 +81,7 @@ public class FTCVisionManager {
         }
     }
 
+<<<<<<< HEAD
     public String readBeaconAfterPress(int times, double timeoutS) throws InterruptedException {
         int redRed = 0;
         int blueBlue = 0;
@@ -107,4 +112,6 @@ public class FTCVisionManager {
             return "blueBlue";
         }
     }
+=======
+>>>>>>> parent of eb92579... Updated FTCVisionManager.java to check after press
 }
