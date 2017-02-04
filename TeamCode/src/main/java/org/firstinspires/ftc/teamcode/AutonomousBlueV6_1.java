@@ -97,16 +97,14 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         debug(8);
         autonomousDrive.encoderDriveInches(0.3,14,14,5);
         debug(9);
-        autonomousDrive.encoderDriveInches(.4,-36,-36,5);
+        autonomousDrive.encoderDriveInches(.4,-18,-18,5);
         debug(10);
-        autonomousDrive.pointTurn(.4,-102.5,2);
+        autonomousDrive.pointTurn(.4,-90.0,2);
         debug(11);
-        autonomousDrive.encoderDriveInches(.3,48,48,6);
+        autonomousDrive.driveTillLine(0.4,5.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
         debug(12);
-        autonomousDrive.pointTurn(.4,105,2);
-        debug(13);
-        autonomousDrive.encoderDriveInches(.4,24,24,2);
-        debug(14);
+        autonomousDrive.encoderDriveInches(0.4,7.0,7.0,5.0);
+        autonomousDrive.turnTillLine(0.4,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL,false);//Should be facing beacon
         result = ftcVisionManager.readBeacon(7,10);
         if(result.equals("redBlue")){
             servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
@@ -115,10 +113,14 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         }else{
             servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
             telemetry.addData("Reader","BLUE_LEFT");
+            if(result.equals("???, ???")){
+                telemetry.addData("Reader","Couldn't determine - Defaulting to Left");
+            };
             telemetry.update();
         }
-        debug(15);
-        autonomousDrive.encoderDriveInches(.3,12,12,5);
+        debug(13);
+        autonomousDrive.encoderDriveInches(.3,14,14,5);
+        autonomousDrive.encoderDriveInches(0.3,-14,-14,5);
         /*autonomousDrive.encoderDriveInches(.4,24,24,4.5); //Forward 3 feet (robot should be in front of beacon now, not facing)
         debug(8);
         autonomousDrive.pointTurn(.4,90,2); //Turn roughly 90 to face beacon
