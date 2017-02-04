@@ -5,6 +5,7 @@ import com.dullesrobotics.ftc.libraries.FTCVisionManager;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
@@ -16,6 +17,7 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 /**
  * Created by nimir on 1/18/2017.
  */
+@Disabled
 @Autonomous(name = "EncoderTest")
 public class EncoderDriveTest extends LinearVisionOpMode {
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;

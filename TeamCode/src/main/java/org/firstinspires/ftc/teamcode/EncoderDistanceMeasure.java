@@ -5,6 +5,7 @@ import com.dullesrobotics.ftc.libraries.BasicRobot;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -19,6 +20,7 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
  * Use this OpMode to measure how far 10000 encoder ticks are
  * Calculate TICKSPERCENTIMETER
  */
+@Disabled
 @Autonomous(name = "EncoderDistanceMeasure")
 public class EncoderDistanceMeasure extends LinearOpMode {
     RobotWithFlickerShooter robot;

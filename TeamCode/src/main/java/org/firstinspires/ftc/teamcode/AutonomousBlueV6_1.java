@@ -69,7 +69,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         autonomousDrive.pointTurn(0.4,205.0,5.0);
 
         //Turn 45deg
-        autonomousDrive.pointTurn(0.4,40.0,5.0);
+        autonomousDrive.pointTurn(0.4,25.0,5.0);
         //Drive till line
         autonomousDrive.driveTillLine(0.4,6.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
         autonomousDrive.encoderDrive(0.4,7,7,5.0);//Go fwd a bit
@@ -121,15 +121,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         debug(13);
         autonomousDrive.encoderDriveInches(.3,14,14,5);
         autonomousDrive.encoderDriveInches(0.3,-14,-14,5);
-        /*autonomousDrive.encoderDriveInches(.4,24,24,4.5); //Forward 3 feet (robot should be in front of beacon now, not facing)
-        debug(8);
-        autonomousDrive.pointTurn(.4,90,2); //Turn roughly 90 to face beacon
-        debug(9);
-        autonomousDrive.encoderDriveInches(.4,12,12,1); //Go forward around 1 foot to get closer to beacon
-        debug(10);
 
-        debug(11);
-        */
     }
 
     public void debug(double i) throws InterruptedException{
