@@ -110,7 +110,8 @@ public class AutonomousDriveClassV2 {
         setRUNWITHENCODERS();
         robot.getBLM().setPower(power);
         robot.getBRM().setPower(power);
-        while(opMode.opModeIsActive()&& ods.getLightDetected() < EOPDTriggerLevel){
+        runtime.reset();
+        while(opMode.opModeIsActive()&& ods.getLightDetected() < EOPDTriggerLevel && runtime.seconds()<timeoutS){
             opMode.telemetry.addData("EOPD",ods.getLightDetected());
             delay(1);
             //opMode.waitOneFullHardwareCycle();

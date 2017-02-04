@@ -30,7 +30,7 @@ public class AutonDriveClassV2Tester extends LinearVisionOpMode {
         waitForVisionStart();
         this.resetStartTime();
 
-        robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1, hardwareMap.dcMotor.get("flickerShooter"));
+        robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1);
         autonomousDrive2 = new AutonomousDriveClassV2(this, robot, hardwareMap.opticalDistanceSensor.get("EOPD"),servoControllerLib,ftcVisionManager);
         servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
@@ -47,27 +47,9 @@ public class AutonDriveClassV2Tester extends LinearVisionOpMode {
         /**
          * INSERT CODE TO TEST BELOW THIS COMMENT
          */
-        logAction("Begin  + SwingTurn");
-        autonomousDrive2.swingTurn(0.5,90.0,5.0);
-        logAction("End  + Swing Turn");
+        logAction("Begin  driveToLine");
+        autonomousDrive2.driveTillLine(0.4,10.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
 
-        delay(2000);
-
-        logAction("Begin  - SwingTurn");
-        autonomousDrive2.swingTurn(0.5,-90.0,5.0);
-        logAction("End  - Swing Turn");
-
-        delay(2000);
-
-        logAction("Begin  + Point Turn");
-        autonomousDrive2.pointTurn(0.5,90.0,5.0);
-        logAction("End  + Point Turn");
-
-        delay(2000);
-
-        logAction("Begin  - Point Turn");
-        autonomousDrive2.pointTurn(0.5,-90.0,5.0);
-        logAction("End  - Point Turn");
 
     }
     public void logAction(String s){
