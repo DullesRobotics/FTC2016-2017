@@ -29,7 +29,7 @@ public class AutonomousDriveClassV2 {
     final static double DISTANCEBETWEENWHEELSINCHES = 14.0;
     final static double POINTTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES/(2.0*2.54);
     final static double SWINGTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES * 2.54;
-    public final static double EOPDWHITELINELIGHTLEVEL = 0.2;
+    public final static double EOPDWHITELINELIGHTLEVEL = 0.05;
     //public final static double EOPDWHITELINELIGHTLEVEL = 0.084;
     private boolean isReversed = false;
     OpticalDistanceSensor ods;
@@ -229,7 +229,9 @@ public class AutonomousDriveClassV2 {
                     return hitTimeOut;
                 }
                 debug(6);
-
+                if (!robot.getBLM().isBusy() && !robot.getBRM().isBusy()){
+                    return false;
+                }
             }
             debug(7);
             // Stop all motion;
