@@ -60,7 +60,8 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         autonomousDrive.resetAll();
         waitForStart(); //Wait for START Button Press on DS
         debug(3);
-        autonomousDrive.encoderDriveInches(.4,57.25,57.25,7); //Forward 1 ft
+        //autonomousDrive.encoderDriveInches(.4,57.25,57.25,7); //Forward 1 ft
+        autonomousDrive.encoderDriveInches(.4,12,12,7);
         debug(4);
 
         autonomousDrive.pointTurn(0.4,180.0,5.0);//TURN 180
