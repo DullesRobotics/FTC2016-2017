@@ -37,7 +37,7 @@ import java.util.Arrays;
  * Created by kk200 on 11/5/2016.
  */
 
-@Disabled
+
 @Autonomous(name = "VuforiaOp")
 public class VuforiaOp extends LinearVisionOpMode {
     long startTime;

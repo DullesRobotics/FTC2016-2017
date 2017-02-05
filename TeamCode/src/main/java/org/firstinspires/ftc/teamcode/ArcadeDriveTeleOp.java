@@ -37,7 +37,7 @@ public class ArcadeDriveTeleOp extends OpMode {
         robotWithWheeledShooter.setDriveTrain(ArcDrive);
         */
 
-        robotWithFlickerShooter = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1,hardwareMap.dcMotor.get("flickerShooter"));
+        robotWithFlickerShooter = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1);
         //robotWithFlickerShooter = new RobotWithFlickerShooter(gamepad1);
         ArcDrive = new ArcadeDrive(robotWithFlickerShooter);
         robotWithFlickerShooter.setDriveTrain(ArcDrive);
@@ -84,7 +84,7 @@ public class ArcadeDriveTeleOp extends OpMode {
             shooting = false;
         }*/
 
-        if (robotWithFlickerShooter.getGamepad1().right_trigger > 0)  //change
+        /*if (robotWithFlickerShooter.getGamepad1().right_trigger > 0)  //change
         {
             robotWithFlickerShooter.turnForwards(robotWithFlickerShooter.getGamepad1().right_trigger);
         }
@@ -100,7 +100,7 @@ public class ArcadeDriveTeleOp extends OpMode {
         }
         else {
             robotWithFlickerShooter.stopShooter();
-        }
+        }*/
 
         if (robotWithFlickerShooter.getGamepad1().dpad_right){
             servController.setDegrees(180); //Right

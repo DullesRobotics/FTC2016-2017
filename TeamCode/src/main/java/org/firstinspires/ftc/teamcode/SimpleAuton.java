@@ -25,22 +25,22 @@ public class SimpleAuton extends LinearOpMode {
 
 
         //Initialize Variables
-        robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1,hardwareMap.dcMotor.get("flickerShooter"));
+        robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1);
         //Set to Arcade Drive (Autonomous Arcade Drive)
         ArcDrive = new ArcadeDrive(robot);
         robot.setDriveTrain(ArcDrive);
 
 
         delay(15000);
-        if(robot.getFLM() != null) robot.getFLM().setPower(0.5);
-        if(robot.getFRM() != null) robot.getFRM().setPower(-0.5);
-        if (robot.getBLM() != null) robot.getBLM().setPower(0.5);
-        if (robot.getBRM() != null) robot.getBRM().setPower(-0.5);
+        //if(robot.getFLM() != null) robot.getFLM().setPower(0.4);
+        //if(robot.getFRM() != null) robot.getFRM().setPower(-0.4);
+        if (robot.getBLM() != null) robot.getBLM().setPower(0.4);
+        if (robot.getBRM() != null) robot.getBRM().setPower(-0.4);
 
         delay(3000);
 
-        if(robot.getFLM() != null) robot.getFLM().setPower(0);
-        if(robot.getFRM() != null) robot.getFRM().setPower(0);
+        //if(robot.getFLM() != null) robot.getFLM().setPower(0);
+        //if(robot.getFRM() != null) robot.getFRM().setPower(0);
         if (robot.getBLM() != null) robot.getBLM().setPower(0);
         if (robot.getBRM() != null) robot.getBRM().setPower(0);
 

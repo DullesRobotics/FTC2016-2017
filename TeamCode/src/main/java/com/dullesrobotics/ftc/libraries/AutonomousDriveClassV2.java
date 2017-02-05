@@ -37,6 +37,7 @@ public class AutonomousDriveClassV2 {
     private ElapsedTime runtime;
     ServoControllerLib servoControllerLib;
     FTCVisionManager ftcVisionManager;
+
     //SensorListener sensorListener;
     //float heading;
 /*
@@ -185,6 +186,7 @@ public class AutonomousDriveClassV2 {
     public boolean encoderDrive  (double speed,
                                   double leftCM, double rightCM,
                                   double timeoutS) throws InterruptedException {
+        //rightCM *= 2;
         int newLeftTarget;
         int newRightTarget;
         //robot.getBLM().set
@@ -265,6 +267,29 @@ public class AutonomousDriveClassV2 {
 
     public boolean isReversed(){
         return isReversed;
+    }
+
+    public void turnSetTime(double power, double seconds,boolean right) throws InterruptedException {
+        runtime.reset();
+        setRUNWITHENCODERS();
+        runtime.reset();
+        if (right) {
+            robot.getBLM().setPower(power);
+            robot.getBRM().setPower(-power);
+        } else {
+            robot.getBLM().setPower(-power);
+            robot.getBRM().setPower(power);
+        }
+
+        while (opMode.opModeIsActive()&&runtime.seconds()<seconds){
+            opMode.telemetry.addData("Running for set time",seconds);
+            opMode.telemetry.addData("Current time",runtime.seconds());
+            opMode.telemetry.update();
+            opMode.waitOneFullHardwareCycle();
+        }
+
+        robot.getBLM().setPower(0.0);
+        robot.getBRM().setPower(0.0);
     }
 
     public void runForSetTime(double power, double seconds) throws InterruptedException {

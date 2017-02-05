@@ -58,7 +58,7 @@ public class AutonomousRedV6 extends LinearVisionOpMode {
         debug(3);
         autonomousDrive.encoderDrive(.4,170,170,4.6); //4 seconds = blue
         debug(4);
-        autonomousDrive.pointTurn(.4,22.25,2); //Turn right roughly 90
+        autonomousDrive.pointTurn(.4,20,2); //Turn right roughly 90
         debug(5);
         autonomousDrive.encoderDrive(.4,200,200,2.1);
         String beaconAnalysis = ftcVisionManager.readBeacon(9,10.0);
@@ -80,7 +80,7 @@ public class AutonomousRedV6 extends LinearVisionOpMode {
         autonomousDrive.encoderDrive(0.4, 100, 100, 2.05);
         debug(23);
         //autonomousDrive.followLine(0.2, AutonomousDriveClass.EOPDWHITELINELIGHTLEVEL, 4.0, false);
-        autonomousDrive.encoderDrive(.4,-200,-200,2.2); //Back up
+        /*autonomousDrive.encoderDrive(.4,-200,-200,2.2); //Back up
         if (bothBeacons) {
             debug(24);
             autonomousDrive.pointTurn(.4, -46, 4); //Turn left

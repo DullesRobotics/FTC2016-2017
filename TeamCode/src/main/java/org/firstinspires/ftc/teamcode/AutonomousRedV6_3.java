@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.dullesrobotics.ftc.libraries.AutonomousDriveClass;
 import com.dullesrobotics.ftc.libraries.AutonomousDriveClassV2;
 import com.dullesrobotics.ftc.libraries.FTCVisionManager;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
@@ -17,11 +16,11 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 
 /**
- * Created by nimir on 1/22/2017.
+ * Created by kk200 on 2/4/2017.
  */
 
-@Autonomous(name = "AutonomousV6.1 RED")
-public class AutonomousBlueV6_1 extends LinearVisionOpMode {
+@Autonomous(name = "V6.3 Red")
+public class AutonomousRedV6_3 extends LinearVisionOpMode{
     private ElapsedTime runtime = new ElapsedTime();
     String currentColorOrder = "???, ???";
     int sleepTime = 0;
@@ -42,7 +41,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         this.resetStartTime();
         debug(1);
         //Initialize Robot
-        ftcVisionManager = new FTCVisionManager(this, Beacon.AnalysisMethod.FAST);
+        ftcVisionManager = new FTCVisionManager(this,Beacon.AnalysisMethod.FAST);
         ftcVisionManager.initFTCVision();
         robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1);
         autonomousDrive = new AutonomousDriveClassV2(this, robot, hardwareMap.opticalDistanceSensor.get("EOPD"),servoControllerLib,ftcVisionManager);
@@ -60,53 +59,25 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         autonomousDrive.resetAll();
         waitForStart(); //Wait for START Button Press on DS
         debug(3);
-        autonomousDrive.runForSetTime(0.4,3.0);
-        //autonomousDrive.
-        //
-        String result = ftcVisionManager.readBeacon(7,10);
-        if(result.equals("redBlue")){  
+        //autonomousDrive.encoderDriveInches(.4,57.25,57.25,7); //Forward 1 ft
+        autonomousDrive.runForSetTime(.8,1.7);
+        autonomousDrive.turnSetTime(1,1,false);
+        autonomousDrive.runForSetTime(.5,1.25);
+        String result = ftcVisionManager.readBeacon(7,4);
+        if (result.equals("blueRed")){
             servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
-            telemetry.addData("Reader","BLUE_RIGHT");
-            telemetry.update();
-        }else{
+        } else {
             servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
-            telemetry.addData("Reader","BLUE_LEFT");
-            if(result.equals("???, ???")){
-                telemetry.addData("Reader","Couldn't determine - Defaulting to Left");
-            };
-            telemetry.update();
         }
-        debug(8);
-        autonomousDrive.encoderDriveInches(0.3,14,14,5);
-        debug(9);
-        autonomousDrive.encoderDriveInches(.4,-10,-10,5);
-        debug(10);
-        autonomousDrive.pointTurn(.4,90.0,2);
-        debug(11);
-        autonomousDrive.driveTillLine(0.4,5.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
-        debug(12);
-        autonomousDrive.encoderDriveInches(0.4,7.0,7.0,5.0);
-        //autonomousDrive.turnTillLine(0.4,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL,false);//Should be facing beacon
-        autonomousDrive.pointTurn(0.4,-45.0,3.0);
-        result = ftcVisionManager.readBeacon(7,10);
-        if(result.equals("redBlue")){
-            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
-            telemetry.addData("Reader","BLUE_RIGHT");
-            telemetry.update();
-        }else{
-            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
-            telemetry.addData("Reader","BLUE_LEFT");
-            if(result.equals("???, ???")){
-                telemetry.addData("Reader","Couldn't determine - Defaulting to Left");
-            };
-            telemetry.update();
-        }
-        debug(13);
-        autonomousDrive.encoderDriveInches(.3,14,14,5);
-        autonomousDrive.encoderDriveInches(0.3,-14,-14,5);
+        autonomousDrive.runForSetTime(.3,2.5);
+        autonomousDrive.runForSetTime(-1,2);
+}
 
 
-    }
+
+    /*public void returnToWall() throws InterruptedException{
+        autonomousDrive.pointTurn();
+    }*/
 
     public void debug(double i) throws InterruptedException{
         String num = Double.toString(i);

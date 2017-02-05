@@ -67,21 +67,21 @@ public class BasicRobot {
         return BRM;
     }
 
-    public DcMotor getFLM() {
-        return FLM;
-    }
+   // public DcMotor getFLM() {
+       /// return FLM;
+    //}
 
-    public DcMotor getFRM() {
-        return FRM;
-    }
+    //public DcMotor getFRM() {
+       // return FRM;
+   // }
 
-    public void setFLM(DcMotor FLM) {
-        this.FLM = FLM;
-    }
+    //public void setFLM(DcMotor FLM) {
+     //   this.FLM = FLM;
+   // }
 
-    public void setFRM(DcMotor FRM) {
-        this.FRM = FRM;
-    }
+    //public void setFRM(DcMotor FRM) {
+       // this.FRM = FRM;
+    //}
 
     public void setBLM(DcMotor BLM) {
         this.BLM = BLM;

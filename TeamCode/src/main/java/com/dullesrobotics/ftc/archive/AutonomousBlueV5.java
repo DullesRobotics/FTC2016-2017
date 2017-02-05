@@ -18,7 +18,7 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
  * Created by nimir on 1/21/2017.
  */
 
-@Disabled
+
 @Autonomous(name = "AutonV5_BLUE_right")
 public class AutonomousBlueV5 extends LinearVisionOpMode {
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;
@@ -40,7 +40,7 @@ public class AutonomousBlueV5 extends LinearVisionOpMode {
         this.resetStartTime();
         debug(1);
         //Initialize Robot
-        robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1, hardwareMap.dcMotor.get("flickerShooter"));
+        robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1);
         autonomousDrive = new AutonomousDriveClass(this, robot, hardwareMap.opticalDistanceSensor.get("EOPD"));
         servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);

@@ -32,10 +32,10 @@ public class OmniDrive extends TeleOpDrivetrain {
         double y = g.left_stick_y;  //Y axis translation
         double c = g.right_stick_x; //Yaw - Rotate about Z axis
 
-        robot.getFLM().setPower(x+y+c);
-        robot.getFRM().setPower(-x+y-c);
-        robot.getBLM().setPower(-x+y+c);
-        robot.getBRM().setPower(x+y-c);
+        //if (robot.getFLM() != null) robot.getFLM().setPower(x+y+c);
+        //if (robot.getFRM() != null)  robot.getFRM().setPower(-x+y-c);
+        if (robot.getBLM() != null)  robot.getBLM().setPower(-x+y+c);
+        if (robot.getBRM() != null)  robot.getBRM().setPower(x+y-c);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class OmniDrive extends TeleOpDrivetrain {
         //xdfbklnbkxf
     }
 
-    /*@Override
+    @Override
     public void driveQuicklyWithGamepad() {
 
     }
@@ -51,5 +51,5 @@ public class OmniDrive extends TeleOpDrivetrain {
     @Override
     public void reverseQuicklyGamepad() {
 
-    }*/
+    }
 }
