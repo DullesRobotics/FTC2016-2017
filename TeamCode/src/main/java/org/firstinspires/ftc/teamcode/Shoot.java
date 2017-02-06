@@ -69,7 +69,7 @@ public class Shoot extends LinearVisionOpMode {
         delay(5000);
         robot.getBRM().setPower(-0.4);
         robot.getBLM().setPower(-0.4);
-        delay(3001); 
+        delay(3001);
         robot.getBRM().setPower(0);
         robot.getBLM().setPower(0);
     }

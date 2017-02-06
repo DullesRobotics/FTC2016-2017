@@ -215,9 +215,7 @@ public class AutonomousDriveClassV2 {
             opMode.telemetry.addData("runtime.seconds() < timeoutS",(runtime.seconds() < timeoutS));
             opMode.telemetry.addData("at least one motor Busy",(robot.getBLM().isBusy() || robot.getBRM().isBusy()));
             opMode.telemetry.update();
-            while (opMode.opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (robot.getBLM().isBusy() || robot.getBRM().isBusy())) {
+            while (opMode.opModeIsActive() && (robot.getBLM().isBusy() || robot.getBRM().isBusy() || runtime.seconds() < timeoutS)) {
                 delay(1);
                 // Display it for the driver.
                 opMode.telemetry.addData("Targets",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
@@ -270,7 +268,6 @@ public class AutonomousDriveClassV2 {
     }
 
     public void turnSetTime(double power, double seconds,boolean right) throws InterruptedException {
-        runtime.reset();
         setRUNWITHENCODERS();
         runtime.reset();
         if (right) {
@@ -309,7 +306,11 @@ public class AutonomousDriveClassV2 {
         robot.getBRM().setPower(0.0);
     }
 
-    public void turnTillLine(double power, double EOPDThreshold, boolean turnLeft) throws InterruptedException {
+    public boolean isOnLine() throws InterruptedException{
+        return ods.getLightDetected() < EOPDWHITELINELIGHTLEVEL;
+    }
+
+    /*public void turnTillLine(double power, double EOPDThreshold, boolean turnLeft) throws InterruptedException {
         setRUNWITHENCODERS();
         if(turnLeft){
             robot.getBRM().setPower(power);
@@ -337,7 +338,7 @@ public class AutonomousDriveClassV2 {
             robot.getBLM().setPower(0.0);
             robot.getBRM().setPower(0.0);
         }
-    }*/
+    }
 
     public void turnLeftTillLine(double power, double EOPDThreshold, boolean turnLeft) throws InterruptedException {
         setRUNWITHENCODERS();
@@ -392,7 +393,7 @@ public class AutonomousDriveClassV2 {
         if (!leftFirst) {
             while (runtime.seconds() < timeout && opMode.opModeIsActive() && ods.getLightDetected() < threshold){
                 /*robot.getBRM().setPower(-.4);
-                robot.getBLM().setPower(.4);*/
+                robot.getBLM().setPower(.4);
                 encoderDrive(.2,2,-2,2);
                 opMode.waitOneFullHardwareCycle();
                 opMode.telemetry.addData("Turning","Right");
@@ -402,7 +403,7 @@ public class AutonomousDriveClassV2 {
         } else {
             while (runtime.seconds() < timeout && opMode.opModeIsActive() && ods.getLightDetected() < threshold){
                 /*robot.getBRM().setPower(.4);
-                robot.getBLM().setPower(-.4);*/
+                robot.getBLM().setPower(-.4);
                 encoderDrive(.2,-2,2,2);
                 opMode.waitOneFullHardwareCycle();
                 opMode.telemetry.addData("Turning2","Left");
@@ -421,7 +422,7 @@ public class AutonomousDriveClassV2 {
                 leftFirst2 = false;
             } else {
                 leftFirst2 = true;
-            }*/
+            }
             leftFirst2 = !leftFirst2;
             counter++;
             opMode.telemetry.addData("Counter",counter);
@@ -429,7 +430,7 @@ public class AutonomousDriveClassV2 {
             opMode.waitOneFullHardwareCycle();
             //delay(250);
         }
-    }
+    }*/
 
     public void readAndPush(String analysis,int goalTries, String teamOn) throws InterruptedException{ //Might not work if blue is on right...
         //Assuming the beacon is randomized, which it should be.....
@@ -487,6 +488,7 @@ public class AutonomousDriveClassV2 {
 
     public void resetAll() throws InterruptedException{
         this.resetEncoders();
+        setRUNWITHENCODERS();
         runtime.reset();
     }
 
