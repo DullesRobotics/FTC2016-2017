@@ -29,7 +29,7 @@ public class RobotWithFlickerShooter extends BasicRobot {
     }
 
     /*
-    public RobotWithFlickerShooter (DcMotor backLeft, DcMotor backRight, Gamepad g1, DcMotor lift){
+    public RobotWithFlickerShooterandMecanum (DcMotor backLeft, DcMotor backRight, Gamepad g1, DcMotor lift){
         super(backLeft,backRight, g1);
         lift =
     }

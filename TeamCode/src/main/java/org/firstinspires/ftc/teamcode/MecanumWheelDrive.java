@@ -3,19 +3,17 @@ package org.firstinspires.ftc.teamcode;
 import com.dullesrobotics.ftc.libraries.ArcadeDrive;
 import com.dullesrobotics.ftc.libraries.FlickerShooterClass;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
-import com.dullesrobotics.ftc.libraries.RobotWithWheeledShooter;
+import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooterandMecanum;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
- * Created by Kenneth on 11/6/2016.
+ * Created by kk200 on 2/7/2017.
  */
-@TeleOp(name = "ArcadeDriveTeleOp")
-public class ArcadeDriveTeleOp extends OpMode {
-    //private RobotWithWheeledShooter robotWithWheeledShooter;
+@TeleOp(name = "MecamumWheelDrive")
+public class MecanumWheelDrive extends OpMode{
     private RobotWithFlickerShooter robotWithFlickerShooter;
     private FlickerShooterClass shooter;
     private ArcadeDrive ArcDrive;
@@ -28,6 +26,7 @@ public class ArcadeDriveTeleOp extends OpMode {
     //private boolean quickly = true;
     //private boolean prevStateQuickly = quickly;
     private boolean shooting = false;
+    private boolean twoDrivers = true;
 
     @Override
     public void init() {
@@ -37,8 +36,7 @@ public class ArcadeDriveTeleOp extends OpMode {
         robotWithWheeledShooter.setDriveTrain(ArcDrive);
         */
 
-        robotWithFlickerShooter = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1);
-        //robotWithFlickerShooter = new RobotWithFlickerShooterandMecanum(gamepad1);
+        robotWithFlickerShooter = new RobotWithFlickerShooterandMecanum(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1);
         ArcDrive = new ArcadeDrive(robotWithFlickerShooter);
         robotWithFlickerShooter.setDriveTrain(ArcDrive);
         servController = new ServoControllerLib(hardwareMap.servo.get("btnServo"));
@@ -108,4 +106,5 @@ public class ArcadeDriveTeleOp extends OpMode {
             servController.setDegrees(0); //Left
         }
     }
+
 }

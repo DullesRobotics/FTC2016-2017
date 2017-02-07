@@ -45,6 +45,9 @@ public class BasicRobot {
         gamepad1 = g1;
     }
 
+    public BasicRobot() {
+    }
+
     public void setDriveTrain(TeleOpDrivetrain driveTrain) {
         this.driveTrain = driveTrain;
     }
