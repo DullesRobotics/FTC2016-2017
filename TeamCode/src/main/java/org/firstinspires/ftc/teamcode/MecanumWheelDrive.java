@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.dullesrobotics.ftc.libraries.ArcadeDrive;
 import com.dullesrobotics.ftc.libraries.FlickerShooterClass;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
-import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooterandMecanum;
+import com.dullesrobotics.ftc.libraries.RobotWithMecanumWheels;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -26,7 +26,7 @@ public class MecanumWheelDrive extends OpMode{
     //private boolean quickly = true;
     //private boolean prevStateQuickly = quickly;
     private boolean shooting = false;
-    private boolean twoDrivers = true;
+    //private boolean twoDrivers = true;
 
     @Override
     public void init() {
@@ -36,7 +36,7 @@ public class MecanumWheelDrive extends OpMode{
         robotWithWheeledShooter.setDriveTrain(ArcDrive);
         */
 
-        robotWithFlickerShooter = new RobotWithFlickerShooterandMecanum(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1);
+        robotWithFlickerShooter = new RobotWithMecanumWheels(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1);
         ArcDrive = new ArcadeDrive(robotWithFlickerShooter);
         robotWithFlickerShooter.setDriveTrain(ArcDrive);
         servController = new ServoControllerLib(hardwareMap.servo.get("btnServo"));
