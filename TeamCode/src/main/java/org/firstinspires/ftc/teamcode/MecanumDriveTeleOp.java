@@ -16,7 +16,7 @@ public class MecanumDriveTeleOp extends OpMode {
     //private RobotWithWheeledShooter robotWithWheeledShooter;
     private RobotWithFlickerShooter robotWithFlickerShooter;
     //private FlickerShooterClass shooter;
-    private MecanumDrive ArcDrive;
+    private MecanumDrive MecDrive;
     private String shooterMotor1; //This is for Wheeled Shooter and Flicker Shooter
     private String shooterMotor2; //This is for Wheeled Shooter
     private ServoControllerLib servController;
@@ -37,8 +37,8 @@ public class MecanumDriveTeleOp extends OpMode {
 
         robotWithFlickerShooter = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1);
         //robotWithFlickerShooter = new RobotWithFlickerShooterandMecanum(gamepad1);
-        ArcDrive = new MecanumDrive(robotWithFlickerShooter);
-        robotWithFlickerShooter.setDriveTrain(ArcDrive);
+        MecDrive = new MecanumDrive(robotWithFlickerShooter);
+        robotWithFlickerShooter.setDriveTrain(MecDrive);
         servController = new ServoControllerLib(hardwareMap.servo.get("btnServo"));
         //shooter = new FlickerShooterClass(hardwareMap.dcMotor.get("Shooter"),this);
     }
