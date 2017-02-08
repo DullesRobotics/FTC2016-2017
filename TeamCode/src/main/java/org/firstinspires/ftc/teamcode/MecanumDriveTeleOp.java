@@ -2,21 +2,21 @@ package org.firstinspires.ftc.teamcode;
 
 import com.dullesrobotics.ftc.libraries.ArcadeDrive;
 import com.dullesrobotics.ftc.libraries.FlickerShooterClass;
+import com.dullesrobotics.ftc.libraries.MecanumDrive;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
-import com.dullesrobotics.ftc.libraries.RobotWithMecanumWheels;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
- * Created by kk200 on 2/7/2017.
+ * Created by Kenneth on 11/6/2016.
  */
-@TeleOp(name = "MecamumWheelDrive")
-public class MecanumWheelDrive extends OpMode{
+@TeleOp(name = "MecanumDriveTeleOp")
+public class MecanumDriveTeleOp extends OpMode {
+    //private RobotWithWheeledShooter robotWithWheeledShooter;
     private RobotWithFlickerShooter robotWithFlickerShooter;
-    private FlickerShooterClass shooter;
-    private ArcadeDrive ArcDrive;
+    //private FlickerShooterClass shooter;
+    private MecanumDrive ArcDrive;
     private String shooterMotor1; //This is for Wheeled Shooter and Flicker Shooter
     private String shooterMotor2; //This is for Wheeled Shooter
     private ServoControllerLib servController;
@@ -26,7 +26,6 @@ public class MecanumWheelDrive extends OpMode{
     //private boolean quickly = true;
     //private boolean prevStateQuickly = quickly;
     private boolean shooting = false;
-    //private boolean twoDrivers = true;
 
     @Override
     public void init() {
@@ -36,8 +35,9 @@ public class MecanumWheelDrive extends OpMode{
         robotWithWheeledShooter.setDriveTrain(ArcDrive);
         */
 
-        robotWithFlickerShooter = new RobotWithMecanumWheels(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1);
-        ArcDrive = new ArcadeDrive(robotWithFlickerShooter);
+        robotWithFlickerShooter = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1);
+        //robotWithFlickerShooter = new RobotWithFlickerShooterandMecanum(gamepad1);
+        ArcDrive = new MecanumDrive(robotWithFlickerShooter);
         robotWithFlickerShooter.setDriveTrain(ArcDrive);
         servController = new ServoControllerLib(hardwareMap.servo.get("btnServo"));
         //shooter = new FlickerShooterClass(hardwareMap.dcMotor.get("Shooter"),this);
@@ -106,5 +106,4 @@ public class MecanumWheelDrive extends OpMode{
             servController.setDegrees(0); //Left
         }
     }
-
 }
