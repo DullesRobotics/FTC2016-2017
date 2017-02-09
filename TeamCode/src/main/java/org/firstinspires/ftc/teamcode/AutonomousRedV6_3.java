@@ -59,18 +59,7 @@ public class AutonomousRedV6_3 extends LinearVisionOpMode{
         autonomousDrive.resetAll();
         waitForStart(); //Wait for START Button Press on DS
         debug(3);
-        //autonomousDrive.encoderDriveInches(.4,57.25,57.25,7); //Forward 1 ft
-        autonomousDrive.runForSetTime(.8,1.7);
-        autonomousDrive.turnSetTime(1,1,false);
-        autonomousDrive.runForSetTime(.5,1.25);
-        String result = ftcVisionManager.readBeacon(7,4);
-        if (result.equals("blueRed")){
-            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
-        } else {
-            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
-        }
-        autonomousDrive.runForSetTime(.3,2.5);
-        autonomousDrive.runForSetTime(-1,2);
+
 }
 
 
