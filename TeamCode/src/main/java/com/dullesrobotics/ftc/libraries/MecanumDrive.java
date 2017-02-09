@@ -17,13 +17,13 @@ public class MecanumDrive extends TeleOpDrivetrain {
     public void driveWithGamepad() {
         Gamepad gamepad = robot.getGamepad1();
         drive(-gamepad.left_stick_x, -gamepad.left_stick_y); //Don't forget the negatives
-        strife(gamepad.right_stick_x, gamepad.right_stick_y);
+        strafe(gamepad.right_stick_x, gamepad.right_stick_y);
     }
 
     public void reverseGamepad() {
         Gamepad gamepad = robot.getGamepad1();
         drive(-gamepad.left_stick_x, gamepad.left_stick_y);
-        strife(gamepad.right_stick_x, gamepad.right_stick_y);
+        strafe(gamepad.right_stick_x, gamepad.right_stick_y);
     }
 
     public void drive(double xPower, double yPower) {
