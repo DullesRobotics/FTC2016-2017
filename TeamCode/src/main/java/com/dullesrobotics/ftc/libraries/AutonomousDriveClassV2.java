@@ -149,7 +149,7 @@ public class AutonomousDriveClassV2 {
             return;
         }
         //double leftDistCM = (2.0 * Math.PI * POINTTURNRADIUSCM * deg)/ 360.0;
-        double leftDistCM = (((deg/360) * 2.0 * Math.PI)* 7.0) * 2.54;
+        double leftDistCM = ((((deg/360) * 2.0 * Math.PI)* 7.0) + 10) + 2.54;
         double rightDistCM = -leftDistCM;
         opMode.telemetry.addData("leftDistCM",leftDistCM);
         opMode.telemetry.update();
@@ -256,11 +256,18 @@ public class AutonomousDriveClassV2 {
     }
 
     public boolean encoderDriveInches  (double speed,
-                                  double leftIn, double rightIn,
-                                  double timeoutS) throws InterruptedException {
+                                         double leftIn, double rightIn,
+                                         double timeoutS) throws InterruptedException {
         leftIn *= 2.54;
         rightIn *= 2.54;
         return encoderDrive(speed,leftIn,rightIn,timeoutS);
+    }
+
+    public boolean encoderDriveInches  (double speed,
+                                        double dis,
+                                        double timeoutS) throws InterruptedException {
+        dis *= 2.54;
+        return encoderDrive(speed,dis,dis,timeoutS);
     }
 
     public boolean isReversed(){

@@ -18,12 +18,11 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 /**
  * Created by kk200 on 2/4/2017.
  *
- * This class should push both beacons and park
- * TODO: Make it push the first beacon successfully and make it work for second beacon. Also add parking...
+ * This class should do the 100 pt auto with line tracker
  */
 
-@Autonomous(name = "V6.3 Red")
-public class AutonomousRedV6_3 extends LinearVisionOpMode{
+@Autonomous(name = "V6.4 Red")
+public class AutonomousBlueV6_4 extends LinearVisionOpMode{
     private ElapsedTime runtime = new ElapsedTime();
     String currentColorOrder = "???, ???";
     int sleepTime = 0;
@@ -62,13 +61,16 @@ public class AutonomousRedV6_3 extends LinearVisionOpMode{
         autonomousDrive.resetAll();
         waitForStart(); //Wait for START Button Press on DS
         debug(3);
-        //Head for first beacon
-        autonomousDrive.encoderDriveInches(.6,60,2);
-        autonomousDrive.pointTurn(.4,90,1);
-        //Robot should be infront of first beacon, facing it.
-        //autonomousDrive.encoderDriveInches(.6,)
+        //Head toward and face first beacon
+        autonomousDrive.encoderDriveInches(.5,36,3);
+        autonomousDrive.pointTurn(.5,-45,2.5);
+        autonomousDrive.driveTillLine(.4,5,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
+        autonomousDrive.pointTurn(.4,10,2);
+        autonomousDrive.encoderDriveInches(.3,3,4);
+        autonomousDrive.pointTurn(.4,-55,4);
+        //Robot should be facing first beacon now
 
-}
+    }
 
 
 
