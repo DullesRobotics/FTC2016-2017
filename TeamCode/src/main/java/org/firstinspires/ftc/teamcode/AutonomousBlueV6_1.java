@@ -83,7 +83,7 @@ public class AutonomousBlueV6_1 extends LinearVisionOpMode {
         debug(10);
         autonomousDrive.pointTurn(.4,90.0,2);
         debug(11);
-        autonomousDrive.driveTillLine(0.4,5.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
+        //autonomousDrive.driveTillLine(0.4,5.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
         debug(12);
         autonomousDrive.encoderDriveInches(0.4,7.0,7.0,5.0);
         //autonomousDrive.turnTillLine(0.4,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL,false);//Should be facing beacon

@@ -48,7 +48,7 @@ public class AutonDriveClassV2Tester extends LinearVisionOpMode {
          * INSERT CODE TO TEST BELOW THIS COMMENT
          */
         logAction("Begin  driveToLine");
-        autonomousDrive2.driveTillLine(0.4,10.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
+        //autonomousDrive2.driveTillLine(0.4,10.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
 
 
     }

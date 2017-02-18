@@ -7,6 +7,7 @@ import com.dullesrobotics.ftc.libraries.RobotWithWheeledShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 
@@ -37,7 +38,7 @@ public class ArcadeDriveTeleOp extends OpMode {
         robotWithWheeledShooter.setDriveTrain(ArcDrive);
         */
 
-        robotWithFlickerShooter = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),gamepad1);
+        robotWithFlickerShooter = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"),hardwareMap.dcMotor.get("BRM"),hardwareMap.dcMotor.get("ballIntake"),gamepad1);
         //robotWithFlickerShooter = new RobotWithFlickerShooterandMecanum(gamepad1);
         ArcDrive = new ArcadeDrive(robotWithFlickerShooter);
         robotWithFlickerShooter.setDriveTrain(ArcDrive);
@@ -58,6 +59,7 @@ public class ArcadeDriveTeleOp extends OpMode {
             robotWithWheeledShooter.stopShooter();
             */
         boolean curState = robotWithFlickerShooter.getGamepad1().right_bumper;
+        DcMotor intake = robotWithFlickerShooter.getBallIntake();
         //boolean curStateQuickly = robotWithFlickerShooter.getGamepad1().left_bumper;
         /*if (curStateQuickly && (prevStateQuickly == false)&&curStateQuickly == true){
             quickly = !quickly;
@@ -101,6 +103,14 @@ public class ArcadeDriveTeleOp extends OpMode {
         else {
             robotWithFlickerShooter.stopShooter();
         }*/
+
+        if (robotWithFlickerShooter.getGamepad1().right_trigger > 0){
+            intake.setPower(-robotWithFlickerShooter.getGamepad1().right_trigger);
+        } else if (robotWithFlickerShooter.getGamepad1().left_trigger > 0){
+            intake.setPower(robotWithFlickerShooter.getGamepad1().left_trigger);
+        } else {
+            intake.setPower(0);
+        }
 
         if (robotWithFlickerShooter.getGamepad1().dpad_right){
             servController.setDegrees(180); //Right

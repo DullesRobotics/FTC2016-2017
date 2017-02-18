@@ -29,7 +29,7 @@ public class AutonomousDriveClassV2 {
     final static double DISTANCEBETWEENWHEELSINCHES = 13.5;
     final static double POINTTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES/(2.0*2.54);
     final static double SWINGTURNRADIUSCM = DISTANCEBETWEENWHEELSINCHES * 2.54;
-    public final static double EOPDWHITELINELIGHTLEVEL = 0.05;
+    public static double EOPDWHITELINELIGHTLEVEL = 0.125;
     //public final static double EOPDWHITELINELIGHTLEVEL = 0.084;
     private boolean isReversed = false;
     OpticalDistanceSensor ods;
@@ -112,16 +112,25 @@ public class AutonomousDriveClassV2 {
         ElapsedTime timer = new ElapsedTime();
         timer.reset();
         setRUNWITHENCODERS();
-        setDirectionReverse();
+        setDirectionNotReversed();
         robot.getBRM().setPower(power);
         robot.getBLM().setPower(power);
         while(!isOnLine() && timer.seconds() < timeoutS && opMode.opModeIsActive()){
-
-
+            opMode.waitOneFullHardwareCycle();
         }
+        resetAll();
     }
 
-
+     public void setEOPDWHITELINELIGHTLEVEL(double multiplier,int nums){
+         double values = 0;
+         for(int i=0;i<nums;i++){
+             values += ods.getLightDetected();
+         }
+         double avg = values/((double)(nums));
+         EOPDWHITELINELIGHTLEVEL = avg*multiplier;
+         opMode.telemetry.addData("EOPDLEVEL",EOPDWHITELINELIGHTLEVEL);
+         opMode.telemetry.update();
+     }
     public void followLine(double power, double timeOutS) throws InterruptedException {
         setDirectionReverse();
         ElapsedTime timer = new ElapsedTime();
@@ -143,38 +152,68 @@ public class AutonomousDriveClassV2 {
             }
 
             opMode.telemetry.addData("Reflectance", reflectance);
-
+            opMode.telemetry.update();
+            opMode.waitOneFullHardwareCycle();
 
         }
+        resetAll();
 
     }
     public void followLine(double power, double timeOutS, double distanceInches) throws InterruptedException {
         setDirectionReverse();
         ElapsedTime timer = new ElapsedTime();
+        ElapsedTime restrictTimer = new ElapsedTime();
+        restrictTimer.reset();
         timer.reset();
         resetEncoders();
         setRUNWITHENCODERS();
+        boolean change = false;
 
         int initalCountLeft = robot.getBLM().getCurrentPosition();
         int initalCountRight = robot.getBRM().getCurrentPosition();
 
-        while(timer.seconds() <= timeOutS && opMode.opModeIsActive() && (robot.getBLM().getCurrentPosition()-initalCountLeft <= (distanceInches*ENCODERTICKSPERREVOLUTION)) && (robot.getBRM().getCurrentPosition()-initalCountRight <= (distanceInches*ENCODERTICKSPERREVOLUTION))){
+        while((timer.seconds() <= timeOutS && opMode.opModeIsActive()) && (robot.getBLM().getCurrentPosition()-initalCountLeft <= (distanceInches*ENCODERTICKSPERREVOLUTION)) && (robot.getBRM().getCurrentPosition()-initalCountRight <= (distanceInches*ENCODERTICKSPERREVOLUTION))){
             double reflectance = ods.getLightDetected();
-
-            if(reflectance >= EOPDWHITELINELIGHTLEVEL){
-                robot.getBRM().setPower(-power);
-                robot.getBLM().setPower(0);
-            }
-            else{
+            /*if (restrictTimer.seconds() > 3){
+                restrictTimer.reset();
+                if (reflectance >= EOPDWHITELINELIGHTLEVEL){
+                    reflectance = EOPDWHITELINELIGHTLEVEL - 1;
+                } else {
+                    reflectance = EOPDWHITELINELIGHTLEVEL + 1;
+                }
+            }*/
+            if(reflectance >= EOPDWHITELINELIGHTLEVEL) { //|| change){
+                /*if (change){
+                    robot.getBLM().setPower(-power);
+                    robot.getBRM().setPower(0);
+                    delay(2500);
+                    change = false;
+                    restrictTimer.reset();
+                }*/
                 robot.getBLM().setPower(-power);
                 robot.getBRM().setPower(0);
+            }
+            else{
+                robot.getBRM().setPower(-power);
+                robot.getBLM().setPower(0);
 
             }
 
-            opMode.telemetry.addData("Reflectance", reflectance);
+            /*if (restrictTimer.seconds() > 2 || !change) {
+                change = true;
+            }*/
 
+            if (isOnLine()){
+                change = false;
+            }
+            opMode.telemetry.addData("Reflectance", reflectance);
+            opMode.telemetry.update();
+            opMode.waitOneFullHardwareCycle();
 
         }
+        robot.getBLM().setPower(0);
+        robot.getBRM().setPower(0);
+        resetAll();
 
     }
 
@@ -215,10 +254,10 @@ public class AutonomousDriveClassV2 {
             return;
         }
         ////double leftDistCM = (2.0 * Math.PI * POINTTURNRADIUSCM * deg)/ 360.0;
-        //double leftDistCM = ((((deg/360) * 2.0 * Math.PI)* 7.0) + 10) + 2.54;
+        double leftDistCM = ((((deg/360) * 2.0 * Math.PI)* 7.0) + 10) + 2.54;
         //mess with later to get calibration right.
 
-        double leftDistCM = ((((deg/360) * 2.0 * Math.PI)* POINTTURNRADIUSCM)) + 2.54;
+        //double leftDistCM = ((((deg/360) * 2.0 * Math.PI)* POINTTURNRADIUSCM)) + 2.54;
         double rightDistCM = -leftDistCM;
         opMode.telemetry.addData("leftDistCM",leftDistCM);
         opMode.telemetry.update();
@@ -301,6 +340,7 @@ public class AutonomousDriveClassV2 {
                 if (!robot.getBLM().isBusy() && !robot.getBRM().isBusy()){
                     return false;
                 }
+                opMode.waitOneFullHardwareCycle();
             }
             debug(7);
             // Stop all motion;
@@ -321,6 +361,7 @@ public class AutonomousDriveClassV2 {
             //opMode.stop();
         }
         debug(10);
+        resetAll();
         return hitTimeOut;
     }
 
@@ -441,7 +482,7 @@ public class AutonomousDriveClassV2 {
         opMode.telemetry.update();
     }*/
 
-    public void readAndSetServo(double power, String analysis,int goalTries, String teamOn) throws InterruptedException{
+    public void readAndSetServo(String teamOn) throws InterruptedException{
         opMode.telemetry.addData("AutoStatus","Attempting to read and push");
         opMode.telemetry.update();
         int tries = 0;
@@ -449,18 +490,18 @@ public class AutonomousDriveClassV2 {
         String colors = ftcVisionManager.readBeacon(9,10);
         if (colors.equals("redBlue")) {
             if(teamOn.toLowerCase() == "blue"){
-                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
             }
             else{
-                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
             }
         }
         else{
             if(teamOn.toLowerCase() == "red"){
-                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
             }
             else{
-                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
             }
 
 

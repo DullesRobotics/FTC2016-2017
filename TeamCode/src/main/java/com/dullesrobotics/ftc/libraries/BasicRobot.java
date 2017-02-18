@@ -13,6 +13,7 @@ public class BasicRobot {
     private DcMotor FRM;
     private DcMotor BLM;
     private DcMotor BRM;
+    private DcMotor ballIntake;
     private Gamepad gamepad1;
     private Gamepad gamepad2;
     private TeleOpDrivetrain driveTrain;
@@ -41,6 +42,13 @@ public class BasicRobot {
         gamepad1 = g1;
     }
 
+    public BasicRobot(DcMotor backleft, DcMotor backRight, DcMotor ballIntake,Gamepad g1) {
+        BLM = backleft;
+        BRM = backRight;
+        this.ballIntake = ballIntake;
+        gamepad1 = g1;
+    }
+
     public BasicRobot(Gamepad g1){
         gamepad1 = g1;
     }
@@ -58,6 +66,7 @@ public class BasicRobot {
     public void driveWithGamepad(){
         driveTrain.driveWithGamepad();
     }
+
 
     //public void driveQuicklyWithGamepad(){ driveTrain.driveQuicklyWithGamepad();}
     //public void reverseQuicklyGamepad(){ driveTrain.reverseQuicklyGamepad();}
@@ -77,6 +86,8 @@ public class BasicRobot {
     public DcMotor getFRM() {
         return FRM;
     }
+
+    public DcMotor getBallIntake() {return ballIntake;}
 
     public void setFLM(DcMotor FLM) {
         this.FLM = FLM;

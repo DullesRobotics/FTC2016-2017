@@ -23,7 +23,7 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 
 @Autonomous(name = "V6.4 Red")
 public class AutonomousBlueV6_4 extends LinearVisionOpMode{
-    private ElapsedTime runtime = new ElapsedTime();
+    ElapsedTime runtime = new ElapsedTime();
     String currentColorOrder = "???, ???";
     int sleepTime = 0;
     RobotWithFlickerShooter robot;
@@ -64,12 +64,11 @@ public class AutonomousBlueV6_4 extends LinearVisionOpMode{
         //Head toward and face first beacon
         autonomousDrive.encoderDriveInches(.5,36,3);
         autonomousDrive.pointTurn(.5,-45,2.5);
-        autonomousDrive.driveTillLine(.4,5,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
+       // autonomousDrive.driveTillLine(.5,5,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
         autonomousDrive.pointTurn(.4,10,2);
         autonomousDrive.encoderDriveInches(.3,3,4);
         autonomousDrive.pointTurn(.4,-55,4);
         //Robot should be facing first beacon now
-
     }
 
 

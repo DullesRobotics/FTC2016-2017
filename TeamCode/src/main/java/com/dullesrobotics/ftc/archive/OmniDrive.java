@@ -43,12 +43,12 @@ public class OmniDrive extends TeleOpDrivetrain {
         //xdfbklnbkxf
     }
 
-    @Override
+
     public void driveQuicklyWithGamepad() {
 
     }
 
-    @Override
+
     public void reverseQuicklyGamepad() {
 
     }
