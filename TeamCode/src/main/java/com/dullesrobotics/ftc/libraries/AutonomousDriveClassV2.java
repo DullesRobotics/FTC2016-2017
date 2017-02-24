@@ -254,7 +254,7 @@ public class AutonomousDriveClassV2 {
             return;
         }
         ////double leftDistCM = (2.0 * Math.PI * POINTTURNRADIUSCM * deg)/ 360.0;
-        double leftDistCM = ((((deg/360) * 2.0 * Math.PI)* 7.0) + 10) + 2.54;
+        double leftDistCM = ((((deg/360) * 2.0 * Math.PI)* 7.0) - 10) + 2.54;
         //mess with later to get calibration right.
 
         //double leftDistCM = ((((deg/360) * 2.0 * Math.PI)* POINTTURNRADIUSCM)) + 2.54;
@@ -295,6 +295,8 @@ public class AutonomousDriveClassV2 {
                                   double leftCM, double rightCM,
                                   double timeoutS) throws InterruptedException {
         //rightCM *= 2;
+        //leftCM = -leftCM;
+        //rightCM = -rightCM;
         int newLeftTarget;
         int newRightTarget;
         //robot.getBLM().set
@@ -490,18 +492,18 @@ public class AutonomousDriveClassV2 {
         String colors = ftcVisionManager.readBeacon(9,10);
         if (colors.equals("redBlue")) {
             if(teamOn.toLowerCase() == "blue"){
-                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
             }
             else{
-                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
             }
         }
         else{
             if(teamOn.toLowerCase() == "red"){
-                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
             }
             else{
-                servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+                servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
             }
 
 

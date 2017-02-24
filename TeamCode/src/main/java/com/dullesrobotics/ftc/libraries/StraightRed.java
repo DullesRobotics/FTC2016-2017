@@ -9,13 +9,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
+import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
+
 /**
  * Created by kk200 on 2/17/2017.
- * TODO: Test, test, and more testing.
  */
 
-@Autonomous(name = "Autonomous Test Blue")
-public class TestClass extends LinearVisionOpMode {
+@Autonomous(name = "Autonomous Straight With 25 Delay")
+public class StraightRed extends LinearVisionOpMode {
     ElapsedTime runtime = new ElapsedTime();
     String currentColorOrder = "???, ???";
     int sleepTime = 0;
@@ -49,45 +50,10 @@ public class TestClass extends LinearVisionOpMode {
         autonomousDrive.resetAll();
         waitForStart(); //Wait for START Button Press on DS
         debug(3);
-        autonomousDrive.setEOPDWHITELINELIGHTLEVEL(1.5,20);
-        debug("Moving forward 2 feet");
-        autonomousDrive.encoderDriveInches(.4,24,3);
-        debug("Turning 55 degrees");
-        autonomousDrive.pointTurn(.4,45,3);
-        debug("Driving till line");
-        autonomousDrive.driveTillLine(.4,10);
-        autonomousDrive.pointTurn(.2,2.5,.35);
-        //If robot hits wall, then make robot back-up first
-        debug("Turning 30 degrees to line up better with line");
-        autonomousDrive.pointTurn(.4,45,3);
-        debug("Attempting to follow line");
-        autonomousDrive.followLine(.2,5,4);
-        debug("Robot should be facing beacon. Beginning analysis");
-        String analysis = ftcVisionManager.readBeacon(7,4);
-        autonomousDrive.readAndSetServo("blue");
-        debug("Pressing beacon");
-        autonomousDrive.followLine(.2,5,4); //Move forward till it hits the beacon
-        //autonomousDrive.encoderDriveInches(.3,-18,2.5);
-        //autonomousDrive.encoderDriveInches(.4,5,2.5);
-        //Robot should have pressed first beacon by now
-        /*debug("Moving onto second beacon");
-        autonomousDrive.encoderDriveInches(.4,36,4);
-        debug("Heading forward one foot");
-        autonomousDrive.encoderDriveInches(.4,12,3); //If robot goes forward twice, fix this
-        debug("Turning to aim for white line");
-        autonomousDrive.pointTurn(.4,55,3);
-        debug("Driving till line 2");
-        autonomousDrive.driveTillLine(.4,10);
-        autonomousDrive.pointTurn(.2,2.4,.35);
-        debug("Turning to line up better");
-        autonomousDrive.pointTurn(.4,30,3);
-        debug("Attempting to follow line");
-        autonomousDrive.followLine(.2,5,4);
-        debug("Robot should be facing beacon. Beginning analysis");
-        analysis = ftcVisionManager.readBeacon(7,4);
-        autonomousDrive.readAndSetServo("blue");
-        debug("Pressing beacon");
-        autonomousDrive.encoderDriveInches(.3,6,2.5);*/
+        debug("Delaying...");
+        delay(25000);
+        debug("Running");
+        autonomousDrive.runForSetTime(-.8,3.5);
     }
     public void debug(double i) throws InterruptedException{
         String num = Double.toString(i);

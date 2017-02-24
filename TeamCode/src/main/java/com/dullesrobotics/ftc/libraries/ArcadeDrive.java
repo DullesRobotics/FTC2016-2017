@@ -36,8 +36,8 @@ public class ArcadeDrive extends TeleOpDrivetrain{
     }
 
     public void drive(double xPower, double yPower) {
-        //xPower = xPower/3; //FULL POWAA
-        //yPower = yPower/1.5; //FULL POWAA
+        //xPower = (xPower/1.25); //FULL POWAA
+        yPower = (yPower/2); //FULL POWAA
         //if(robot.getFLM() != null) robot.getFLM().setPower(xPower + yPower);
         //if(robot.getFRM() != null) robot.getFRM().setPower(xPower - yPower);
         if (robot.getBLM() != null) robot.getBLM().setPower(xPower + yPower);
