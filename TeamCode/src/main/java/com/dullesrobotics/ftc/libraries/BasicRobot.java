@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 /**
  * Created by Kenneth on 11/6/2016.
+ *
+ * TODO: Maybe make a new class to use instead of BasicRobot...since its not basic anymore, and has 2 wheels.
  */
 
 public class BasicRobot {
@@ -14,18 +16,19 @@ public class BasicRobot {
     private DcMotor BLM;
     private DcMotor BRM;
     private DcMotor ballIntake;
+    private DcMotor strifeMotor;
     private Gamepad gamepad1;
     private Gamepad gamepad2;
     private TeleOpDrivetrain driveTrain;
 
 
-    public BasicRobot(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight, Gamepad g1){
+    /*public BasicRobot(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight, Gamepad g1){
         FLM = frontLeft;
         FRM = frontRight;
         BLM = backLeft;
         BRM = backRight;
         gamepad1 = g1;
-    }
+    }*/
 
     public BasicRobot(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight,Gamepad g1, Gamepad g2){
         FLM = frontLeft;
@@ -42,18 +45,23 @@ public class BasicRobot {
         gamepad1 = g1;
     }
 
-    public BasicRobot(DcMotor backleft, DcMotor backRight, DcMotor ballIntake,Gamepad g1) {
+    public BasicRobot(DcMotor frontLeft, DcMotor frontRight, DcMotor middleMotor, Gamepad g1){
+        FLM = frontLeft;
+        FRM = frontRight;
+        strifeMotor = middleMotor;
+        gamepad1 = g1;
+    }
+
+    public BasicRobot(DcMotor backleft, DcMotor backRight, DcMotor ballIntake,DcMotor middleMotor,Gamepad g1) {
         BLM = backleft;
         BRM = backRight;
+        strifeMotor = middleMotor;
         this.ballIntake = ballIntake;
         gamepad1 = g1;
     }
 
     public BasicRobot(Gamepad g1){
         gamepad1 = g1;
-    }
-
-    public BasicRobot() {
     }
 
     public void setDriveTrain(TeleOpDrivetrain driveTrain) {
@@ -67,10 +75,10 @@ public class BasicRobot {
         driveTrain.driveWithGamepad();
     }
 
-
     //public void driveQuicklyWithGamepad(){ driveTrain.driveQuicklyWithGamepad();}
     //public void reverseQuicklyGamepad(){ driveTrain.reverseQuicklyGamepad();}
     public void reverseGamepad() { driveTrain.reverseGamepad();}
+
     public DcMotor getBLM() {
         return BLM;
     }
@@ -112,6 +120,8 @@ public class BasicRobot {
     public Gamepad getGamepad2() {
         return gamepad2;
     }
+
+    public DcMotor getStrifeMotor() { return strifeMotor; }
 
     public void setGamepad(Gamepad g1) {
         gamepad1 = g1;

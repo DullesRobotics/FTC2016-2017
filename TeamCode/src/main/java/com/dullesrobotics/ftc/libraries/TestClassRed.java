@@ -1,6 +1,7 @@
 package com.dullesrobotics.ftc.libraries;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
@@ -14,8 +15,11 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
  *
  * TODO: This seems to not turn correctly, although it should be fixed.
  * TODO: We need to test.
+ *
+ * This autonomous should push the first beacon for RED; Attempted for Regionals
  */
 
+@Disabled
 @Autonomous(name = "Autonomous Test Red")
 public class TestClassRed extends LinearVisionOpMode {
     ElapsedTime runtime = new ElapsedTime();
