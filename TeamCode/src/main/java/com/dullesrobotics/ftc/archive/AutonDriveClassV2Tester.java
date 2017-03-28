@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package com.dullesrobotics.ftc.archive;
 
 import com.dullesrobotics.ftc.libraries.AutonomousDriveClass;
 import com.dullesrobotics.ftc.libraries.AutonomousDriveClassV2;
@@ -6,6 +6,7 @@ import com.dullesrobotics.ftc.libraries.FTCVisionManager;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -18,6 +19,7 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 /**
  * Created by Kenneth on 1/22/2017.
  */
+@Disabled
 @Autonomous(name = "AutonDriveClassV2Tester")
 public class AutonDriveClassV2Tester extends LinearVisionOpMode {
     RobotWithFlickerShooter robot;

@@ -53,7 +53,7 @@ public class ArcadeDriveTeleOp extends OpMode {
         robotWithWheeledShooter.driveWithGamepad();
         if (robotWithWheeledShooter.getGamepad1().a)  //change
             robotWithWheeledShooter.shootForward();
-        else if(robotWithWheeledShooter.getGamepad1().b) //change
+            else if(robotWithWhueledShooter.getGamepad1().b) //change
             robotWithWheeledShooter.shootBackward();
         else if(robotWithWheeledShooter.getGamepad1().x) //change
             robotWithWheeledShooter.stopShooter();

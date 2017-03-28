@@ -1,10 +1,11 @@
-package org.firstinspires.ftc.teamcode;
+package com.dullesrobotics.ftc.archive;
 
 import com.dullesrobotics.ftc.libraries.AutonomousDriveClass;
 import com.dullesrobotics.ftc.libraries.FTCVisionManager;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
@@ -17,17 +18,17 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
  * Created by nimir on 1/21/2017.
  */
 
-
-@Autonomous(name = "AutonV6_RED")
-public class AutonomousRedV6 extends LinearVisionOpMode {
+@Disabled
+@Autonomous(name = "AutonV6_BLUE")
+public class AutonomousBlueV6 extends LinearVisionOpMode {
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;
     final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
     final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
     private ElapsedTime runtime = new ElapsedTime();
-    RobotWithFlickerShooter robot;
-    AutonomousDriveClass autonomousDrive;
     String currentColorOrder = "???, ???";
     int sleepTime = 0;
+    RobotWithFlickerShooter robot;
+    AutonomousDriveClass autonomousDrive;
     ServoControllerLib servoControllerLib;
     OpticalDistanceSensor ods;
     FTCVisionManager ftcVisionManager;
@@ -41,7 +42,7 @@ public class AutonomousRedV6 extends LinearVisionOpMode {
         this.resetStartTime();
         debug(1);
         //Initialize Robot
-        robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1, hardwareMap.dcMotor.get("flickerShooter"));
+        robot = new RobotWithFlickerShooter(hardwareMap.dcMotor.get("BLM"), hardwareMap.dcMotor.get("BRM"), gamepad1);
         autonomousDrive = new AutonomousDriveClass(this, robot, hardwareMap.opticalDistanceSensor.get("EOPD"));
         servoControllerLib = new ServoControllerLib(hardwareMap.servo.get("btnServo"), ServoControllerLib.SERVOLEFT);
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);

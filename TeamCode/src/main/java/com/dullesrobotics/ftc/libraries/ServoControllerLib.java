@@ -49,7 +49,7 @@ public class ServoControllerLib {
         buttonServo.setPosition(degrees);
     }
 
-   // public void setDegrees(double degrees, int index){ servos[index].setPosition(degrees); }
+    // public void setDegrees(double degrees, int index){ servos[index].setPosition(degrees); }
 
     /*public void setDegreesAll(double degrees){
         for (Servo s:servos)

@@ -1,10 +1,12 @@
-package org.firstinspires.ftc.teamcode;
+package com.dullesrobotics.ftc.archive;
 
+import com.dullesrobotics.ftc.libraries.AutonomousDriveClass;
 import com.dullesrobotics.ftc.libraries.AutonomousDriveClassV2;
 import com.dullesrobotics.ftc.libraries.FTCVisionManager;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
@@ -16,11 +18,11 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 
 /**
- * Created by kk200 on 2/4/2017.
+ * Created by nimir on 1/22/2017.
  */
-
-@Autonomous(name = "AutonomousV6.2 BLUE")
-public class AutonomousBlueV6_2 extends LinearVisionOpMode{
+@Disabled
+@Autonomous(name = "AutonomousV6.1 RED")
+public class AutonomousBlueV6_1 extends LinearVisionOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     String currentColorOrder = "???, ???";
     int sleepTime = 0;
@@ -59,61 +61,53 @@ public class AutonomousBlueV6_2 extends LinearVisionOpMode{
         autonomousDrive.resetAll();
         waitForStart(); //Wait for START Button Press on DS
         debug(3);
-        //autonomousDrive.encoderDriveInches(.4,57.25,57.25,7); //Forward 1 ft
-        autonomousDrive.encoderDriveInches(.3,18,18,3);
-        debug(4);
-        autonomousDrive.pointTurn(0.3,183,2.0);//TURN 180
-        /* Shoot Balls */
-        leftShooter.setDegrees(ServoControllerLib.SERVORIGHT);
-        rightShooter.setDegrees(ServoControllerLib.SERVOLEFT);
-        delay(500);
-        autonomousDrive.pointTurn(0.4,200,2.5);
-        debug(5);
-        autonomousDrive.encoderDriveInches(.65,41.5,41.5,3.5);
-        debug(6);
-        autonomousDrive.pointTurn(.4,100,2);
-        debug(7);
-        autonomousDrive.encoderDriveInches(.5,24,24,4);
+        autonomousDrive.runForSetTime(0.4,3.0);
+        //autonomousDrive.
+        //
+        String result = ftcVisionManager.readBeacon(7,10);
+        if(result.equals("redBlue")){  
+            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+            telemetry.addData("Reader","BLUE_RIGHT");
+            telemetry.update();
+        }else{
+            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+            telemetry.addData("Reader","BLUE_LEFT");
+            if(result.equals("???, ???")){
+                telemetry.addData("Reader","Couldn't determine - Defaulting to Left");
+            };
+            telemetry.update();
+        }
         debug(8);
-        String result = ftcVisionManager.readBeacon(7,4);
-        if (result.equals("redBlue")){
-            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
-        } else {
-            servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
-        }
+        autonomousDrive.encoderDriveInches(0.3,14,14,5);
         debug(9);
-        autonomousDrive.encoderDriveInches(.25,15,15,5);
+        autonomousDrive.encoderDriveInches(.4,-10,-10,5);
         debug(10);
-        autonomousDrive.encoderDriveInches(.4,-21,-21,5);
+        autonomousDrive.pointTurn(.4,90.0,2);
         debug(11);
-        autonomousDrive.pointTurn(.4,-105,2);
+        //autonomousDrive.driveTillLine(0.4,5.0,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL);
         debug(12);
-        autonomousDrive.encoderDriveInches(.4,45,45,4);
-        debug(13);
-        autonomousDrive.pointTurn(.4,100,2);
-        debug(14);
-        autonomousDrive.encoderDriveInches(.4,24,24,4);
-        debug(15);
-        result = ftcVisionManager.readBeacon(7,4);
-        if (result.equals("redBlue")){
+        autonomousDrive.encoderDriveInches(0.4,7.0,7.0,5.0);
+        //autonomousDrive.turnTillLine(0.4,AutonomousDriveClassV2.EOPDWHITELINELIGHTLEVEL,false);//Should be facing beacon
+        autonomousDrive.pointTurn(0.4,-45.0,3.0);
+        result = ftcVisionManager.readBeacon(7,10);
+        if(result.equals("redBlue")){
             servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
-        } else {
+            telemetry.addData("Reader","BLUE_RIGHT");
+            telemetry.update();
+        }else{
             servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+            telemetry.addData("Reader","BLUE_LEFT");
+            if(result.equals("???, ???")){
+                telemetry.addData("Reader","Couldn't determine - Defaulting to Left");
+            };
+            telemetry.update();
         }
-        autonomousDrive.encoderDriveInches(.24,10,10,5);
-        debug(16);
-        autonomousDrive.encoderDriveInches(.4,-21,-21,3);
-        debug(17);
-        autonomousDrive.pointTurn(.4,80,2);
-        debug(18);
-        autonomousDrive.encoderDriveInches(.7,144,144,3);
+        debug(13);
+        autonomousDrive.encoderDriveInches(.3,14,14,5);
+        autonomousDrive.encoderDriveInches(0.3,-14,-14,5);
+
+
     }
-
-
-
-    /*public void returnToWall() throws InterruptedException{
-        autonomousDrive.pointTurn();
-    }*/
 
     public void debug(double i) throws InterruptedException{
         String num = Double.toString(i);
