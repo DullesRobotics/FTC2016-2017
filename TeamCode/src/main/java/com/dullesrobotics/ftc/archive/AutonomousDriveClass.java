@@ -1,6 +1,8 @@
-package com.dullesrobotics.ftc.libraries;
+package com.dullesrobotics.ftc.archive;
 
+import com.dullesrobotics.ftc.libraries.BasicRobot;
 import com.dullesrobotics.ftc.mods.SensorListener;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -18,6 +20,7 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
  * Created by Kenneth on 1/8/2017.
  */
 
+@Disabled
 public class AutonomousDriveClass {
     BasicRobot robot;
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;

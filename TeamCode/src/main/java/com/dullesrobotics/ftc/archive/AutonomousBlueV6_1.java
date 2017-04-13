@@ -1,6 +1,5 @@
 package com.dullesrobotics.ftc.archive;
 
-import com.dullesrobotics.ftc.libraries.AutonomousDriveClass;
 import com.dullesrobotics.ftc.libraries.AutonomousDriveClassV2;
 import com.dullesrobotics.ftc.libraries.FTCVisionManager;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
@@ -14,8 +13,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
-
-import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 
 /**
  * Created by nimir on 1/22/2017.

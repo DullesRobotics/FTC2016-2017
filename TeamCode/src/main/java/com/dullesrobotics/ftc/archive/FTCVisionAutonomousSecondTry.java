@@ -1,7 +1,5 @@
 package com.dullesrobotics.ftc.archive;
 
-import com.dullesrobotics.ftc.libraries.ArcadeDrive;
-import com.dullesrobotics.ftc.libraries.AutonomousDriveClass;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;

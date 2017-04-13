@@ -23,9 +23,9 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
  * This autonomous should push the first beacon for RED; Attempted for Regionals
  */
 
-@Disabled
-@Autonomous(name = "Autonomous Test Red")
-public class TestClassRed extends LinearVisionOpMode {
+
+@Autonomous(name = "Main Red Autonomous")
+public class AutonomousRedV7 extends LinearVisionOpMode {
     ElapsedTime runtime = new ElapsedTime();
     String currentColorOrder = "???, ???";
     int sleepTime = 0;

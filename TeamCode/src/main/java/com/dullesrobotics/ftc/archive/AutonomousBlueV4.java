@@ -1,8 +1,5 @@
 package com.dullesrobotics.ftc.archive;
 
-import com.dullesrobotics.ftc.libraries.ArcadeDrive;
-import com.dullesrobotics.ftc.libraries.AutonomousDriveClass;
-import com.dullesrobotics.ftc.libraries.AutonomousDriveClass;
 import com.dullesrobotics.ftc.libraries.FTCVisionManager;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
@@ -13,14 +10,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.lasarobotics.vision.android.Cameras;
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
-import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
-import org.lasarobotics.vision.util.ScreenOrientation;
-import org.opencv.core.Size;
-
-import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 
 /**
  * Created by Kenneth on 1/7/2017.

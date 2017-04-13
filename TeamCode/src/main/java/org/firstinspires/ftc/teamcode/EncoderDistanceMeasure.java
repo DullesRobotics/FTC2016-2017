@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.dullesrobotics.ftc.libraries.AutonomousDriveClass;
-import com.dullesrobotics.ftc.libraries.BasicRobot;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;

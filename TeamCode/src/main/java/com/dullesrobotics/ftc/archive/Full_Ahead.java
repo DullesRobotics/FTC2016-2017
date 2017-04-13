@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package com.dullesrobotics.ftc.archive;
 
 import com.dullesrobotics.ftc.libraries.AutonomousDriveClassV2;
 import com.dullesrobotics.ftc.libraries.FTCVisionManager;
@@ -19,20 +19,16 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 /**
  * Created by kk200 on 2/4/2017.
  */
+
 @Disabled
 @Autonomous(name = "Full Speed Ahead")
 public class Full_Ahead extends LinearVisionOpMode{
-    private ElapsedTime runtime = new ElapsedTime();
-    String currentColorOrder = "???, ???";
-    int sleepTime = 0;
     RobotWithFlickerShooter robot;
     AutonomousDriveClassV2 autonomousDrive;
     ServoControllerLib servoControllerLib;
     OpticalDistanceSensor ods;
     FTCVisionManager ftcVisionManager;
     final boolean DEBUG = true;
-    final boolean bothBeacons = false;
-    final boolean parkCorner = false;
     ServoControllerLib leftShooter,rightShooter;
 
 

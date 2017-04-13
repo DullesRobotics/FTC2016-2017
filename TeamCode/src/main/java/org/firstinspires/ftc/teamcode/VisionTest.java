@@ -16,7 +16,7 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
  * Created by kk200 on 2/1/2017.
  */
 import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
-@Autonomous(name = "VisionTEstadasfafs")
+@Autonomous(name = "Vision Test")
 public class VisionTest extends LinearVisionOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     String currentColorOrder = "???, ???";
