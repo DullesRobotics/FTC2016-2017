@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 public class AdvancedRobot extends BasicRobot {
     private DcMotor strifeMotor;
     private DcMotor ballIntake;
+    private DcMotor wheeledShooter1;
 
     /**
     *ORDER: FrontRight, FrontLeft, BackRight, BackLeft, Strife, Intake
@@ -23,6 +24,7 @@ public class AdvancedRobot extends BasicRobot {
         super(motors, g1);
         if (motors[4] != null) this.strifeMotor = motors[4];
         if (motors[5] != null) this.ballIntake = motors[5];
+        //if (motors[6] != null) this.wheeledShooter1 = motors[6];
     }
 
     public DcMotor getFrontRight(){ return super.getFRM(); }
@@ -31,6 +33,7 @@ public class AdvancedRobot extends BasicRobot {
     public DcMotor getBackLeft(){ return super.getBLM(); }
     public DcMotor getStrifeMotor(){ return strifeMotor; }
     public DcMotor getBallIntake(){ return ballIntake; }
+    public DcMotor getWheeledShooter1(){ return wheeledShooter1; }
 
     public DcMotor getFRM(){ return super.getFRM(); }
     public DcMotor getFLM(){ return super.getFLM(); }

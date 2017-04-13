@@ -19,15 +19,15 @@ public class ArcadeDrive extends TeleOpDrivetrain{
     @Override
     public void driveWithGamepad() {
         Gamepad gamepad = advancedRobot.getGamepad();
-        drive(-gamepad.right_stick_x, -gamepad.right_stick_y,-gamepad.left_stick_x, gamepad.left_trigger); //Don't forget the negatives
+        drive(-gamepad.right_stick_x, -gamepad.right_stick_y,-gamepad.left_stick_x, gamepad.left_trigger, gamepad.right_trigger); //Don't forget the negatives
     }
 
     public void reverseGamepad(){
         Gamepad gamepad = advancedRobot.getGamepad();
-        drive(gamepad.right_stick_x, gamepad.right_stick_y,gamepad.left_stick_x,gamepad.left_trigger);
+        drive(gamepad.right_stick_x, gamepad.right_stick_y,gamepad.left_stick_x,gamepad.left_trigger, gamepad.right_trigger);
     }
 
-    public void drive(double xPower, double yPower, double strafe, double intake) {
+    public void drive(double xPower, double yPower, double strafe, double intake, double wheeledShooter) {
         //xPower = (xPower/1.25);
         yPower = (yPower/2);
         if(advancedRobot.getFrontLeft() != null) advancedRobot.getFrontLeft().setPower(xPower + yPower);
@@ -36,5 +36,6 @@ public class ArcadeDrive extends TeleOpDrivetrain{
         if (advancedRobot.getBackRight() != null) advancedRobot.getBackRight().setPower(xPower - yPower);
         if (advancedRobot.getStrifeMotor() != null) advancedRobot.getStrifeMotor().setPower(strafe);
         if (advancedRobot.getBallIntake() != null) advancedRobot.getBallIntake().setPower(intake);
+        if (advancedRobot.getWheeledShooter1() != null) advancedRobot.getWheeledShooter1().setPower(wheeledShooter);
     }
 }
