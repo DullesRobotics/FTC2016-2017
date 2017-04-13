@@ -18,23 +18,23 @@ public class ArcadeDrive extends TeleOpDrivetrain{
 
     @Override
     public void driveWithGamepad() {
-        Gamepad gamepad = robot.getGamepad1();
-        drive(-gamepad.right_stick_x, -gamepad.right_stick_y,-gamepad.left_stick_x); //Don't forget the negatives
+        Gamepad gamepad = advancedRobot.getGamepad();
+        drive(-gamepad.right_stick_x, -gamepad.right_stick_y,-gamepad.left_stick_x, gamepad.left_trigger); //Don't forget the negatives
     }
 
     public void reverseGamepad(){
-        Gamepad gamepad = robot.getGamepad1();
-        drive(-gamepad.right_stick_x, gamepad.right_stick_y,gamepad.left_stick_x);
+        Gamepad gamepad = advancedRobot.getGamepad();
+        drive(gamepad.right_stick_x, gamepad.right_stick_y,gamepad.left_stick_x,gamepad.left_trigger);
     }
 
-    public void drive(double xPower, double yPower, double strafe) {
+    public void drive(double xPower, double yPower, double strafe, double intake) {
         //xPower = (xPower/1.25);
         yPower = (yPower/2);
-        if(robot.getFLM() != null) robot.getFLM().setPower(xPower + yPower);
-        if(robot.getFRM() != null) robot.getFRM().setPower(xPower - yPower);
-        if (robot.getBLM() != null) robot.getBLM().setPower(xPower + yPower);
-        if (robot.getBRM() != null) robot.getBRM().setPower(xPower - yPower);
-        if (robot.getStrifeMotor() != null) robot.getStrifeMotor().setPower(strafe);
-
+        if(advancedRobot.getFrontLeft() != null) advancedRobot.getFrontLeft().setPower(xPower + yPower);
+        if(advancedRobot.getFrontRight() != null) advancedRobot.getFrontRight().setPower(xPower - yPower);
+        if (advancedRobot.getBackLeft() != null) advancedRobot.getBackLeft().setPower(xPower + yPower);
+        if (advancedRobot.getBackRight() != null) advancedRobot.getBackRight().setPower(xPower - yPower);
+        if (advancedRobot.getStrifeMotor() != null) advancedRobot.getStrifeMotor().setPower(strafe);
+        if (advancedRobot.getBallIntake() != null) advancedRobot.getBallIntake().setPower(intake);
     }
 }

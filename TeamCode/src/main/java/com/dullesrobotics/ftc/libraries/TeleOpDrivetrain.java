@@ -6,12 +6,12 @@ package com.dullesrobotics.ftc.libraries;
 
 public abstract class TeleOpDrivetrain {
 
-    protected BasicRobot robot;
-    protected AdvancedRobot robot2;
+    protected BasicRobot basicRobot;
+    protected AdvancedRobot advancedRobot;
 
-    public TeleOpDrivetrain(BasicRobot r){ robot = r; }
+    public TeleOpDrivetrain(BasicRobot r){ basicRobot = r; }
 
-    public TeleOpDrivetrain(AdvancedRobot r){ robot2 = r; }
+    public TeleOpDrivetrain(AdvancedRobot r){ advancedRobot = r; }
 
     public abstract void driveWithGamepad();
     public abstract void reverseGamepad();
