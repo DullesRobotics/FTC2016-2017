@@ -5,6 +5,7 @@ import com.dullesrobotics.ftc.libraries.FTCVisionManager;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
@@ -18,7 +19,7 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 /**
  * Created by kk200 on 2/4/2017.
  */
-
+@Disabled
 @Autonomous(name = "Full Speed Ahead")
 public class Full_Ahead extends LinearVisionOpMode{
     private ElapsedTime runtime = new ElapsedTime();

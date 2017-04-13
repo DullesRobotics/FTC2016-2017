@@ -5,12 +5,14 @@ import com.dullesrobotics.ftc.libraries.FlickerShooterClass;
 import com.dullesrobotics.ftc.libraries.MecanumDrive;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 /**
  * Created by Kenneth on 11/6/2016.
  */
+@Disabled
 @TeleOp(name = "MecanumDriveTeleOp")
 public class MecanumDriveTeleOp extends OpMode {
     //private RobotWithWheeledShooter robotWithWheeledShooter;

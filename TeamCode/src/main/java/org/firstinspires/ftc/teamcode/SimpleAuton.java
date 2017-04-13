@@ -3,12 +3,14 @@ package org.firstinspires.ftc.teamcode;
 import com.dullesrobotics.ftc.libraries.ArcadeDrive;
 import com.dullesrobotics.ftc.libraries.RobotWithFlickerShooter;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by Kenneth on 1/7/2017.
  */
+@Disabled
 @Autonomous(name = "SimpleAuton - FAILSAFE")
 public class SimpleAuton extends LinearOpMode {
     RobotWithFlickerShooter robot;

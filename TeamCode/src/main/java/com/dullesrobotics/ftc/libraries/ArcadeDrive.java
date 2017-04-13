@@ -36,14 +36,14 @@ public class ArcadeDrive extends TeleOpDrivetrain{
     }*/
 
 
-    public void drive(double xPower, double yPower, double xPower2) {
+    public void drive(double xPower, double yPower, double strafe) {
         //xPower = (xPower/1.25);
         yPower = (yPower/2);
-        //if(robot.getFLM() != null) robot.getFLM().setPower(xPower + yPower);
-        //if(robot.getFRM() != null) robot.getFRM().setPower(xPower - yPower);
+        if(robot.getFLM() != null) robot.getFLM().setPower(xPower + yPower);
+        if(robot.getFRM() != null) robot.getFRM().setPower(xPower - yPower);
         if (robot.getBLM() != null) robot.getBLM().setPower(xPower + yPower);
         if (robot.getBRM() != null) robot.getBRM().setPower(xPower - yPower);
-        if (robot.getStrifeMotor() != null) robot.getStrifeMotor().setPower(xPower2);
+        if (robot.getStrifeMotor() != null) robot.getStrifeMotor().setPower(strafe);
 
     }
 
