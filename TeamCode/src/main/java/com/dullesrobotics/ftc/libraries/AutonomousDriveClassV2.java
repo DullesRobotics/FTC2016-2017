@@ -54,8 +54,8 @@ public class AutonomousDriveClassV2 {
 
     public AutonomousDriveClassV2(AdvancedRobot r){ robot = r; }
 
-    public AutonomousDriveClassV2(LinearVisionOpMode op, AdvancedRobot r, OpticalDistanceSensor o, ServoControllerLib servoLib, FTCVisionManager vision) {
-        robot = r;
+    public AutonomousDriveClassV2(LinearVisionOpMode op, BasicRobot r, OpticalDistanceSensor o, ServoControllerLib servoLib, FTCVisionManager vision) {
+        robot = (AdvancedRobot) r;
         ods = o;
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
         opMode = op;
