@@ -15,100 +15,61 @@ public class BasicRobot {
     private DcMotor FRM;
     private DcMotor BLM;
     private DcMotor BRM;
-    private DcMotor ballIntake;
-    private DcMotor strifeMotor;
     private Gamepad gamepad1;
     private Gamepad gamepad2;
     private TeleOpDrivetrain driveTrain;
 
-
-    /*public BasicRobot(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight, Gamepad g1){
-        FLM = frontLeft;
-        FRM = frontRight;
-        BLM = backLeft;
-        BRM = backRight;
-        gamepad1 = g1;
-    }*/
-
-    public BasicRobot(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight,Gamepad g1, Gamepad g2){
-        FLM = frontLeft;
-        FRM = frontRight;
-        BLM = backLeft;
-        BRM = backRight;
-        gamepad1 = g1;
-        gamepad2 = g2;
+    public BasicRobot(DcMotor FLM, DcMotor FRM, DcMotor BLM, DcMotor BRM, Gamepad g1){
+        this.FLM = FLM;
+        this.FRM = FRM;
+        this.BLM = BLM;
+        this.BRM = BRM;
+        this.gamepad1 = g1;
     }
 
-    public BasicRobot(DcMotor backleft, DcMotor backRight,Gamepad g1) {
-        BLM = backleft;
-        BRM = backRight;
-        gamepad1 = g1;
+    public BasicRobot(DcMotor[] motors, Gamepad g1){
+        if (motors[0] != null) this.FRM = motors[0];
+        if (motors[1] != null) this.FLM = motors[1];
+        if (motors[2] != null) this.BRM = motors[2];
+        if (motors[3] != null) this.BLM = motors[3];
+        this.gamepad1 = g1;
     }
 
-    public BasicRobot(DcMotor frontLeft, DcMotor frontRight, DcMotor middleMotor, Gamepad g1){
-        FLM = frontLeft;
-        FRM = frontRight;
-        strifeMotor = middleMotor;
-        gamepad1 = g1;
-    }
-
-    public BasicRobot(DcMotor backleft, DcMotor backRight, DcMotor ballIntake,DcMotor middleMotor,Gamepad g1) {
-        BLM = backleft;
-        BRM = backRight;
-        strifeMotor = middleMotor;
-        this.ballIntake = ballIntake;
-        gamepad1 = g1;
-    }
-
-    public BasicRobot(Gamepad g1){
-        gamepad1 = g1;
-    }
 
     public void setDriveTrain(TeleOpDrivetrain driveTrain) {
         this.driveTrain = driveTrain;
     }
-
     public TeleOpDrivetrain getDriveTrain() {
         return driveTrain;
     }
+
     public void driveWithGamepad(){
         driveTrain.driveWithGamepad();
     }
-
-    //public void driveQuicklyWithGamepad(){ driveTrain.driveQuicklyWithGamepad();}
-    //public void reverseQuicklyGamepad(){ driveTrain.reverseQuicklyGamepad();}
     public void reverseGamepad() { driveTrain.reverseGamepad();}
 
     public DcMotor getBLM() {
         return BLM;
     }
-
     public DcMotor getBRM() {
         return BRM;
     }
-
     public DcMotor getFLM() {
         return FLM;
     }
-
     public DcMotor getFRM() {
         return FRM;
     }
 
-    public DcMotor getBallIntake() {return ballIntake;}
-
     public void setFLM(DcMotor FLM) {
         this.FLM = FLM;
     }
-
     public void setFRM(DcMotor FRM) {
        this.FRM = FRM;
     }
-
     public void setBLM(DcMotor BLM) {
         this.BLM = BLM;
     }
-
     public void setBRM(DcMotor BRM) {
         this.BRM = BRM;
     }
@@ -116,23 +77,14 @@ public class BasicRobot {
     public Gamepad getGamepad1(){
         return gamepad1;
     }
-
     public Gamepad getGamepad2() {
         return gamepad2;
     }
 
-    public DcMotor getStrifeMotor() { return strifeMotor; }
-
-    public void setGamepad(Gamepad g1) {
+    public void setGamepad1(Gamepad g1) {
         gamepad1 = g1;
     }
-
     public void setGamepad2(Gamepad gamepad2) {
         this.gamepad2 = gamepad2;
     }
-
-
-    /*public void reverseQuicklyGamepad() {
-        driveTrain.reverseQuicklyGamepad();
-    }*/
 }

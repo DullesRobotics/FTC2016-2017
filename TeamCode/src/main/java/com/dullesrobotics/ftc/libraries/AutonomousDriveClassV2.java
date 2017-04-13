@@ -20,7 +20,9 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
  */
 
 public class AutonomousDriveClassV2 {
-    BasicRobot robot;
+    //BasicRobot robot;
+    AdvancedRobot robot;
+
     final static double ENCODERTICKSPERREVOLUTION = 1478.4;
     final static double CIRCUMFERENCEOFWHEELCENTIMETERS = Math.PI*9.6;
     //final static double TICKSPERCENTIMETER = ENCODERTICKSPERREVOLUTION/CIRCUMFERENCEOFWHEELCENTIMETERS;
@@ -46,10 +48,13 @@ public class AutonomousDriveClassV2 {
         sensorListener = s;
     }
 */
-    public AutonomousDriveClassV2(BasicRobot r) {
+    /*public AutonomousDriveClassV2(BasicRobot r) {
         robot = r;
-    }
-    public AutonomousDriveClassV2(LinearVisionOpMode op, BasicRobot r, OpticalDistanceSensor o, ServoControllerLib servoLib, FTCVisionManager vision) {
+    }*/
+
+    public AutonomousDriveClassV2(AdvancedRobot r){ robot = r; }
+
+    public AutonomousDriveClassV2(LinearVisionOpMode op, AdvancedRobot r, OpticalDistanceSensor o, ServoControllerLib servoLib, FTCVisionManager vision) {
         robot = r;
         ods = o;
         robot.getBLM().setDirection(DcMotorSimple.Direction.REVERSE);
