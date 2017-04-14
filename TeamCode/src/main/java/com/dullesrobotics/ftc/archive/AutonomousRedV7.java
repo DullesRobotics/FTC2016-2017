@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package com.dullesrobotics.ftc.archive;
 
 import com.dullesrobotics.ftc.libraries.AutonomousDriveClassV2;
 import com.dullesrobotics.ftc.libraries.FTCVisionManager;
@@ -23,8 +23,8 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
  * This autonomous should push the first beacon for RED; Attempted for Regionals
  */
 
-
-@Autonomous(name = "Main Red Autonomous")
+@Disabled
+@Autonomous(name = "Red Autonomous V7")
 public class AutonomousRedV7 extends LinearVisionOpMode {
     ElapsedTime runtime = new ElapsedTime();
     String currentColorOrder = "???, ???";

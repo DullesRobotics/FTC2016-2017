@@ -22,13 +22,7 @@ public class ArcadeDriveTeleOp extends OpMode {
 
     @Override
     public void init() {
-        robot = new AdvancedRobot(
-                hardwareMap.dcMotor.get("rightMotors"),
-                hardwareMap.dcMotor.get("leftMotors"),
-                hardwareMap.dcMotor.get("strafeMotor"),
-                gamepad1
-        );
-
+        robot = new AdvancedRobot(this);
         ArcDrive = new ArcadeDrive(robot, this);
         robot.setDriveTrain(ArcDrive);
     }

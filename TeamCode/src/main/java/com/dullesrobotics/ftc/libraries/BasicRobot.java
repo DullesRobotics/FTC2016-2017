@@ -1,5 +1,6 @@
 package com.dullesrobotics.ftc.libraries;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
@@ -21,6 +22,15 @@ public class BasicRobot {
     private Gamepad gamepad1;
     private Gamepad gamepad2;
     private TeleOpDrivetrain driveTrain;
+
+    final String rightSetName = "rightMotors"; /** CHANGE THIS */
+    final String leftSetName = "leftMotors"; /** CHANGE THIS */
+
+    public BasicRobot(OpMode opMode, Gamepad g1){
+        this.gamepad1 = g1;
+        this.rightSet = opMode.hardwareMap.dcMotor.get(rightSetName);
+        this.leftSet = opMode.hardwareMap.dcMotor.get(leftSetName);
+    }
 
     public BasicRobot(DcMotor FLM, DcMotor FRM, DcMotor BLM, DcMotor BRM, Gamepad g1){
         this.FLM = FLM;
@@ -83,6 +93,8 @@ public class BasicRobot {
     public void setBRM(DcMotor BRM) {
         this.BRM = BRM;
     }
+    public void setRightSet(DcMotor rightSet){ this.rightSet = rightSet; }
+    public void setLeftSet(DcMotor leftSet){ this.leftSet = leftSet; }
 
     public Gamepad getGamepad1(){
         return gamepad1;
