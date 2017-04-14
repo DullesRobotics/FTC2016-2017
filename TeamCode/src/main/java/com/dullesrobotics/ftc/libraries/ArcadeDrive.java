@@ -23,12 +23,12 @@ public class ArcadeDrive extends TeleOpDrivetrain{
     @Override
     public void driveWithGamepad() {
         Gamepad gamepad = advancedRobot.getGamepad1();
-        drive(-gamepad.right_stick_x, -gamepad.right_stick_y,-gamepad.left_stick_x);
+        drive(-gamepad.right_stick_x, -gamepad.right_stick_y,gamepad.left_stick_x);
     }
 
     public void reverseGamepad(){
         Gamepad gamepad = advancedRobot.getGamepad1();
-        drive(gamepad.right_stick_x, gamepad.right_stick_y,gamepad.left_stick_x);
+        drive(gamepad.right_stick_x, gamepad.right_stick_y,-gamepad.left_stick_x);
     }
 
     public void drive(double xPower, double yPower, double strafe) {
