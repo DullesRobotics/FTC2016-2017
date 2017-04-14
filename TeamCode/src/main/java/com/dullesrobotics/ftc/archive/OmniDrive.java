@@ -27,15 +27,15 @@ public class OmniDrive extends TeleOpDrivetrain {
 
     @Override
     public void driveWithGamepad() {
-        Gamepad g = robot.getGamepad1();
+        Gamepad g = basicRobot.getGamepad1();
         double x = g.left_stick_x;  //X axis translation
         double y = g.left_stick_y;  //Y axis translation
         double c = g.right_stick_x; //Yaw - Rotate about Z axis
 
         //if (robot.getFLM() != null) robot.getFLM().setPower(x+y+c);
         //if (robot.getFRM() != null)  robot.getFRM().setPower(-x+y-c);
-        if (robot.getBLM() != null)  robot.getBLM().setPower(-x+y+c);
-        if (robot.getBRM() != null)  robot.getBRM().setPower(x+y-c);
+        if (basicRobot.getBLM() != null)  basicRobot.getBLM().setPower(-x+y+c);
+        if (basicRobot.getBRM() != null)  basicRobot.getBRM().setPower(x+y-c);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.dullesrobotics.ftc.libraries;
 
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
@@ -13,39 +12,14 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class AdvancedRobot extends BasicRobot {
     private DcMotor strifeMotor;
-    private DcMotor ballIntake;
-    private DcMotor wheeledShooter1;
 
-    /**
-    *ORDER: FrontRight, FrontLeft, BackRight, BackLeft, Strife, Intake
-    */
-
-    public AdvancedRobot(DcMotor[] motors, Gamepad g1){
-        super(motors, g1);
-        if (motors[4] != null) this.strifeMotor = motors[4];
-        if (motors[5] != null) this.ballIntake = motors[5];
-        //if (motors[6] != null) this.wheeledShooter1 = motors[6];
+    public AdvancedRobot(DcMotor rightSet,DcMotor leftSet,DcMotor strifeMotor, Gamepad g1){
+        super(rightSet, leftSet, g1);
+        this.strifeMotor = strifeMotor;
     }
 
-    public DcMotor getFrontRight(){ return super.getFRM(); }
-    public DcMotor getFrontLeft(){ return super.getFLM(); }
-    public DcMotor getBackRight(){ return super.getBRM(); }
-    public DcMotor getBackLeft(){ return super.getBLM(); }
     public DcMotor getStrifeMotor(){ return strifeMotor; }
-    public DcMotor getBallIntake(){ return ballIntake; }
-    public DcMotor getWheeledShooter1(){ return wheeledShooter1; }
 
-    public DcMotor getFRM(){ return super.getFRM(); }
-    public DcMotor getFLM(){ return super.getFLM(); }
-    public DcMotor getBRM(){ return super.getBRM(); }
-    public DcMotor getBLM(){ return super.getBLM(); }
-
-    public void setGamepad(Gamepad g1){ super.setGamepad1(g1); }
-
-    public Gamepad getGamepad(){ return super.getGamepad1(); }
-
-    public void setDriveTrain(TeleOpDrivetrain driveTrain){ super.setDriveTrain(driveTrain); }
-
-    public void drive(){ super.getDriveTrain().driveWithGamepad(); }
-    public void reverseDrive(){ super.getDriveTrain().reverseGamepad(); }
+    public void drive(){ getDriveTrain().driveWithGamepad(); }
+    public void reverseDrive(){ getDriveTrain().reverseGamepad(); }
 }

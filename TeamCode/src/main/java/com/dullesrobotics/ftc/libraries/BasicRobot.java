@@ -3,6 +3,7 @@ package com.dullesrobotics.ftc.libraries;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+
 /**
  * Created by Kenneth on 11/6/2016.
  *
@@ -15,6 +16,8 @@ public class BasicRobot {
     private DcMotor FRM;
     private DcMotor BLM;
     private DcMotor BRM;
+    private DcMotor rightSet;
+    private DcMotor leftSet;
     private Gamepad gamepad1;
     private Gamepad gamepad2;
     private TeleOpDrivetrain driveTrain;
@@ -27,11 +30,21 @@ public class BasicRobot {
         this.gamepad1 = g1;
     }
 
-    public BasicRobot(DcMotor[] motors, Gamepad g1){
-        if (motors[0] != null) this.FRM = motors[0];
-        if (motors[1] != null) this.FLM = motors[1];
-        if (motors[2] != null) this.BRM = motors[2];
-        if (motors[3] != null) this.BLM = motors[3];
+    public BasicRobot(DcMotor backLeft, DcMotor backRight,DcMotor ajdoja , Gamepad g1){
+        //This is because some old autonomous classes depend on this
+    }
+
+    public BasicRobot(DcMotor backLeft, Gamepad g1){
+        //This is because some old autonomous classes depend on this
+    }
+
+    public BasicRobot(Gamepad g1) {
+        //This is because some old autonomous classes depend on this
+    }
+
+    public BasicRobot(DcMotor rightSet, DcMotor leftSet, Gamepad g1){
+        this.rightSet = rightSet;
+        this.leftSet = leftSet;
         this.gamepad1 = g1;
     }
 
@@ -42,11 +55,6 @@ public class BasicRobot {
     public TeleOpDrivetrain getDriveTrain() {
         return driveTrain;
     }
-
-    public void driveWithGamepad(){
-        driveTrain.driveWithGamepad();
-    }
-    public void reverseGamepad() { driveTrain.reverseGamepad();}
 
     public DcMotor getBLM() {
         return BLM;
@@ -60,6 +68,8 @@ public class BasicRobot {
     public DcMotor getFRM() {
         return FRM;
     }
+    public DcMotor getRightSet(){ return rightSet;}
+    public DcMotor getLeftSet(){ return leftSet;}
 
     public void setFLM(DcMotor FLM) {
         this.FLM = FLM;
