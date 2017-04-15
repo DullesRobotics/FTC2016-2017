@@ -28,6 +28,9 @@ public class AdvancedRobot extends BasicRobot {
     }
 
     public DcMotor getStrifeMotor(){ return strifeMotor; }
+    public DcMotor getStrafeMotor(){ //Karim likes naming stuff wrong
+        return strifeMotor;
+    }
 
     public void drive(){ getDriveTrain().driveWithGamepad(); }
     public void reverseDrive(){ getDriveTrain().reverseGamepad(); }

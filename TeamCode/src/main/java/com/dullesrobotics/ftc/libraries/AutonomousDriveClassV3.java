@@ -116,8 +116,13 @@ public class AutonomousDriveClassV3 {
         opMode.telemetry.update();
     }
 
-    public void arcTurn(){
+    public void arcMoveForTime(Direction direction1,Direction direction 2, double time){
         //Im gonna let Kenneth do this, I dont do circles very well
+
+    }
+    public void ultimateMove(double xDist, double yDist, double turn) throws Exception {
+        throw new Exception("Not implemented yet: Get rekt m8");
+
     }
 
 
