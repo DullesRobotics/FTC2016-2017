@@ -23,7 +23,7 @@ public class ArcadeDriveTeleOp extends OpMode {
     @Override
     public void init() {
         robot = new AdvancedRobot(this);
-        ArcDrive = new ArcadeDrive(robot, this);
+        ArcDrive = new ArcadeDrive(robot); //Passing "this" allows for debugging
         robot.setDriveTrain(ArcDrive);
     }
 

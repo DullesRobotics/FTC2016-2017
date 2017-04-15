@@ -38,25 +38,39 @@ public class ArcadeDrive extends TeleOpDrivetrain{
         if (advancedRobot.getBackRight() != null) advancedRobot.getBackRight().setPower(xPower - yPower);*/
         if (advancedRobot.getStrifeMotor() != null) {
             advancedRobot.getStrifeMotor().setPower(strafe);
-            teleop.telemetry.addData("Strafe Motor", "Enabled");
-            teleop.telemetry.addData("Strafe Motor Power",advancedRobot.getStrifeMotor().getPower());
+            if (teleop != null) {
+                teleop.telemetry.addData("Strafe Motor", "Enabled");
+                teleop.telemetry.addData("Strafe Motor Power", advancedRobot.getStrifeMotor().getPower());
+            }
         } else {
-            teleop.telemetry.addData("Strafe Motor", "Disabled");
+            if (teleop != null) {
+                teleop.telemetry.addData("Strafe Motor", "Disabled");
+            }
         }
         if (advancedRobot.getRightSet() != null) {
             advancedRobot.getRightSet().setPower(xPower - yPower);
-            teleop.telemetry.addData("Right Motors", "Enabled");
-            teleop.telemetry.addData("Right Motor Power",advancedRobot.getRightSet().getPower());
+            if (teleop != null) {
+                teleop.telemetry.addData("Right Motors", "Enabled");
+                teleop.telemetry.addData("Right Motor Power", advancedRobot.getRightSet().getPower());
+            }
         } else {
-            teleop.telemetry.addData("Right Motors", "Disabled");
+            if (teleop != null) {
+                teleop.telemetry.addData("Right Motors", "Disabled");
+            }
         }
         if (advancedRobot.getLeftSet() != null) {
             advancedRobot.getLeftSet().setPower(xPower + yPower);
-            teleop.telemetry.addData("Left Motors", "Enabled");
-            teleop.telemetry.addData("Left Motor Power",advancedRobot.getLeftSet().getPower());
+            if (teleop != null) {
+                teleop.telemetry.addData("Left Motors", "Enabled");
+                teleop.telemetry.addData("Left Motor Power", advancedRobot.getLeftSet().getPower());
+            }
         } else {
-            teleop.telemetry.addData("Left Motors", "Disabled");
+            if (teleop != null) {
+                teleop.telemetry.addData("Left Motors", "Disabled");
+            }
         }
-        teleop.telemetry.update();
+        if (teleop != null) {
+            teleop.telemetry.update();
+        }
     }
 }

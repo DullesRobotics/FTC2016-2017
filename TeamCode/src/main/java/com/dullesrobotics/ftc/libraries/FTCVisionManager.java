@@ -21,10 +21,11 @@ public class FTCVisionManager {
     Beacon.AnalysisMethod analysisMethod;
     public ElapsedTime runtime;
 
-    public FTCVisionManager(LinearVisionOpMode op, Beacon.AnalysisMethod aM) {
+    public FTCVisionManager(LinearVisionOpMode op, Beacon.AnalysisMethod aM) throws InterruptedException {
         opMode = op;
         analysisMethod = aM;
         runtime = new ElapsedTime();
+        initFTCVision();
     }
 
     public void initFTCVision() throws InterruptedException {
@@ -77,36 +78,7 @@ public class FTCVisionManager {
                 return "blueRed";
             }
         }
-    /*public String readBeaconAfterPress(int times, double timeoutS) throws InterruptedException {
-        int redRed = 0;
-        int blueBlue = 0;
-        redBlue = 0;
-        blueRed = 0;
-        if (times % 2 == 0)
-            times++;
-        runtime.reset();
-        for (int i = 0; i < times && opMode.opModeIsActive() && runtime.seconds() < timeoutS; i++) { //Purposefully not even number
-            opMode.waitOneFullHardwareCycle();
-            if (opMode.beacon.getAnalysis().getColorString().equals("red, red")) {
-                redBlue++;
-                opMode.telemetry.addData("redRed", redBlue);
-            } else if (opMode.beacon.getAnalysis().getColorString().equals("blue, blue")) {
-                blueRed++;
-                opMode.telemetry.addData("blueBlue", blueRed);
-            } else {
-                i--;
-                opMode.telemetry.addData("???, ???", opMode.beacon.getAnalysis().getColorString());
-            }
-            delay(75); //Let vision process a new frame not get same info
-            opMode.telemetry.update();
-        }
-        if (redRed > blueBlue) {
-            return "redRed";
-            //return "left";
-        } else {
-            return "blueBlue";
-        }
-    }*/
+
         return "??";
     }
 }

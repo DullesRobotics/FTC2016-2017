@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.lasarobotics.vision.opmode.LinearVisionOpMode;
+
 /**
  * Created by kk200 on 4/12/2017.
  *
@@ -16,13 +18,13 @@ public class AdvancedRobot extends BasicRobot {
     final String strafeMotorName = "strafeMotor"; /** CHANGE THIS */
 
     public AdvancedRobot(OpMode opMode){
-        super(opMode, opMode.gamepad1);
+        super(opMode);
         this.strifeMotor = opMode.hardwareMap.dcMotor.get(strafeMotorName);
     }
 
-    public AdvancedRobot(DcMotor rightSet,DcMotor leftSet,DcMotor strifeMotor, Gamepad g1){
-        super(rightSet, leftSet, g1);
-        this.strifeMotor = strifeMotor;
+    public AdvancedRobot(LinearVisionOpMode opMode){
+        super(opMode);
+        this.strifeMotor = opMode.hardwareMap.dcMotor.get(strafeMotorName);
     }
 
     public DcMotor getStrifeMotor(){ return strifeMotor; }
