@@ -57,6 +57,11 @@ public class AutonomousDriveClassV3 {
         BACKWARD,
         RIGHT,
         LEFT,
+
+        FORWARD_RIGHT, //Diagonal right
+        FORWARD_LEFT, //Diagonal left
+        BACKWARD_RIGHT,
+        BACKWARD_LEFT
     }
 
     public AutonomousDriveClassV3(AdvancedRobot robot) throws InterruptedException{
@@ -81,20 +86,40 @@ public class AutonomousDriveClassV3 {
 
     public void driveSetTime(double time, Direction direction) throws InterruptedException{
         timer.reset();
-        int right = 0,left = 0,strafe = 0;
+        double right = 0,left = 0,strafe = 0;
         switch (direction){
             case FORWARD:
-                right = 1;
-                left = -1;
-                break;
-            case BACKWARD:
                 right = -1;
                 left = 1;
+                break;
+            case BACKWARD:
+                right = 1;
+                left = -1;
                 break;
             case RIGHT:
                 strafe = 1;
                 break;
             case LEFT:
+                strafe = -1;
+                break;
+            case FORWARD_RIGHT:
+                right = -1;
+                left = 1;
+                strafe = 1;
+                break;
+            case FORWARD_LEFT:
+                right = -1;
+                left = 1;
+                strafe = -1;
+                break;
+            case BACKWARD_RIGHT:
+                right = 1;
+                left = -1;
+                strafe = 1;
+                break;
+            case BACKWARD_LEFT:
+                right = 1;
+                left = -1;
                 strafe = -1;
                 break;
             default:
@@ -103,20 +128,24 @@ public class AutonomousDriveClassV3 {
                 break;
         }
         while (opMode.opModeIsActive() && timer.seconds() < time) {
-            robot.getRightSet().setPower(right);
-            robot.getLeftSet().setPower(left);
-            robot.getStrifeMotor().setPower(strafe);
+            robot.getRightSet().setPower(right/2);
+            robot.getLeftSet().setPower(left/2);
+            robot.getStrifeMotor().setPower(strafe/2);
             opMode.telemetry.addData("Autonomous ","Moving " + direction);
             opMode.telemetry.update();
         }
         robot.getRightSet().setPower(0);
         robot.getLeftSet().setPower(0);
         robot.getStrifeMotor().setPower(0);
+        while(opMode.opModeIsActive() && timer.seconds() < (time + .5)){  //To account for momentum from previous run
+            opMode.telemetry.addData("Autonomous","Delaying half a second");
+            opMode.telemetry.update();
+        }
         opMode.telemetry.addData("Autonomous","Done");
         opMode.telemetry.update();
     }
 
-    public void arcMoveForTime(Direction direction1,Direction direction 2, double time){
+    public void arcMoveForTime(Direction direction1,Direction direction2, double time){
         //Im gonna let Kenneth do this, I dont do circles very well
 
     }

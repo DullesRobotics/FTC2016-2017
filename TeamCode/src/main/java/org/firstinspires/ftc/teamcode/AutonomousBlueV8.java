@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
+import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
+
 /**
  * Created by kk200 on 4/13/2017.
  */
@@ -25,6 +27,13 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
         autonomous = new AutonomousDriveClassV3(robot);
         waitForStart();
 
-        autonomous.driveSetTime(3, AutonomousDriveClassV3.Direction.FORWARD);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.FORWARD);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.RIGHT);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.BACKWARD);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.LEFT);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.FORWARD_RIGHT);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.BACKWARD_LEFT);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.FORWARD_LEFT);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.BACKWARD_RIGHT);
     }
 }
