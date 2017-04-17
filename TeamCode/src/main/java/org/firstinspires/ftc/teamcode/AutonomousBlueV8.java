@@ -25,15 +25,16 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
     public void runOpMode() throws InterruptedException {
         robot = new AdvancedRobot(this);
         autonomous = new AutonomousDriveClassV3(robot);
+        double defaultSpeed = .75;
         waitForStart();
 
-        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.FORWARD);
-        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.RIGHT);
-        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.BACKWARD);
-        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.LEFT);
-        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.FORWARD_RIGHT);
-        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.BACKWARD_LEFT);
-        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.FORWARD_LEFT);
-        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.BACKWARD_RIGHT);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.FORWARD,defaultSpeed);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.RIGHT,defaultSpeed);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.BACKWARD,defaultSpeed);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.LEFT,defaultSpeed);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.FORWARD_RIGHT,defaultSpeed);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.BACKWARD_LEFT,defaultSpeed);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.FORWARD_LEFT,defaultSpeed);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.BACKWARD_RIGHT,defaultSpeed);
     }
 }
