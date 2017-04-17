@@ -94,6 +94,14 @@ public class AutonomousDriveClassV3 {
         }
     }
 
+    public void delayAutonomous(double time){
+        timer.reset();
+        while(opMode.opModeIsActive() && timer.seconds() < time){
+            opMode.telemetry.addData("Autonomous","Delaying " + time + " seconds.");
+            opMode.telemetry.update();
+        }
+    }
+
     public void setDelayAfterEachCall(boolean delay){
         delayAfterEachCall = delay;
     }
@@ -191,28 +199,56 @@ public class AutonomousDriveClassV3 {
     }
 
     public void driveTillLine(Direction direction, double speed, double timeOut) throws InterruptedException{
-        timer.reset();
-        double reflectance = lightSensor.getLightDetected();
-        double[] speeds = decodeDirection(direction,speed);
-        while(timer.seconds() < timeOut && reflectance < WhiteLineLightLevel && opMode.opModeIsActive()){ //> or <?
-            reflectance = lightSensor.getLightDetected();
-            robot.getRightSet().setPower(speeds[0]);
-            robot.getLeftSet().setPower(speeds[1]);
-            robot.getStrifeMotor().setPower(speeds[2]);
-            opMode.telemetry.addData("Autonomous","Searching for white line....");
+        if (lightSensor != null) {
+            timer.reset();
+            double reflectance = lightSensor.getLightDetected();
+            double[] speeds = decodeDirection(direction, speed);
+            while (timer.seconds() < timeOut && reflectance < WhiteLineLightLevel && opMode.opModeIsActive()) { //> or <?
+                reflectance = lightSensor.getLightDetected();
+                robot.getRightSet().setPower(speeds[0]);
+                robot.getLeftSet().setPower(speeds[1]);
+                robot.getStrifeMotor().setPower(speeds[2]);
+                opMode.telemetry.addData("Autonomous", "Searching for white line....");
+                opMode.telemetry.update();
+            }
+            if (delayAfterEachCall)
+                delayCall();
+            opMode.telemetry.addData("Autonomous", "Done");
+            opMode.telemetry.update();
+            robot.getRightSet().setPower(0);
+            robot.getLeftSet().setPower(0);
+            robot.getStrifeMotor().setPower(0);
+        } else {
+            opMode.telemetry.addData("ERROR","LightSensor not found; Failed method 'driveTillLine'");
             opMode.telemetry.update();
         }
-        if (delayAfterEachCall)
-            delayCall();
-        opMode.telemetry.addData("Autonomous","Done");
-        opMode.telemetry.update();
-        robot.getRightSet().setPower(0);
-        robot.getLeftSet().setPower(0);
-        robot.getStrifeMotor().setPower(0);
     }
 
-    public void readAndSetServo(){
-        //TODO
+    public String getVisionAnalysis() throws InterruptedException{
+        return ftcVisionManager.readBeacon(7,3);
+    }
+
+    public void setSevo(String teamOn) throws InterruptedException{
+        if (servoControllerLib != null) {
+            if (teamOn.toLowerCase().equals("blue")) {
+                if (getVisionAnalysis().toLowerCase().equals("redblue")) {
+                    servoControllerLib.setDegrees(servoControllerLib.SERVORIGHT);
+                } else {
+                    servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+                }
+            } else {
+                if (getVisionAnalysis().toLowerCase().equals("bluered")) {
+                    servoControllerLib.setDegrees(servoControllerLib.SERVORIGHT);
+                } else {
+                    servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+                }
+            }
+            opMode.telemetry.addData("Autonomous", "Successfully set servo position");
+            opMode.telemetry.update();
+        } else {
+            opMode.telemetry.addData("ERROR","ServoControllerLib not instantiated; Failed method 'setServo'");
+            opMode.telemetry.update();
+        }
     }
 
 

@@ -26,6 +26,8 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
         robot = new AdvancedRobot(this);
         autonomous = new AutonomousDriveClassV3(robot);
         double defaultSpeed = .75;
+        String TEAMON = "Blue";
+
         waitForStart();
 
         autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.FORWARD,defaultSpeed);
@@ -36,5 +38,7 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
         autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.BACKWARD_LEFT,defaultSpeed);
         autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.FORWARD_LEFT,defaultSpeed);
         autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.BACKWARD_RIGHT,defaultSpeed);
+
+        autonomous.setSevo(TEAMON);
     }
 }

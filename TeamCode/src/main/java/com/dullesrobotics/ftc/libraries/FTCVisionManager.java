@@ -25,7 +25,7 @@ public class FTCVisionManager {
         opMode = op;
         analysisMethod = aM;
         runtime = new ElapsedTime();
-        initFTCVision();
+        initFTCVision(); //// FIXME: 4/17/2017 In case it doesnt work
     }
 
     public void initFTCVision() throws InterruptedException {
