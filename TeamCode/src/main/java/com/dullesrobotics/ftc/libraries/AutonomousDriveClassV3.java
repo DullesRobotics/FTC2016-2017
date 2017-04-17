@@ -194,7 +194,7 @@ public class AutonomousDriveClassV3 {
         timer.reset();
         double reflectance = lightSensor.getLightDetected();
         double[] speeds = decodeDirection(direction,speed);
-        while(timer.seconds() < timeOut && reflectance >= WhiteLineLightLevel && opMode.opModeIsActive()){ //> or <?
+        while(timer.seconds() < timeOut && reflectance < WhiteLineLightLevel && opMode.opModeIsActive()){ //> or <?
             reflectance = lightSensor.getLightDetected();
             robot.getRightSet().setPower(speeds[0]);
             robot.getLeftSet().setPower(speeds[1]);
@@ -209,6 +209,10 @@ public class AutonomousDriveClassV3 {
         robot.getRightSet().setPower(0);
         robot.getLeftSet().setPower(0);
         robot.getStrifeMotor().setPower(0);
+    }
+
+    public void readAndSetServo(){
+        //TODO
     }
 
 
