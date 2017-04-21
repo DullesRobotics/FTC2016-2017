@@ -1,12 +1,7 @@
 package com.dullesrobotics.ftc.libraries;
 
-import android.test.InstrumentationTestRunner;
-
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.LightSensor;
-import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
@@ -38,23 +33,19 @@ public class AutonomousDriveClassV3 {
 
 
     /**
-     *
-     *                    YOU DO NOT NEED TO EDIT BELOW
-     *
-     *
-     *        Unless you're adding methods or modifying current methods. Try and change above
-     *        without modifying below to meet your needs to keep the code simple for later use.
+     *        When you're modifying code below, keep it simple and make
+     *        it take in as few parameters as possible.
      *  TODO: Unless you're at a contest, in which case, DO WHATEVER.
      *
      *  --Karim Karim
      *
      * */
-    private LinearVisionOpMode opMode;
-    private AdvancedRobot robot;
-    private FTCVisionManager ftcVisionManager;
-    private ServoControllerLib servoControllerLib;
-    private LightSensor lightSensor;
-    private ElapsedTime timer;
+    private LinearVisionOpMode opMode = null;
+    private AdvancedRobot robot = null;
+    private FTCVisionManager ftcVisionManager = null;
+    private ServoControllerLib servoControllerLib = null;
+    private LightSensor lightSensor = null;
+    private ElapsedTime timer = null;
 
     public enum Direction {
         FORWARD,
@@ -65,7 +56,7 @@ public class AutonomousDriveClassV3 {
         FORWARD_RIGHT, //Diagonal right
         FORWARD_LEFT, //Diagonal left
         BACKWARD_RIGHT,
-        BACKWARD_LEFT
+        BACKWARD_LEFT,
     }
 
     public AutonomousDriveClassV3(AdvancedRobot robot) throws InterruptedException{
@@ -172,10 +163,9 @@ public class AutonomousDriveClassV3 {
     }
 
     private void encoderDrive() throws Exception{
-        //Need encoders
-        //Use this for methods that need distance
-        throw new Exception("encoderDrive is not yet implemented");
-        //// FIXME: 4/17/2017
+
+
+
     }
 
 
@@ -228,7 +218,7 @@ public class AutonomousDriveClassV3 {
         return ftcVisionManager.readBeacon(7,3);
     }
 
-    public void setSevo(String teamOn) throws InterruptedException{
+    public void setServo(String teamOn) throws InterruptedException{
         if (servoControllerLib != null) {
             if (teamOn.toLowerCase().equals("blue")) {
                 if (getVisionAnalysis().toLowerCase().equals("redblue")) {
@@ -253,7 +243,7 @@ public class AutonomousDriveClassV3 {
 
 
     public void arcMoveForTime(Direction direction1,Direction direction2, double time){
-        //Im gonna let Kenneth do this, I dont do circles very well
+        //Im gonna let Kenneth do this, I don't do circles very well
 
     }
     public void ultimateMove(double xDist, double yDist, double turn) throws Exception {
