@@ -97,46 +97,47 @@ public class AutonomousDriveClassV3 {
         delayAfterEachCall = delay;
     }
 
-    private double[] decodeDirection(Direction direction,double speed){
+    private double[] decodeDirection(Direction direction){
         double right = 0,left = 0,strafe = 0;
         switch (direction){
             case FORWARD:
-                right = -speed;
-                left = speed;
+                right = -1;
+                left = 1;
                 break;
             case BACKWARD:
-                right = speed;
-                left = -speed;
+                right = 1;
+                left = -1;
                 break;
             case RIGHT:
-                strafe = speed;
+                strafe = 1;
                 break;
             case LEFT:
-                strafe = -speed;
+                strafe = -1;
                 break;
             case FORWARD_RIGHT:
-                right = -speed;
-                left = speed;
-                strafe = speed;
+                right = -1;
+                left = 1;
+                strafe = 1;
                 break;
             case FORWARD_LEFT:
-                right = -speed;
-                left = speed;
-                strafe = -speed;
+                right = -1;
+                left = 1;
+                strafe = -1;
                 break;
             case BACKWARD_RIGHT:
-                right = speed;
-                left = -speed;
-                strafe = speed;
+                right = 1;
+                left = -1;
+                strafe = 1;
                 break;
             case BACKWARD_LEFT:
-                right = speed;
-                left = -speed;
-                strafe = -speed;
+                right = 1;
+                left = -1;
+                strafe = -1;
                 break;
             default:
-                right = speed;
-                left = -speed;
+                right = 0;
+                left = 0;
+                strafe = 0;
                 break;
         }
         double[] array = {right,left,strafe};
@@ -145,11 +146,11 @@ public class AutonomousDriveClassV3 {
 
     public void driveSetTime(double time, Direction direction, double speed) throws InterruptedException{
         timer.reset();
-        double[] speeds = decodeDirection(direction,speed);
+        double[] decodedDirection = decodeDirection(direction);
         while (opMode.opModeIsActive() && timer.seconds() < time) {
-            robot.getRightSet().setPower(speeds[0]);
-            robot.getLeftSet().setPower(speeds[1]);
-            robot.getStrifeMotor().setPower(speeds[2]);
+            robot.getRightSet().setPower(decodedDirection[0] * speed);
+            robot.getLeftSet().setPower(decodedDirection[1] * speed);
+            robot.getStrifeMotor().setPower(decodedDirection[2] * speed);
             opMode.telemetry.addData("Autonomous ","Moving " + direction);
             opMode.telemetry.update();
         }
@@ -192,12 +193,12 @@ public class AutonomousDriveClassV3 {
         if (lightSensor != null) {
             timer.reset();
             double reflectance = lightSensor.getLightDetected();
-            double[] speeds = decodeDirection(direction, speed);
+            double[] decodedDirection = decodeDirection(direction);
             while (timer.seconds() < timeOut && reflectance < WhiteLineLightLevel && opMode.opModeIsActive()) { //> or <?
                 reflectance = lightSensor.getLightDetected();
-                robot.getRightSet().setPower(speeds[0]);
-                robot.getLeftSet().setPower(speeds[1]);
-                robot.getStrifeMotor().setPower(speeds[2]);
+                robot.getRightSet().setPower(decodedDirection[0] * speed);
+                robot.getLeftSet().setPower(decodedDirection[1] * speed);
+                robot.getStrifeMotor().setPower(decodedDirection[2] * speed);
                 opMode.telemetry.addData("Autonomous", "Searching for white line....");
                 opMode.telemetry.update();
             }
