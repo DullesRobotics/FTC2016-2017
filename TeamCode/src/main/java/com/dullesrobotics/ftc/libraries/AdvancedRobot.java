@@ -14,22 +14,21 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
  */
 
 public class AdvancedRobot extends BasicRobot {
-    private DcMotor strifeMotor;
+    private DcMotor strafeMotor;
     final String strafeMotorName = "strafeMotor"; /** CHANGE THIS */
 
     public AdvancedRobot(OpMode opMode){
         super(opMode);
-        this.strifeMotor = opMode.hardwareMap.dcMotor.get(strafeMotorName);
+        this.strafeMotor = opMode.hardwareMap.dcMotor.get(strafeMotorName);
     }
 
     public AdvancedRobot(LinearVisionOpMode opMode){
         super(opMode);
-        this.strifeMotor = opMode.hardwareMap.dcMotor.get(strafeMotorName);
+        this.strafeMotor = opMode.hardwareMap.dcMotor.get(strafeMotorName);
     }
 
-    public DcMotor getStrifeMotor(){ return strifeMotor; }
     public DcMotor getStrafeMotor(){ //Karim likes naming stuff wrong
-        return strifeMotor;
+        return strafeMotor;
     }
 
     public void drive(){ getDriveTrain().driveWithGamepad(); }

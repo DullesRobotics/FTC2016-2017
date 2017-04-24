@@ -36,11 +36,11 @@ public class ArcadeDrive extends TeleOpDrivetrain{
         if(advancedRobot.getFrontRight() != null) advancedRobot.getFrontRight().setPower(xPower - yPower);
         if (advancedRobot.getBackLeft() != null) advancedRobot.getBackLeft().setPower(xPower + yPower);
         if (advancedRobot.getBackRight() != null) advancedRobot.getBackRight().setPower(xPower - yPower);*/
-        if (advancedRobot.getStrifeMotor() != null) {
-            advancedRobot.getStrifeMotor().setPower(strafe);
+        if (advancedRobot.getStrafeMotor() != null) {
+            advancedRobot.getStrafeMotor().setPower(strafe);
             if (teleop != null) {
                 teleop.telemetry.addData("Strafe Motor", "Enabled");
-                teleop.telemetry.addData("Strafe Motor Power", advancedRobot.getStrifeMotor().getPower());
+                teleop.telemetry.addData("Strafe Motor Power", advancedRobot.getStrafeMotor().getPower());
             }
         } else {
             if (teleop != null) {

@@ -86,8 +86,9 @@ public class AutonomousDriveClassV3 {
     }
 
     public void delayAutonomous(double time){
-        timer.reset();
-        while(opMode.opModeIsActive() && timer.seconds() < time){
+        ElapsedTime timer2 = new ElapsedTime();
+        timer2.reset();
+        while(opMode.opModeIsActive() && timer2.seconds() < time){
             opMode.telemetry.addData("Autonomous","Delaying " + time + " seconds.");
             opMode.telemetry.update();
         }
@@ -150,13 +151,13 @@ public class AutonomousDriveClassV3 {
         while (opMode.opModeIsActive() && timer.seconds() < time) {
             robot.getRightSet().setPower(decodedDirection[0] * speed);
             robot.getLeftSet().setPower(decodedDirection[1] * speed);
-            robot.getStrifeMotor().setPower(decodedDirection[2] * speed);
+            robot.getStrafeMotor().setPower(decodedDirection[2] * speed);
             opMode.telemetry.addData("Autonomous ","Moving " + direction);
             opMode.telemetry.update();
         }
         robot.getRightSet().setPower(0);
         robot.getLeftSet().setPower(0);
-        robot.getStrifeMotor().setPower(0);
+        robot.getStrafeMotor().setPower(0);
         if (delayAfterEachCall)
             delayCall();
         opMode.telemetry.addData("Autonomous","Done");
@@ -198,7 +199,7 @@ public class AutonomousDriveClassV3 {
                 reflectance = lightSensor.getLightDetected();
                 robot.getRightSet().setPower(decodedDirection[0] * speed);
                 robot.getLeftSet().setPower(decodedDirection[1] * speed);
-                robot.getStrifeMotor().setPower(decodedDirection[2] * speed);
+                robot.getStrafeMotor().setPower(decodedDirection[2] * speed);
                 opMode.telemetry.addData("Autonomous", "Searching for white line....");
                 opMode.telemetry.update();
             }
@@ -208,7 +209,7 @@ public class AutonomousDriveClassV3 {
             opMode.telemetry.update();
             robot.getRightSet().setPower(0);
             robot.getLeftSet().setPower(0);
-            robot.getStrifeMotor().setPower(0);
+            robot.getStrafeMotor().setPower(0);
         } else {
             opMode.telemetry.addData("ERROR","LightSensor not found; Failed method 'driveTillLine'");
             opMode.telemetry.update();
@@ -247,11 +248,8 @@ public class AutonomousDriveClassV3 {
         //Im gonna let Kenneth do this, I don't do circles very well
 
     }
-    public void ultimateMove(double xDist, double yDist, double turn) throws Exception {
-        throw new Exception("Not implemented yet: Get rekt m8");
+    public void ultimateMove(double xDist, double yDist, double turn) throws InterruptedException {
+        throw new InterruptedException("Not implemented yet: Get rekt m8");
         //// FIXME: 4/17/2017
     }
-
-
-
 }
