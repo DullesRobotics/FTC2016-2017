@@ -1,5 +1,8 @@
 package com.dullesrobotics.ftc.libraries;
 
+import android.test.InstrumentationTestRunner;
+
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.lasarobotics.vision.ftc.resq.Beacon;
@@ -15,7 +18,6 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
  * -Create an AutonomousDriveClassV3 object and pass the previously created
  * AdvancedRobot object.
  *
- * Thats it!
  *
  *
  */
@@ -25,6 +27,12 @@ public class AutonomousDriveClassV3 {
     private String servoName = "buttonServo"; //button pusher servo's name
 
     private double WhiteLineLightLevel = 0.125; //White line light level
+
+    private double TicksPerRevolution = 1440;
+    private double encoderRadius = 0;
+    private double TicksPerCentimeter = 1/((Math.PI * Math.pow(encoderRadius,2))/TicksPerRevolution);
+
+    private double robotWheelDistance = 0;
 
     private Beacon.AnalysisMethod analysisMethod = Beacon.AnalysisMethod.FAST; //Beacon analysis method...self-explanatory
     private int servoInitPosition = ServoControllerLib.SERVORIGHT; //Initial servo position
@@ -164,30 +172,44 @@ public class AutonomousDriveClassV3 {
         opMode.telemetry.update();
     }
 
-    private void encoderDrive() throws Exception{
-
-
-
+    public void encoderDrive(double speed, double leftCM, double rightCM, double time) throws InterruptedException{
+        robot.getRightSet().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.getLeftSet().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.getRightSet().setPower(0);
+        robot.getLeftSet().setPower(0);
+        robot.getRightSet().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.getLeftSet().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        int rightTarget = robot.getRightSet().getCurrentPosition() + (int)(rightCM * TicksPerCentimeter);
+        int leftTarget = robot.getLeftSet().getCurrentPosition() + (int)(leftCM * TicksPerCentimeter);
+        robot.getRightSet().setTargetPosition(rightTarget);
+        robot.getLeftSet().setTargetPosition(leftTarget);
+        timer.reset();
+        robot.getRightSet().setPower(Math.abs(speed));
+        robot.getLeftSet().setPower(Math.abs(speed));
+        while (opMode.opModeIsActive() && timer.seconds() < time && robot.getRightSet().isBusy() && robot.getLeftSet().isBusy()){
+            opMode.telemetry.addData("AUTONOMOUS","Target Position(R,L): " + rightTarget + "," + leftTarget);
+            opMode.telemetry.addData("AUTONOMOUS","Current Position(R,L): " + robot.getRightSet().getCurrentPosition() + "," + robot.getLeftSet().getCurrentPosition());
+            opMode.telemetry.update();
+        }
+        robot.getRightSet().setPower(0);
+        robot.getLeftSet().setPower(0);
     }
 
-
-    public void driveSetDistance() throws Exception{
-        //Need encoderDrive
-        throw new Exception("driveSetDistance is not yet implemented");
-        //// FIXME: 4/17/2017
+    public void driveSetDistance(double speed, double distance, double time) throws InterruptedException{
+        double toCm = distance * 2.54;
+        encoderDrive(speed,distance,distance,time);
     }
 
-    public void pointTurn() throws Exception{
-        //Need encoderDrive
-        throw new Exception("turn is not yet implemented");
-        //// FIXME: 4/17/2017
+    public void driveSetDistanceCM(double speed, double distance, double time) throws InterruptedException{
+        encoderDrive(speed,distance,distance,time);
     }
 
-    public void swingTurn() throws Exception{
-        //Need encoderDrive
-        //Set the right or left wheels power to 0, it shouldnt be jumpy bc omni wheels dood
-        throw new Exception("swingTurn is not yet implemented");
-        //// FIXME: 4/17/2017
+    public void pointTurn(double speed, double degrees, double time) throws Exception{
+        encoderDrive(speed,(degrees/360)*robotWheelDistance * Math.PI,-(degrees/360)*robotWheelDistance * Math.PI,time);
+    }
+
+    public void swingTurn(double speed, double degrees, double time) throws Exception{
+        encoderDrive(speed,(degrees/360)* 2 * robotWheelDistance * Math.PI,0,time);
     }
 
     public void driveTillLine(Direction direction, double speed, double timeOut) throws InterruptedException{

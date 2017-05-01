@@ -23,21 +23,13 @@ public class Practice extends OpMode
     DcMotor motor5;
     @Override
     public void init() {
-        g1 = gamepad1;
-        motor1 = hardwareMap.dcMotor.get("test");
-        motor2 = hardwareMap.dcMotor.get("test");
-        motor3 = hardwareMap.dcMotor.get("test");
-        motor4 = hardwareMap.dcMotor.get("test");
-        motor5 = hardwareMap.dcMotor.get("test");
+
+
     }
 
     @Override
     public void loop() {
         motor1.setPower(-g1.right_stick_y);
-        motor2.setPower(g1.left_stick_y);
-        motor3.setPower(-g1.right_stick_y);
-        motor4.setPower(g1.left_stick_y);
-        motor5.setPower(g1.right_stick_x);
 
     }
 }

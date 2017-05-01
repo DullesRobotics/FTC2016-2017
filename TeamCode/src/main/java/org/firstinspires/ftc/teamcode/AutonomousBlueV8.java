@@ -31,8 +31,8 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
 
         waitForStart();
 
-        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.FORWARD,defaultSpeed);
-        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.BACKWARD,defaultSpeed);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.RIGHT,defaultSpeed);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.LEFT,defaultSpeed);
 
 
         autonomous.setServo(TeamOn);
