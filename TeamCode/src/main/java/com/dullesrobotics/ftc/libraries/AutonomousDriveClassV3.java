@@ -1,7 +1,5 @@
 package com.dullesrobotics.ftc.libraries;
 
-import android.test.InstrumentationTestRunner;
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -30,7 +28,7 @@ public class AutonomousDriveClassV3 {
 
     private double TicksPerRevolution = 1440;
     private double encoderRadius = 0;
-    private double TicksPerCentimeter = 1/((Math.PI * Math.pow(encoderRadius,2))/TicksPerRevolution);
+    private double TicksPerCentimeter = 1/((Math.PI * 2 * encoderRadius)/TicksPerRevolution);
 
     private double robotWheelDistance = 0;
 
@@ -173,6 +171,7 @@ public class AutonomousDriveClassV3 {
     }
 
     public void encoderDrive(double speed, double leftCM, double rightCM, double time) throws InterruptedException{
+        robot.getRightSet().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.getRightSet().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.getLeftSet().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.getRightSet().setPower(0);
@@ -204,6 +203,11 @@ public class AutonomousDriveClassV3 {
         encoderDrive(speed,distance,distance,time);
     }
 
+    public void driveWithinTime(double distance, double time) throws InterruptedException{
+        double speed = distance/time;
+        encoderDrive(speed,distance,distance,time);
+    }
+
     public void pointTurn(double speed, double degrees, double time) throws Exception{
         encoderDrive(speed,(degrees/360)*robotWheelDistance * Math.PI,-(degrees/360)*robotWheelDistance * Math.PI,time);
     }
@@ -222,12 +226,12 @@ public class AutonomousDriveClassV3 {
                 robot.getRightSet().setPower(decodedDirection[0] * speed);
                 robot.getLeftSet().setPower(decodedDirection[1] * speed);
                 robot.getStrafeMotor().setPower(decodedDirection[2] * speed);
-                opMode.telemetry.addData("Autonomous", "Searching for white line....");
+                opMode.telemetry.addData("AUTONOMOUS", "Searching for white line....");
                 opMode.telemetry.update();
             }
             if (delayAfterEachCall)
                 delayCall();
-            opMode.telemetry.addData("Autonomous", "Done");
+            opMode.telemetry.addData("AUTONOMOUS", "Done");
             opMode.telemetry.update();
             robot.getRightSet().setPower(0);
             robot.getLeftSet().setPower(0);
