@@ -9,8 +9,6 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
 /**
  * Created by Kenneth on 11/6/2016.
- *
- * TODO: Maybe make a new class to use instead of BasicRobot...since its not basic anymore, and has 2 wheels.
  */
 
 public class BasicRobot {
@@ -33,15 +31,35 @@ public class BasicRobot {
     public BasicRobot(OpMode opMode){
         this.opMode = opMode;
         this.gamepad1 = opMode.gamepad1;
-        this.rightSet = opMode.hardwareMap.dcMotor.get(rightSetName);
-        this.leftSet = opMode.hardwareMap.dcMotor.get(leftSetName);
+        try {
+            this.rightSet = opMode.hardwareMap.dcMotor.get(rightSetName);
+        } catch (NullPointerException e){
+            opMode.telemetry.addData("ERROR","Failed to find " + rightSetName + "! " + e);
+            opMode.telemetry.update();
+        }
+        try {
+            this.leftSet = opMode.hardwareMap.dcMotor.get(leftSetName);
+        } catch (NullPointerException e){
+            opMode.telemetry.addData("ERROR","Failed to find " + leftSetName + "! " + e);
+            opMode.telemetry.update();
+        }
     }
 
     public BasicRobot(LinearVisionOpMode opMode){
         this.linearVisionOpMode = opMode;
         this.gamepad1 = opMode.gamepad1;
-        this.rightSet = opMode.hardwareMap.dcMotor.get(rightSetName);
-        this.leftSet = opMode.hardwareMap.dcMotor.get(leftSetName);
+        try {
+            this.rightSet = opMode.hardwareMap.dcMotor.get(rightSetName);
+        } catch (NullPointerException e){
+            opMode.telemetry.addData("ERROR","Failed to find " + rightSetName + "! " + e);
+            opMode.telemetry.update();
+        }
+        try {
+            this.leftSet = opMode.hardwareMap.dcMotor.get(leftSetName);
+        } catch (NullPointerException e){
+            opMode.telemetry.addData("ERROR","Failed to find " + leftSetName + "! " + e);
+            opMode.telemetry.update();
+        }
     }
 
     public void setDriveTrain(TeleOpDrivetrain driveTrain) {

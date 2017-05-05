@@ -27,14 +27,10 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
         autonomous = new AutonomousDriveClassV3(robot);
 
         double defaultSpeed = .75;
-        String TeamOn = "Blue";
+        //String TeamOn = "Blue";
 
         waitForStart();
 
-        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.RIGHT,defaultSpeed);
-        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.LEFT,defaultSpeed);
-
-
-        autonomous.setServo(TeamOn);
+        autonomous.driveSetDistance(defaultSpeed,5,500);
     }
 }

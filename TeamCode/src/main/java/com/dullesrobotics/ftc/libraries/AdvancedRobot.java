@@ -19,12 +19,22 @@ public class AdvancedRobot extends BasicRobot {
 
     public AdvancedRobot(OpMode opMode){
         super(opMode);
-        this.strafeMotor = opMode.hardwareMap.dcMotor.get(strafeMotorName);
+        try {
+            this.strafeMotor = opMode.hardwareMap.dcMotor.get(strafeMotorName);
+        } catch (NullPointerException e){
+            opMode.telemetry.addData("ERROR:","Failed to find Strafe Motor! " + e);
+            opMode.telemetry.update();
+        }
     }
 
     public AdvancedRobot(LinearVisionOpMode opMode){
         super(opMode);
-        this.strafeMotor = opMode.hardwareMap.dcMotor.get(strafeMotorName);
+        try {
+            this.strafeMotor = opMode.hardwareMap.dcMotor.get(strafeMotorName);
+        } catch (NullPointerException e){
+            opMode.telemetry.addData("ERROR:","Failed to find Strafe Motor! " + e);
+            opMode.telemetry.update();
+        }
     }
 
     public DcMotor getStrafeMotor(){ //Karim likes naming stuff wrong
