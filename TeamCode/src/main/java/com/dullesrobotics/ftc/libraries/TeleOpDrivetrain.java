@@ -15,4 +15,5 @@ public abstract class TeleOpDrivetrain {
 
     public abstract void driveWithGamepad();
     public abstract void reverseGamepad();
+    public abstract void shoot(double pow);
 }

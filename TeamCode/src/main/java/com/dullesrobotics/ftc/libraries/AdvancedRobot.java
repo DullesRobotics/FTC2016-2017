@@ -15,14 +15,33 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
 public class AdvancedRobot extends BasicRobot {
     private DcMotor strafeMotor;
+    private DcMotor shooterMotor;
+
     final String strafeMotorName = "strafeMotor"; /** CHANGE THIS */
+    final String shooterMotorName = "shooterMotor";
 
     public AdvancedRobot(OpMode opMode){
         super(opMode);
         try {
-            this.strafeMotor = opMode.hardwareMap.dcMotor.get(strafeMotorName);
-        } catch (NullPointerException e){
+            try {
+                this.strafeMotor = opMode.hardwareMap.dcMotor.get(strafeMotorName);
+            } catch (NullPointerException e){
+                opMode.telemetry.addData("ERROR:","Failed to find Strafe Motor! " + e);
+                opMode.telemetry.update();
+            }
+        } catch (IllegalArgumentException e){
             opMode.telemetry.addData("ERROR:","Failed to find Strafe Motor! " + e);
+            opMode.telemetry.update();
+        }
+        try {
+            try {
+                this.shooterMotor = opMode.hardwareMap.dcMotor.get(shooterMotorName);
+            } catch (NullPointerException e) {
+                opMode.telemetry.addData("ERROR:", "Failed to find Shooter Motor! " + e);
+                opMode.telemetry.update();
+            }
+        } catch (IllegalArgumentException e){
+            opMode.telemetry.addData("ERROR:", "Failed to find Shooter Motor! " + e);
             opMode.telemetry.update();
         }
     }
@@ -30,8 +49,13 @@ public class AdvancedRobot extends BasicRobot {
     public AdvancedRobot(LinearVisionOpMode opMode){
         super(opMode);
         try {
-            this.strafeMotor = opMode.hardwareMap.dcMotor.get(strafeMotorName);
-        } catch (NullPointerException e){
+            try {
+                this.strafeMotor = opMode.hardwareMap.dcMotor.get(strafeMotorName);
+            } catch (NullPointerException e){
+                opMode.telemetry.addData("ERROR:","Failed to find Strafe Motor! " + e);
+                opMode.telemetry.update();
+            }
+        } catch (IllegalArgumentException e){
             opMode.telemetry.addData("ERROR:","Failed to find Strafe Motor! " + e);
             opMode.telemetry.update();
         }
@@ -40,7 +64,10 @@ public class AdvancedRobot extends BasicRobot {
     public DcMotor getStrafeMotor(){ //Karim likes naming stuff wrong
         return strafeMotor;
     }
+    public DcMotor getShooterMotor() { return shooterMotor; }
 
     public void drive(){ getDriveTrain().driveWithGamepad(); }
     public void reverseDrive(){ getDriveTrain().reverseGamepad(); }
+
+    public void shoot(double pow) {getDriveTrain().shoot(pow);}
 }

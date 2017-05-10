@@ -32,14 +32,24 @@ public class BasicRobot {
         this.opMode = opMode;
         this.gamepad1 = opMode.gamepad1;
         try {
-            this.rightSet = opMode.hardwareMap.dcMotor.get(rightSetName);
-        } catch (NullPointerException e){
+            try {
+                this.rightSet = opMode.hardwareMap.dcMotor.get(rightSetName);
+            } catch (NullPointerException e){
+                opMode.telemetry.addData("ERROR","Failed to find " + rightSetName + "! " + e);
+                opMode.telemetry.update();
+            }
+        } catch (IllegalArgumentException e){
             opMode.telemetry.addData("ERROR","Failed to find " + rightSetName + "! " + e);
             opMode.telemetry.update();
         }
         try {
-            this.leftSet = opMode.hardwareMap.dcMotor.get(leftSetName);
-        } catch (NullPointerException e){
+            try {
+                this.leftSet = opMode.hardwareMap.dcMotor.get(leftSetName);
+            } catch (NullPointerException e) {
+                opMode.telemetry.addData("ERROR", "Failed to find " + leftSetName + "! " + e);
+                opMode.telemetry.update();
+            }
+        } catch (IllegalArgumentException e){
             opMode.telemetry.addData("ERROR","Failed to find " + leftSetName + "! " + e);
             opMode.telemetry.update();
         }
@@ -49,14 +59,24 @@ public class BasicRobot {
         this.linearVisionOpMode = opMode;
         this.gamepad1 = opMode.gamepad1;
         try {
-            this.rightSet = opMode.hardwareMap.dcMotor.get(rightSetName);
-        } catch (NullPointerException e){
+            try {
+                this.rightSet = opMode.hardwareMap.dcMotor.get(rightSetName);
+            } catch (NullPointerException e){
+                opMode.telemetry.addData("ERROR","Failed to find " + rightSetName + "! " + e);
+                opMode.telemetry.update();
+            }
+        } catch (IllegalArgumentException e){
             opMode.telemetry.addData("ERROR","Failed to find " + rightSetName + "! " + e);
             opMode.telemetry.update();
         }
         try {
-            this.leftSet = opMode.hardwareMap.dcMotor.get(leftSetName);
-        } catch (NullPointerException e){
+            try {
+                this.leftSet = opMode.hardwareMap.dcMotor.get(leftSetName);
+            } catch (NullPointerException e) {
+                opMode.telemetry.addData("ERROR", "Failed to find " + leftSetName + "! " + e);
+                opMode.telemetry.update();
+            }
+        } catch (IllegalArgumentException e){
             opMode.telemetry.addData("ERROR","Failed to find " + leftSetName + "! " + e);
             opMode.telemetry.update();
         }

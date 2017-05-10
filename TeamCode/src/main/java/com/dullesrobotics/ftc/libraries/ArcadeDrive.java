@@ -23,12 +23,23 @@ public class ArcadeDrive extends TeleOpDrivetrain{
     @Override
     public void driveWithGamepad() {
         Gamepad gamepad = advancedRobot.getGamepad1();
-        drive(-gamepad.right_stick_x, -gamepad.right_stick_y,gamepad.left_stick_x);
+        drive(gamepad.right_stick_x, -gamepad.right_stick_y,-gamepad.left_stick_x);
     }
 
     public void reverseGamepad(){
         Gamepad gamepad = advancedRobot.getGamepad1();
-        drive(gamepad.right_stick_x, gamepad.right_stick_y,-gamepad.left_stick_x);
+        drive(-gamepad.right_stick_x, gamepad.right_stick_y,gamepad.left_stick_x);//But I love comments!
+    }
+
+    public void shoot(double pow){
+        try {
+            advancedRobot.getShooterMotor().setPower(pow);
+        } catch (NullPointerException e){
+            if (teleop != null){
+                teleop.telemetry.addData("Shooter Motor","Disabled");
+                teleop.telemetry.update();
+            }
+        }
     }
 
     public void drive(double xPower, double yPower, double strafe) {
@@ -36,35 +47,35 @@ public class ArcadeDrive extends TeleOpDrivetrain{
         if(advancedRobot.getFrontRight() != null) advancedRobot.getFrontRight().setPower(xPower - yPower);
         if (advancedRobot.getBackLeft() != null) advancedRobot.getBackLeft().setPower(xPower + yPower);
         if (advancedRobot.getBackRight() != null) advancedRobot.getBackRight().setPower(xPower - yPower);*/
-        if (advancedRobot.getStrafeMotor() != null) {
+        try {
             advancedRobot.getStrafeMotor().setPower(strafe);
             if (teleop != null) {
-                teleop.telemetry.addData("Strafe Motor", "Enabled");
-                teleop.telemetry.addData("Strafe Motor Power", advancedRobot.getStrafeMotor().getPower());
+                //teleop.telemetry.addData("Strafe Motor", "Enabled");
+                //teleop.telemetry.addData("Strafe Motor Power", advancedRobot.getStrafeMotor().getPower());
             }
-        } else {
+        } catch (NullPointerException e) {
             if (teleop != null) {
                 teleop.telemetry.addData("Strafe Motor", "Disabled");
             }
         }
-        if (advancedRobot.getRightSet() != null) {
+        try {
             advancedRobot.getRightSet().setPower(xPower - yPower);
             if (teleop != null) {
-                teleop.telemetry.addData("Right Motors", "Enabled");
-                teleop.telemetry.addData("Right Motor Power", advancedRobot.getRightSet().getPower());
+                //teleop.telemetry.addData("Right Motors", "Enabled");
+                //teleop.telemetry.addData("Right Motor Power", advancedRobot.getRightSet().getPower());
             }
-        } else {
+        } catch (NullPointerException e) {
             if (teleop != null) {
                 teleop.telemetry.addData("Right Motors", "Disabled");
             }
         }
-        if (advancedRobot.getLeftSet() != null) {
+        try {
             advancedRobot.getLeftSet().setPower(xPower + yPower);
             if (teleop != null) {
-                teleop.telemetry.addData("Left Motors", "Enabled");
-                teleop.telemetry.addData("Left Motor Power", advancedRobot.getLeftSet().getPower());
+                //teleop.telemetry.addData("Left Motors", "Enabled");
+                //teleop.telemetry.addData("Left Motor Power", advancedRobot.getLeftSet().getPower());
             }
-        } else {
+        } catch (NullPointerException e) {
             if (teleop != null) {
                 teleop.telemetry.addData("Left Motors", "Disabled");
             }

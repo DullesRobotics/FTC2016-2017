@@ -20,6 +20,12 @@ public class ArcadeDriveTeleOp extends OpMode {
     private boolean reversed = true;
     private boolean prevStateReverse = reversed;
 
+    private boolean shooting = true;
+    private boolean prevStateShooting = shooting;
+
+    private boolean shootingForwad = false;
+    private boolean prevShootingForward = shootingForwad;
+
     @Override
     public void init() {
         robot = new AdvancedRobot(this);
@@ -30,15 +36,40 @@ public class ArcadeDriveTeleOp extends OpMode {
     @Override
     public void loop() {
         boolean curState = robot.getGamepad1().right_bumper;
-        if (curState && (prevStateReverse == false)&&curState == true){
+        boolean curStateY = robot.getGamepad1().y;
+        boolean curStateLB = robot.getGamepad1().left_bumper;
+
+        if (curState && (prevStateReverse == false)&& (curState == true)){
             reversed = !reversed;
         }
+
+        if (curStateY && (prevStateShooting == false) && (shooting == true)){
+            shooting = !shooting;
+        }
+
+        if (curStateLB & (prevShootingForward == false) && (shootingForwad == true)){
+            shootingForwad = !shootingForwad;
+        }
+
+        prevShootingForward = curStateLB;
+        prevStateShooting = curStateY;
         prevStateReverse = curState;
+
         if (!reversed) {
             robot.drive();
         } else
         {
             robot.reverseDrive();
+        }
+
+        if (shooting){
+            if (shootingForwad) {
+                robot.shoot(1);
+            } else {
+                robot.shoot(-1);
+            }
+        } else {
+            robot.shoot(0);
         }
     }
 }
