@@ -1,15 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.dullesrobotics.ftc.libraries.AdvancedRobot;
-import com.dullesrobotics.ftc.libraries.AutonomousDriveClassV2;
 import com.dullesrobotics.ftc.libraries.AutonomousDriveClassV3;
-import com.dullesrobotics.ftc.libraries.FTCVisionManager;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
-import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
-
-import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 
 /**
  * Created by kk200 on 4/13/2017.
@@ -38,7 +32,7 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
  * 10) Back robot up
  * 11) Go full force toward center, but park on corner
  *
- * 10-11, we should make it toggable from the controller.
+ * 10-11, we should make separate opmodes for each.
  */
 
 @Autonomous(name = "[BLUE] Autonomous V8")
@@ -46,6 +40,8 @@ import static com.dullesrobotics.ftc.libraries.commonMethods.delay;
 public class AutonomousBlueV8 extends LinearVisionOpMode {
     AutonomousDriveClassV3 autonomous;
     AdvancedRobot robot;
+
+    String currentMode = "CenterPark";
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -56,6 +52,9 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
         //String TeamOn = "Blue";
 
         waitForStart();
+
+        telemetry.addData("MODE: ",currentMode);
+        telemetry.update();
 
         autonomous.driveSetTime(1, AutonomousDriveClassV3.Direction.FORWARD,.7);
         autonomous.driveSetTime(.25, AutonomousDriveClassV3.Direction.RIGHT,1);

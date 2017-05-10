@@ -1,6 +1,7 @@
 package com.dullesrobotics.ftc.libraries;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.lasarobotics.vision.ftc.resq.Beacon;
