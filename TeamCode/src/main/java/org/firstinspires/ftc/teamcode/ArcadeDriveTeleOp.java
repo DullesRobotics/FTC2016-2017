@@ -35,9 +35,9 @@ public class ArcadeDriveTeleOp extends OpMode {
 
     @Override
     public void loop() {
-        boolean curState = robot.getGamepad1().right_bumper;
-        boolean curStateY = robot.getGamepad1().y;
-        boolean curStateLB = robot.getGamepad1().left_bumper;
+        boolean curState = robot.getGamepad1().left_bumper;
+        boolean curStateY = robot.getGamepad1().right_bumper;
+        boolean curStateLB = robot.getGamepad1().y;
 
         if (curState && (prevStateReverse == false)&& (curState == true)){
             reversed = !reversed;
