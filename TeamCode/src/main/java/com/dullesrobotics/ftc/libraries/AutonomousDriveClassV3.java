@@ -318,6 +318,25 @@ public class AutonomousDriveClassV3 {
         }
     }
 
+    public void shoot(double time){
+        try {
+            timer.reset();
+            while (opMode.opModeIsActive() && timer.seconds() < time) {
+                robot.getShooterMotor().setPower(1);
+            }
+            robot.getShooterMotor().setPower(0);
+            opMode.telemetry.addData("Autonomous","Successfully shot!");
+            opMode.telemetry.update();
+        } catch (NullPointerException e){
+            opMode.telemetry.addData("ERROR","Failed to shoot!");
+            opMode.telemetry.update();
+        }
+    }
+
+    public void shoot(){
+        shoot(3);
+    }
+
 
     public void arcMoveForTime(Direction direction1,Direction direction2, double time){
         //Im gonna let Kenneth do this, I don't do circles very well
