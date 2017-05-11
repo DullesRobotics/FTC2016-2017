@@ -1,9 +1,8 @@
 package com.dullesrobotics.ftc.libraries;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
+
 
 /**
  * Created by Kenneth on 11/5/2016.
@@ -12,13 +11,15 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 public class ArcadeDrive extends TeleOpDrivetrain{
     OpMode teleop;
 
-    public ArcadeDrive(BasicRobot r){
+    public ArcadeDrive(BasicRobot r, OpMode teleop){
         super(r);
+        this.teleop = teleop;
     }
 
-    public ArcadeDrive(AdvancedRobot r){ super(r); }
-
-    public ArcadeDrive(AdvancedRobot r, OpMode teleop){ super(r); this.teleop = teleop; }
+    public ArcadeDrive(AdvancedRobot r, OpMode teleop){
+        super(r);
+        this.teleop = teleop;
+    }
 
     @Override
     public void driveWithGamepad() {
@@ -35,53 +36,27 @@ public class ArcadeDrive extends TeleOpDrivetrain{
         try {
             advancedRobot.getShooterMotor().setPower(pow);
         } catch (NullPointerException e){
-            if (teleop != null){
-                teleop.telemetry.addData("Shooter Motor","Disabled");
-                teleop.telemetry.update();
-            }
+            teleop.telemetry.addData("Shooter Motor","Disabled");
+            teleop.telemetry.update();
         }
     }
 
     public void drive(double xPower, double yPower, double strafe) {
-        /*if(advancedRobot.getFrontLeft() != null) advancedRobot.getFrontLeft().setPower(xPower + yPower);
-        if(advancedRobot.getFrontRight() != null) advancedRobot.getFrontRight().setPower(xPower - yPower);
-        if (advancedRobot.getBackLeft() != null) advancedRobot.getBackLeft().setPower(xPower + yPower);
-        if (advancedRobot.getBackRight() != null) advancedRobot.getBackRight().setPower(xPower - yPower);*/
         try {
             advancedRobot.getStrafeMotor().setPower(strafe);
-            if (teleop != null) {
-                //teleop.telemetry.addData("Strafe Motor", "Enabled");
-                //teleop.telemetry.addData("Strafe Motor Power", advancedRobot.getStrafeMotor().getPower());
-            }
         } catch (NullPointerException e) {
-            if (teleop != null) {
-                teleop.telemetry.addData("Strafe Motor", "Disabled");
-            }
+            teleop.telemetry.addData("Strafe Motor", "Disabled");
         }
         try {
             advancedRobot.getRightSet().setPower(xPower - yPower);
-            if (teleop != null) {
-                //teleop.telemetry.addData("Right Motors", "Enabled");
-                //teleop.telemetry.addData("Right Motor Power", advancedRobot.getRightSet().getPower());
-            }
         } catch (NullPointerException e) {
-            if (teleop != null) {
-                teleop.telemetry.addData("Right Motors", "Disabled");
-            }
+            teleop.telemetry.addData("Right Motors", "Disabled");
         }
         try {
             advancedRobot.getLeftSet().setPower(xPower + yPower);
-            if (teleop != null) {
-                //teleop.telemetry.addData("Left Motors", "Enabled");
-                //teleop.telemetry.addData("Left Motor Power", advancedRobot.getLeftSet().getPower());
-            }
         } catch (NullPointerException e) {
-            if (teleop != null) {
-                teleop.telemetry.addData("Left Motors", "Disabled");
-            }
+            teleop.telemetry.addData("Left Motors", "Disabled");
         }
-        if (teleop != null) {
-            teleop.telemetry.update();
-        }
+        teleop.telemetry.update();
     }
 }

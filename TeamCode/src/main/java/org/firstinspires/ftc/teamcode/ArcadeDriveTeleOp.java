@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 /**
  * Created by Kenneth on 11/6/2016.
- * Modified by Karim
+ * Modified by Karim...heavily
  *
  */
 
@@ -29,7 +29,7 @@ public class ArcadeDriveTeleOp extends OpMode {
     @Override
     public void init() {
         robot = new AdvancedRobot(this);
-        ArcDrive = new ArcadeDrive(robot); //Passing "this" allows for debugging
+        ArcDrive = new ArcadeDrive(robot,this);
         robot.setDriveTrain(ArcDrive);
     }
 

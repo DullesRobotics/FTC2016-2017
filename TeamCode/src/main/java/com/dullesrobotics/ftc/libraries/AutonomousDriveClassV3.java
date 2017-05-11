@@ -196,53 +196,6 @@ public class AutonomousDriveClassV3 {
         robot.getRightSet().setPower(0);
         robot.getLeftSet().setPower(0);
     }
-    /*public boolean encoderDrive(double speed, double leftCM, double rightCM, double time){
-                int newLeftTarget;
-                int newRightTarget;
-                timer.reset();
-                boolean hitTimeOut = false;
-                if (opMode.opModeIsActive()) {
-                newLeftTarget = robot.getLeftSet().getCurrentPosition() + (int)(leftCM * TicksPerCentimeter);
-                newRightTarget = robot.getRightSet().getCurrentPosition() + (int)(rightCM * TicksPerCentimeter);
-                robot.getLeftSet().setTargetPosition(newLeftTarget);
-                robot.getRightSet().setTargetPosition(newRightTarget);
-                robot.getLeftSet().setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                robot.getRightSet().setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                timer.reset();
-                robot.getLeftSet().setPower(Math.abs(speed));
-                robot.getRightSet().setPower(Math.abs(speed));
-                // keep looping while we are still active, and there is time left, and both motors are running.
-                opMode.telemetry.addData("opModeisActive",opMode.opModeIsActive());
-                opMode.telemetry.addData("runtime.seconds() < timeoutS",(timer.seconds() < time));
-                opMode.telemetry.addData("at least one motor Busy",(robot.getLeftSet().isBusy() || robot.getRightSet().isBusy()));
-                opMode.telemetry.update();
-                while (opMode.opModeIsActive() && (robot.getLeftSet().isBusy() || robot.getRightSet().isBusy() || timer.seconds() < time)) {
-                    delay(1);
-                    // Display it for the driver.
-                    opMode.telemetry.addData("Targets",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
-                    opMode.telemetry.addData("CurrentPos",  "Running at %7d :%7d",
-                            robot.getLeftSet().getCurrentPosition(),
-                            robot.getRightSet().getCurrentPosition());
-                    opMode.telemetry.update();
-                    if(timer.seconds() > time){
-                        hitTimeOut = true;
-                        return hitTimeOut;
-                    }
-                    if (!robot.getLeftSet().isBusy() && !robot.getRightSet().isBusy()){
-                        return false;
-                    }
-                }
-                // Stop all motion;
-                robot.getLeftSet().setPower(0);
-                robot.getRightSet().setPower(0);
-                // Turn off RUN_TO_POSITION
-                robot.getLeftSet().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.getRightSet().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            } else {
-                    return hitTimeOut;
-            }
-            return hitTimeOut;
-    }*/
 
     public void driveSetDistance(double speed, double distance, double time) throws InterruptedException{
         double toCm = distance * 2.54;
@@ -335,7 +288,7 @@ public class AutonomousDriveClassV3 {
     }
 
     public void shoot(){
-        shoot(3);
+        shoot(1);
     }
 
 

@@ -41,8 +41,6 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
     AutonomousDriveClassV3 autonomous;
     AdvancedRobot robot;
 
-    String currentMode = "CenterPark";
-
     @Override
     public void runOpMode() throws InterruptedException {
         robot = new AdvancedRobot(this);
@@ -53,7 +51,6 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
 
         waitForStart();
 
-        telemetry.addData("MODE: ",currentMode);
         telemetry.update();
 
         autonomous.driveSetTime(1, AutonomousDriveClassV3.Direction.FORWARD,.7);
