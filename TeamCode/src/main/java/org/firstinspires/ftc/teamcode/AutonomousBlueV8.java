@@ -53,6 +53,22 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
 
         telemetry.update();
 
+        /*
        autonomous.driveTillLine(AutonomousDriveClassV3.Direction.FORWARD,.5,10);
+       */
+
+        /*Start out sideways facing corner vortex
+        Left for a few seconds
+        Forward till sensor can touch line when moved left
+        Left till line
+        SetServo
+        Forward
+        Back
+        Left for .5 seconds
+        Left till line
+        SetServo
+        Forward
+        Back
+         */
     }
 }
