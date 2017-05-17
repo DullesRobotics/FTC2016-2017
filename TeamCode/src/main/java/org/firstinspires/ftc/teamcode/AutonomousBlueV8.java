@@ -53,7 +53,6 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
 
         telemetry.update();
 
-        autonomous.driveSetTime(1, AutonomousDriveClassV3.Direction.FORWARD,.7);
-        autonomous.driveSetTime(.25, AutonomousDriveClassV3.Direction.RIGHT,1);
+       autonomous.driveTillLine(AutonomousDriveClassV3.Direction.FORWARD,.5,10);
     }
 }

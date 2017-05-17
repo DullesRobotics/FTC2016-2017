@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.dullesrobotics.ftc.libraries.AdvancedRobot;
 import com.dullesrobotics.ftc.libraries.ArcadeDrive;
+import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -14,9 +15,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "[MAIN] Arcade Drive")
 public class ArcadeDriveTeleOp extends OpMode {
-    private AdvancedRobot robot;
+    private String btnServoName = "btnServo";
 
+    private AdvancedRobot robot;
     private ArcadeDrive ArcDrive;
+    private ServoControllerLib servoLib;
+
     private boolean reversed = true;
     private boolean prevStateReverse = reversed;
 
@@ -31,6 +35,7 @@ public class ArcadeDriveTeleOp extends OpMode {
         robot = new AdvancedRobot(this);
         ArcDrive = new ArcadeDrive(robot,this);
         robot.setDriveTrain(ArcDrive);
+        servoLib = new ServoControllerLib(hardwareMap.servo.get(btnServoName),90);
     }
 
     @Override
@@ -60,6 +65,14 @@ public class ArcadeDriveTeleOp extends OpMode {
         } else
         {
             robot.reverseDrive();
+        }
+
+        if (robot.getGamepad1().dpad_right){
+            servoLib.setDegrees(-190);
+        }
+
+        if (robot.getGamepad1().dpad_left){
+            servoLib.setDegrees(190);
         }
 
         if (shooting){
