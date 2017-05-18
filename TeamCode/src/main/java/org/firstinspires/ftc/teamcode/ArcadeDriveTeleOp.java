@@ -5,6 +5,7 @@ import com.dullesrobotics.ftc.libraries.ArcadeDrive;
 import com.dullesrobotics.ftc.libraries.ServoControllerLib;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 
 /**
@@ -15,7 +16,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "[MAIN] Arcade Drive")
 public class ArcadeDriveTeleOp extends OpMode {
-    private String btnServoName = "btnServo";
+    private String btnServoName = "buttonServo";
 
     private AdvancedRobot robot;
     private ArcadeDrive ArcDrive;
@@ -36,6 +37,9 @@ public class ArcadeDriveTeleOp extends OpMode {
         ArcDrive = new ArcadeDrive(robot,this);
         robot.setDriveTrain(ArcDrive);
         servoLib = new ServoControllerLib(hardwareMap.servo.get(btnServoName),90);
+        robot.getRightSet().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.getLeftSet().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.getStrafeMotor().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     @Override

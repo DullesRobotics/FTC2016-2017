@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class ServoControllerLib {
     private Servo buttonServo;
-    public static final int SERVOLEFT = -360;
-    public static final int SERVORIGHT = 360;
+    public static final int SERVOLEFT = 360;
+    public static final int SERVORIGHT = -360;
 
     public ServoControllerLib(Servo btnServ, double degrees){
         buttonServo = btnServ;

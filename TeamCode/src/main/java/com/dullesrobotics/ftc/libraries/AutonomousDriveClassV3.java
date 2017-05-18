@@ -109,12 +109,12 @@ public class AutonomousDriveClassV3 {
         double right = 0,left = 0,strafe = 0;
         switch (direction){
             case FORWARD:
-                right = -1;
-                left = 1;
-                break;
-            case BACKWARD:
                 right = 1;
                 left = -1;
+                break;
+            case BACKWARD:
+                right = -1;
+                left = 1;
                 break;
             case RIGHT:
                 strafe = 1;
@@ -123,22 +123,22 @@ public class AutonomousDriveClassV3 {
                 strafe = -1;
                 break;
             case FORWARD_RIGHT:
-                right = -1;
-                left = 1;
-                strafe = 1;
-                break;
-            case FORWARD_LEFT:
-                right = -1;
-                left = 1;
-                strafe = -1;
-                break;
-            case BACKWARD_RIGHT:
                 right = 1;
                 left = -1;
                 strafe = 1;
                 break;
-            case BACKWARD_LEFT:
+            case FORWARD_LEFT:
                 right = 1;
+                left = -1;
+                strafe = -1;
+                break;
+            case BACKWARD_RIGHT:
+                right = -1;
+                left = 1;
+                strafe = 1;
+                break;
+            case BACKWARD_LEFT:
+                right = -1;
                 left = -1;
                 strafe = -1;
                 break;
@@ -232,13 +232,13 @@ public class AutonomousDriveClassV3 {
                 opMode.telemetry.addData("AUTONOMOUS", "Searching for white line....");
                 opMode.telemetry.update();
             }
+            robot.getRightSet().setPower(0);
+            robot.getLeftSet().setPower(0);
+            robot.getStrafeMotor().setPower(0);
             if (delayAfterEachCall)
                 delayCall();
             opMode.telemetry.addData("AUTONOMOUS", "Done");
             opMode.telemetry.update();
-            robot.getRightSet().setPower(0);
-            robot.getLeftSet().setPower(0);
-            robot.getStrafeMotor().setPower(0);
         } else {
             opMode.telemetry.addData("ERROR","LightSensor not found; Failed method 'driveTillLine'");
             opMode.telemetry.update();
@@ -249,29 +249,54 @@ public class AutonomousDriveClassV3 {
         return ftcVisionManager.readBeacon(7,3);
     }
 
-    public void setServo(String teamOn) throws InterruptedException{
+    public String setServo(String teamOn) throws InterruptedException{
         if (servoControllerLib != null) {
+            servoControllerLib.setDegrees(ServoControllerLib.SERVORIGHT);
+            delayCall();
             if (teamOn.toLowerCase().equals("blue")) {
                 if (getVisionAnalysis().toLowerCase().equals("redblue")) {
                     servoControllerLib.setDegrees(servoControllerLib.SERVORIGHT);
+                    opMode.telemetry.addData("Autonomous","Servo set RIGHT");
                 } else {
                     servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+                    opMode.telemetry.addData("Autonomous","Servo set LEFT");
                 }
             } else {
                 if (getVisionAnalysis().toLowerCase().equals("bluered")) {
                     servoControllerLib.setDegrees(servoControllerLib.SERVORIGHT);
+                    opMode.telemetry.addData("Autonomous","Servo set RIGHT");
                 } else {
                     servoControllerLib.setDegrees(ServoControllerLib.SERVOLEFT);
+                    opMode.telemetry.addData("Autonomous","Servo set LEFT");
                 }
             }
-            opMode.telemetry.addData("Autonomous", "Successfully set servo position");
+            strifeAdjustForBeacon(teamOn);
+            delayCall();
+            opMode.telemetry.addData("Autonomous", "Successfully set servo position&Strife");
             opMode.telemetry.update();
         } else {
             opMode.telemetry.addData("ERROR","ServoControllerLib not instantiated; Failed method 'setServo'");
             opMode.telemetry.update();
         }
+        return getVisionAnalysis().toLowerCase();
     }
 
+    public void strifeAdjustForBeacon(String teamOn) throws InterruptedException {
+        String beaconResult = getVisionAnalysis().toLowerCase();
+        if(teamOn.toLowerCase().equals("blue")){
+            if(beaconResult.equals("bluered")){
+                driveSetTime(0.2,Direction.LEFT,0.15);
+            }else{
+                driveSetTime(0.2,Direction.RIGHT,0.15);
+            }
+        }else{
+            if(beaconResult.equals("bluered")){
+                driveSetTime(0.2,Direction.RIGHT,0.15);
+            }else{
+                driveSetTime(0.2,Direction.LEFT,0.15);
+            }
+        }
+    }
     public void shoot(double time){
         try {
             timer.reset();

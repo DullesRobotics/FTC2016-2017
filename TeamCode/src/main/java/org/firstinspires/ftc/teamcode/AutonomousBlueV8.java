@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.dullesrobotics.ftc.libraries.AdvancedRobot;
 import com.dullesrobotics.ftc.libraries.AutonomousDriveClassV3;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
 /**
@@ -48,7 +50,9 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
 
         double defaultSpeed = .75;
         //String TeamOn = "Blue";
-
+        robot.getRightSet().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.getLeftSet().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.getStrafeMotor().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         waitForStart();
 
         telemetry.update();
@@ -70,16 +74,19 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
         Forward
         Back
 
-        IDEA
-        Calibrate Line
+        TODO: Add strifing before hitting left; not right
+
+        TODO: Calibrate EOPD
          */
-        autonomous.driveSetTime(2.0, AutonomousDriveClassV3.Direction.LEFT,0.5);
-        autonomous.driveSetTime(1.0, AutonomousDriveClassV3.Direction.FORWARD,0.5);
-        autonomous.driveTillLine(AutonomousDriveClassV3.Direction.LEFT,0.3, 5.0);
-        autonomous.setServo("blue"); 
-        autonomous.driveSetTime(2.0, AutonomousDriveClassV3.Direction.FORWARD, 0.3);
-        autonomous.driveSetTime(2.0, AutonomousDriveClassV3.Direction.BACKWARD, 0.3);
-        autonomous.driveSetTime(1.0, AutonomousDriveClassV3.Direction.LEFT, 0.3);
+        autonomous.driveSetTime(2.3, AutonomousDriveClassV3.Direction.LEFT,0.4);
+        autonomous.driveSetTime(2.2, AutonomousDriveClassV3.Direction.FORWARD,0.2);
+        autonomous.driveTillLine(AutonomousDriveClassV3.Direction.LEFT,0.2, 5.0);
+        autonomous.driveSetTime(0.23101, AutonomousDriveClassV3.Direction.LEFT,0.1501);
+        autonomous.setServo("blue");
+        autonomous.driveSetTime(2.3, AutonomousDriveClassV3.Direction.FORWARD, 0.2);
+        //ADD TODO here
+        autonomous.driveSetTime(1.3, AutonomousDriveClassV3.Direction.BACKWARD, 0.25);
+        autonomous.driveSetTime(.5, AutonomousDriveClassV3.Direction.LEFT, 0.2);
         autonomous.driveTillLine(AutonomousDriveClassV3.Direction.LEFT, 0.3, 5.0);
         autonomous.setServo("blue");
         autonomous.driveSetTime(2.0, AutonomousDriveClassV3.Direction.FORWARD, 0.3);
