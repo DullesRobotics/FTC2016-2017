@@ -86,8 +86,9 @@ public class AutonomousDriveClassV3 {
 
     private void delayCall(){
         timer.reset();
-        while(opMode.opModeIsActive() && timer.seconds() < 1){
-            opMode.telemetry.addData("Autonomous","Delaying one second");
+        double delaySec = .3;
+        while(opMode.opModeIsActive() && timer.seconds() < delaySec){
+            opMode.telemetry.addData("Autonomous","Delaying " + delaySec + " seconds");
             opMode.telemetry.update();
         }
     }
@@ -117,9 +118,11 @@ public class AutonomousDriveClassV3 {
                 left = 1;
                 break;
             case RIGHT:
+                right = .02;
                 strafe = 1;
                 break;
             case LEFT:
+                right = .02;
                 strafe = -1;
                 break;
             case FORWARD_RIGHT:
