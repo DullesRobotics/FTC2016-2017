@@ -76,7 +76,7 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
         autonomous.driveSetTime(2.0, AutonomousDriveClassV3.Direction.LEFT,0.5);
         autonomous.driveSetTime(1.0, AutonomousDriveClassV3.Direction.FORWARD,0.5);
         autonomous.driveTillLine(AutonomousDriveClassV3.Direction.LEFT,0.3, 5.0);
-        autonomous.setServo("blue");
+        autonomous.setServo("blue"); 
         autonomous.driveSetTime(2.0, AutonomousDriveClassV3.Direction.FORWARD, 0.3);
         autonomous.driveSetTime(2.0, AutonomousDriveClassV3.Direction.BACKWARD, 0.3);
         autonomous.driveSetTime(1.0, AutonomousDriveClassV3.Direction.LEFT, 0.3);
