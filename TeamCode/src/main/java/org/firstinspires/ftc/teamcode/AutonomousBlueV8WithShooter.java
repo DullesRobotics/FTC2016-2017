@@ -7,21 +7,28 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
+import com.dullesrobotics.ftc.libraries.AdvancedRobot;
+import com.dullesrobotics.ftc.libraries.AutonomousDriveClassV3;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.lasarobotics.vision.opmode.LinearVisionOpMode;
+
 /**
  * Created by kk200 on 4/13/2017.
  */
 
-@Autonomous(name = "[BLUE] Autonomous V8")
+@Autonomous(name = "[BLUE] Autonomous V8 With Shooter")
 
-public class AutonomousBlueV8 extends LinearVisionOpMode {
+public class AutonomousBlueV8WithShooter extends LinearVisionOpMode {
     AutonomousDriveClassV3 autonomous;
     AdvancedRobot robot;
-
+    DcMotor shooter;
     @Override
     public void runOpMode() throws InterruptedException {
         robot = new AdvancedRobot(this);
         autonomous = new AutonomousDriveClassV3(robot);
-
+        shooter = robot.getShooterMotor();
         double defaultSpeed = .75;
         //String TeamOn = "Blue";
         robot.getRightSet().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -53,7 +60,7 @@ public class AutonomousBlueV8 extends LinearVisionOpMode {
         TODO: Calibrate EOPD
          */
         autonomous.driveSetTime(2.3, AutonomousDriveClassV3.Direction.LEFT,0.4);
-        autonomous.driveSetTime(2.31, AutonomousDriveClassV3.Direction.FORWARD,0.2);
+        autonomous.driveSetTime(2.2, AutonomousDriveClassV3.Direction.FORWARD,0.2);
         autonomous.driveTillLine(AutonomousDriveClassV3.Direction.LEFT,0.2, 5.0);
         autonomous.driveSetTime(0.23101, AutonomousDriveClassV3.Direction.LEFT,0.1501);
         autonomous.setServo("blue");

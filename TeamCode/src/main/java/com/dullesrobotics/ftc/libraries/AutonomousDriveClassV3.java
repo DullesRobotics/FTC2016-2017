@@ -288,15 +288,15 @@ public class AutonomousDriveClassV3 {
         String beaconResult = getVisionAnalysis().toLowerCase();
         if(teamOn.toLowerCase().equals("blue")){
             if(beaconResult.equals("bluered")){
-                driveSetTime(0.2,Direction.LEFT,0.15);
+                driveSetTime(0.2,Direction.LEFT,0.22);
             }else{
-                driveSetTime(0.2,Direction.RIGHT,0.15);
+                driveSetTime(0.2,Direction.RIGHT,0.22);
             }
         }else{
             if(beaconResult.equals("bluered")){
-                driveSetTime(0.2,Direction.RIGHT,0.15);
+                driveSetTime(0.2,Direction.RIGHT,0.22);
             }else{
-                driveSetTime(0.2,Direction.LEFT,0.15);
+                driveSetTime(0.2,Direction.LEFT,0.22);
             }
         }
     }

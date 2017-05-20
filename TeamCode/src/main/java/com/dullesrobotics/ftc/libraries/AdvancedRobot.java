@@ -69,5 +69,5 @@ public class AdvancedRobot extends BasicRobot {
     public void drive(){ getDriveTrain().driveWithGamepad(); }
     public void reverseDrive(){ getDriveTrain().reverseGamepad(); }
 
-    public void shoot(double pow) {getDriveTrain().shoot(pow);}
+
 }
