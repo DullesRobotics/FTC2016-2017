@@ -9,7 +9,7 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 /**
  * Created by kk200 on 4/12/2017.
  *
- * TODO: Implement wheeled shooter
+ * TODO: Implement wheeled shooter <-- Yea that never happened. Good luck!
  *
  */
 
